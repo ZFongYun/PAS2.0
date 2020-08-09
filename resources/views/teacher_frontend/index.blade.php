@@ -15,3 +15,4 @@
 
     <!--main content end-->
 @endsection
+@section('title','首頁')
