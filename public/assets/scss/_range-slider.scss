@@ -1,0 +1,14 @@
+
+
+/* Ion Range slider */
+
+.irs--flat{
+  .irs-bar, .irs-to, .irs-from, .irs-single, .irs-handle > i:first-child {
+    background-color: $custom !important;
+  }
+  .irs-to, .irs-from, .irs-single{
+    &:before{
+      border-top-color: $custom;
+    }
+  }
+}

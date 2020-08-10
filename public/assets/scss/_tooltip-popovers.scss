@@ -1,0 +1,35 @@
+
+/* Tooltips */
+
+.tooltip-inner {
+  border-radius: 3px;
+  padding: 6px 10px;
+}
+.jqstooltip {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  width: auto!important;
+  height: auto!important;
+}
+
+
+/* Popover */
+
+.popover {
+  font-family: inherit;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+
+  .popover-header {
+    background-color: transparent;
+    color: $custom;
+    font-weight: 500;
+    font-size: 15px;
+    margin-top: 0px;
+  }
+  .popover-body{
+    color: $lightdark7;
+  }
+}

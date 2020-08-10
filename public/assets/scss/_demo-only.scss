@@ -1,0 +1,38 @@
+/* Demo only */
+.icon-list-demo {
+  div {
+    cursor: pointer;
+    line-height: 45px;
+    white-space: nowrap;
+    color: #75798B;
+
+    p{
+      margin-bottom: 0px;
+      line-height: inherit;
+    }
+  }
+  i {
+    display: inline-block;
+    font-size: 18px;
+    margin: 0;
+    vertical-align: middle;
+    width: 40px;
+    text-align: center;
+  }
+  .col-lg-4 {
+    border-radius: 3px;
+    &:hover {
+      background-color: rgba($custom, 0.07);
+    }
+  }
+}
+
+//Button Demo
+.button-list {
+  margin-left: -8px;
+  margin-bottom: -12px;
+  .btn {
+    margin-bottom: 12px;
+    margin-left: 8px;
+  }
+}

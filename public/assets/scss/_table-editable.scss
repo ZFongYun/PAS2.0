@@ -1,0 +1,26 @@
+
+
+/* editable table */
+#datatable-editable {
+  .actions {
+    a {
+      padding: 5px;
+    }
+  }
+  .form-control {
+    background-color: $white;
+    width: 100%;
+  }
+  .fa-trash-o {
+    color: $danger;
+  }
+  .fa-times {
+    color: $danger;
+  }
+  .fa-pencil {
+    color: $success;
+  }
+  .fa-save {
+    color: $success;
+  }
+}

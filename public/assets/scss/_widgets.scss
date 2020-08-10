@@ -1,0 +1,74 @@
+
+
+/* =============
+   Widgets
+============= */
+
+
+.widget-user {
+  min-height: 112px;
+
+  img {
+    height: 72px;
+    float: left;
+  }
+
+  .wid-u-info {
+    margin-left: 90px;
+
+    p,h4 {
+      white-space: nowrap;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 400;
+      font-size: 16px;
+    }
+  }
+}
+
+/* Widget-chart */
+.widget-chart ul li {
+  width: 31.5%;
+  display: inline-block;
+  padding: 0px;
+}
+
+
+/* Inbox-widget */
+
+.inbox-widget {
+  .inbox-item {
+    border-bottom: 1px solid $light3;
+    overflow: hidden;
+    padding: 10px 0;
+    position: relative;
+    .inbox-item-img {
+      display: block;
+      float: left;
+      margin-right: 15px;
+      width: 40px;
+    }
+    img {
+      width: 40px;
+    }
+    .inbox-item-author {
+      color: $lightdark3;
+      display: block;
+      margin: 0;
+    }
+    .inbox-item-text {
+      color: $muted;
+      display: block;
+      font-size: 12px;
+      margin: 0;
+    }
+    .inbox-item-date {
+      color: $muted;
+      font-size: 11px;
+      position: absolute;
+      right: 7px;
+      top: 2px;
+    }
+  }
+}
