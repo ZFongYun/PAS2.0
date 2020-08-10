@@ -1213,7 +1213,7 @@ body.fixed-left .side-menu.left {
   margin-left: 180px;
 }
 
-#wrapper.enlarged .menu-title, #wrapper.enlarged .menu-arrow {
+#wrapper.enlarged .menu-title, #wrapper.enlarged .user-title, #wrapper.enlarged .menu-arrow {
   display: none !important;
 }
 
@@ -4670,5 +4670,17 @@ File: Responsive
 }
 
 .logout:hover{
-  color: #435966;
+  color: #a4abbb;
+}
+
+.center{
+  margin: 0 auto;
+  float: none;
+}
+
+.user-title{
+  color: #ffffff;
+  font-size: 16px;
+  margin-top: 15px;
+  text-align: center;
 }

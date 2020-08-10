@@ -3,12 +3,18 @@
     <div class="sidebar-inner slimscrollleft">
         <!--- Divider -->
         <div id="sidebar-menu">
+
             <ul>
 
-                <li class="text-muted menu-title">功能列</li>
+                <div class="col-md-6 col-6 center" style="text-align: center">
+                    <img src="assets/images/users/avatar-11.png" class="img-fluid d-block rounded-circle" alt="user">
+                    <p class="user-title">觀迎教師使用</p>
+                </div>
+
+                <li class="text-muted menu-title"> 功能列表</li>
 
                 <li class="has_sub">
-                    <a href="#" class="waves-effect"><i class="fa fa-home"></i> <span> 首頁 </span> </a>
+                    <a href="{{action('ProfIndexController@index')}}" class="waves-effect"><i class="fa fa-home"></i> <span> 首頁 </span> </a>
                 </li>
 
                 <li class="has_sub">
@@ -38,4 +44,5 @@
 
     </div>
 </div>
+
 <!-- Left Sidebar End -->
