@@ -18,3 +18,5 @@ Route::get('/', function () {
 });
 
 Route::get('/profIndex','ProfIndexController@index');
+
+Route::get('/login','ProfLoginController@index');
