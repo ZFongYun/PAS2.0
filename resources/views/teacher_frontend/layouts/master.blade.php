@@ -11,6 +11,9 @@
 
     <title>@yield('title')</title>
 
+    <!-- Custom box css -->
+    <link href="../plugins/custombox/dist/custombox.min.css" rel="stylesheet">
+
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
@@ -48,6 +51,9 @@
 <script src="assets/js/wow.min.js"></script>
 <script src="assets/js/jquery.nicescroll.js"></script>
 <script src="assets/js/jquery.scrollTo.min.js"></script>
+
+<!-- Modal-Effect -->
+<script src="../plugins/custombox/dist/custombox.min.js"></script>
 
 <!-- App js -->
 <script src="assets/js/jquery.core.js"></script>
