@@ -183,12 +183,12 @@ a:focus {
 
 /* Page titles */
 .page-title {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 200;
   margin-bottom: 0px;
   margin-top: 0px;
   line-height: 42px;
-  font-family: "Karla", sans-serif;
+  font-family: "Noto Sans TC", sans-serif;
 }
 
 .page-title-drop::after {
@@ -4683,4 +4683,15 @@ File: Responsive
   font-size: 16px;
   margin-top: 15px;
   text-align: center;
+}
+
+.button-font{
+  font-size: 16px;
+  font-weight: 200;
+}
+
+.button-dropdown:hover{
+  background-color: #57c5a5;
+  color: #ffffff;
+  padding-left: 10px;
 }
