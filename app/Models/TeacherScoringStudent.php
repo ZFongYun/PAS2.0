@@ -13,4 +13,16 @@ class TeacherScoringStudent extends Model
     protected $fillable = [
         'meeting_id','raters_teacher_id','object_student_id','point','feedback'  //欄位
     ];
+
+    public function meeting(){
+        return $this->belongsTo('App\Models\Meeting','meeting_id');
+    }
+
+    public function raters_teacher(){
+        return $this->belongsTo('App\Models\Teacher','raters_teacher_id');
+    }
+
+    public function object_student(){
+        return $this->belongsTo('App\Models\Student','object_student_id');
+    }
 }

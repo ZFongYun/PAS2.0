@@ -13,4 +13,12 @@ class Teacher extends Model
     protected $fillable = [
         'account','password'  //欄位
     ];
+
+    public function teacher_scoring_student(){
+        return $this->hasMany('App\Models\TeacherScoringStudent');
+    }
+
+    public function teacher_scoring_team(){
+        return $this->hasMany('App\Models\TeacherScoringTeam');
+    }
 }

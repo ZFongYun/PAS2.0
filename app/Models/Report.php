@@ -13,4 +13,12 @@ class Report extends Model
     protected $fillable = [
         'meeting_id','team_id','file'  //欄位
     ];
+
+    public function meeting(){
+        return $this->belongsTo('App\Models\Meeting','meeting_id');
+    }
+
+    public function team(){
+        return $this->belongsTo('App\Models\Team','team_id');
+    }
 }

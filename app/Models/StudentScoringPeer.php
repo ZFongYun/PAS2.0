@@ -13,4 +13,16 @@ class StudentScoringPeer extends Model
     protected $fillable = [
         'meeting_id','raters_student_id','object_student_id','point','feedback'  //欄位
     ];
+
+    public function meeting(){
+        return $this->belongsTo('App\Models\Meeting','meeting_id');
+    }
+
+    public function raters_student(){
+        return $this->belongsTo('App\Models\Student','raters_student_id');
+    }
+
+    public function object_student(){
+        return $this->belongsTo('App\Models\Student','object_student_id');
+    }
 }

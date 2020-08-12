@@ -13,4 +13,12 @@ class TeamMember extends Model
     protected $fillable = [
         'student_id','team_id','role','position'  //欄位
     ];
+
+    public function student(){
+        return $this->belongsTo('App\Models\Student','student_id');
+    }
+
+    public function team(){
+        return $this->belongsTo('App\Models\Team','team_id');
+    }
 }

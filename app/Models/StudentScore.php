@@ -13,4 +13,12 @@ class StudentScore extends Model
     protected $fillable = [
         'student_id','meeting_id','score','bonus','total','count'  //欄位
     ];
+
+    public function student(){
+        return $this->belongsTo('App\Models\Student','student_id');
+    }
+
+    public function meeting(){
+        return $this->belongsTo('App\Models\Meeting','meeting_id');
+    }
 }

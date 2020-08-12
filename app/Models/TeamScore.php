@@ -13,4 +13,12 @@ class TeamScore extends Model
     protected $fillable = [
         'team_id','meeting_id','score','bonus','total','count'  //欄位
     ];
+
+    public function Team(){
+        return $this->belongsTo('App\Models\Team','team_id');
+    }
+
+    public function meeting(){
+        return $this->belongsTo('App\Models\Meeting','meeting_id');
+    }
 }
