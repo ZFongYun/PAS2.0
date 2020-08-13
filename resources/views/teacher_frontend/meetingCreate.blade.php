@@ -18,7 +18,9 @@
                                 <li><a href="#" class="dropdown-item">Separated link</a></li>
                             </ul>
                         </div>
-                        <h4 class="page-title">Starter Page</h4>
+                        <h4 class="page-title">新增會議</h4>
+
+                        <h5>注意！「*」為必填欄位</h5>
 
                     </div>
                 </div>
@@ -29,10 +31,6 @@
 
         </div> <!-- content -->
 
-        <footer class="footer">
-            2017 - 2019 c Flacto. <span class="d-none d-sm-inline-block">Design by <a href="http://coderthemes.com/" target="_blank" class="text-muted">Coderthemes</a></span>
-        </footer>
-
     </div>
 @endsection
-@section('title','首頁')
+@section('title','新增會議')
