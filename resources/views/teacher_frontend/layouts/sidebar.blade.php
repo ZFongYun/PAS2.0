@@ -7,7 +7,7 @@
             <ul>
 
                 <div class="col-md-6 col-6 center" style="text-align: center">
-                    <img src="assets/images/users/avatar-11.png" class="img-fluid d-block rounded-circle" alt="user">
+                    <img src="{{ URL::asset('assets/images/users/avatar-11.png') }}" class="img-fluid d-block rounded-circle" alt="user">
                     <p class="user-title">觀迎教師使用</p>
                 </div>
 
