@@ -28,3 +28,11 @@ Route::resource('prof','ProfIndexController',['only'=>[
 Route::resource('prof','ProfIndexController',['except'=>[
     'create','edit','show'
 ]]);
+
+Route::resource('meeting','MeetingController',['only'=>[
+    'index','create'
+]]);
+
+Route::resource('meeting','MeetingController',['except'=>[
+    'edit','show','store','update','destroy'
+]]);

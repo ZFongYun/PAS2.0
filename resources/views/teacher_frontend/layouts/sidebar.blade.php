@@ -14,11 +14,11 @@
                 <li class="text-muted menu-title"> 功能列表</li>
 
                 <li class="has_sub">
-                    <a href="{{action('ProfIndexController@index')}}" class="waves-effect"><i class="fa fa-home"></i> <span> 首頁 </span> </a>
+                    <a href="{{route('prof.index')}}" class="waves-effect"><i class="fa fa-home"></i> <span> 首頁 </span> </a>
                 </li>
 
                 <li class="has_sub">
-                    <a href="#" class="waves-effect"><i class="fa fa-cog"></i> <span> 會議管理 </span> </a>
+                    <a href="{{route('meeting.index')}}" class="waves-effect"><i class="fa fa-cog"></i> <span> 會議管理 </span> </a>
                 </li>
 
                 <li class="has_sub">

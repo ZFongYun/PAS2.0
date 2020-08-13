@@ -10,7 +10,7 @@
                     <div class="col-sm-12">
                         <div class="btn-group m-b-20">
                             <h4 class="page-title">會議公告</h4>
-                            <button class="btn btn-custom waves-effect waves-light m-l-10 button-font" data-toggle="modal" data-target="#myModal">新增</button>
+                            <button class="btn btn-primary waves-effect waves-light m-l-10 button-font" data-toggle="modal" data-target="#myModal">新增</button>
                         </div>
 
                         <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
