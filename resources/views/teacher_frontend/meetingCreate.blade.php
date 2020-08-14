@@ -24,7 +24,7 @@
                                         <div class="form-group row">
                                             <label for="content" class="col-sm-4 control-label form-title">會議摘要*</label>
                                             <div class="col-md-8">
-                                                <textarea id="content" name="content" class="form-control" maxlength="225" rows="2"></textarea>
+                                                <textarea id="content" name="content" class="form-control" maxlength="225" rows="2" required=""></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row">
