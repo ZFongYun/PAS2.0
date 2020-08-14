@@ -4694,3 +4694,38 @@ File: Responsive
   background-color: #57c5a5;
   color: #ffffff;
 }
+
+.star {
+  font-size: 15px;
+  font-weight: 200;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  line-height: 42px;
+  font-family: "Noto Sans TC", sans-serif;
+  color: #e96154;
+}
+
+.p-l-45 {
+  padding-left: 45px !important;
+}
+
+.little-title{
+  font-size: 18px;
+  font-weight: 200;
+  font-family: "Noto Sans TC", sans-serif;
+  width: auto;
+  border:1px; 
+  border-bottom-style: solid;
+  border-top-style: none;
+  border-left-style:none;
+  border-right-style:none;
+  border-color: #797979;
+  padding-bottom: 5px;
+}
+
+.form-title{
+  font-size: 16px;
+  font-weight: 200;
+  font-family: "Noto Sans TC", sans-serif;
+  border-color: #797979;
+}
