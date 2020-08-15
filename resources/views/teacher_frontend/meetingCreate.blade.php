@@ -106,7 +106,7 @@
                             <div class="col-sm-10">
                                 <p class="little-title">加分條件 *</p>
                                 <h5><b>評分組別</b></h5>
-                                <div class="col-sm-6 p-l-45">
+                                <div class="col-sm-10 p-l-45">
                                     <div class="form-group row">
                                         <label for="team_limit" class="col-sm-4 control-label form-title m-r-10">最多評分</label>
                                         <div class="form-group m-r-10">
@@ -123,7 +123,7 @@
                                     </div>
                                 </div>
                                 <h5><b>評分組員</b></h5>
-                                <div class="col-sm-6 p-l-45">
+                                <div class="col-sm-10 p-l-45">
                                     <div class="form-group row">
                                         <label for="member_limit" class="col-sm-4 control-label form-title m-r-10">最多評分</label>
                                         <div class="form-group m-r-10">
