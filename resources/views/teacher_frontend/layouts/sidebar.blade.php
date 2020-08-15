@@ -22,7 +22,7 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="#" class="waves-effect"><i class="fa fa-user"></i> <span> 成員名單 </span> </a>
+                    <a href="{{route('ImportStudent.index')}}" class="waves-effect"><i class="fa fa-user"></i> <span> 成員名單 </span> </a>
                 </li>
 
                 <li class="has_sub">
