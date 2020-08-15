@@ -17,8 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::get('/profIndex','ProfIndexController@index');
-
 Route::get('/login','ProfLoginController@index');
 
 Route::resource('prof','ProfIndexController',['only'=>[
@@ -35,4 +33,12 @@ Route::resource('meeting','MeetingController',['only'=>[
 
 Route::resource('meeting','MeetingController',['except'=>[
     'edit','show','store','update','destroy'
+]]);
+
+Route::resource('ImportStudent','ImportStudentController',['only'=>[
+    'index','store','destroy'
+]]);
+
+Route::resource('ImportStudent','ImportStudentController',['except'=>[
+    'edit','show','update','create'
 ]]);
