@@ -40,10 +40,6 @@ class ImportStudentController extends Controller
      */
     public function store(Request $request)
     {
-//        $password = $request->input('password');
-//        $student = new Student();
-//        $student->password = Hash::make($password);
-//        $student->save();
 
         $request->validate([
             'import_file' => 'required'

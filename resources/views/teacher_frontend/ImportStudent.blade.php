@@ -77,17 +77,9 @@
                                                     <label for="title" class="form-title">匯入檔案</label>
                                                     <input type="file" name="import_file" class="form-control">
                                                     <p>csv格式說明：<br>
-                                                    1. 檔案中的欄位以第一欄為班級, 第二欄為學號, 第三欄為學生姓名, 三欄之間以逗點(,)分隔。<br>
-                                                    2. 若匯入帳號已為此課程中的成員, 則不做處理;反之則加入為成員。</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="password" class="form-title">預設密碼</label>
-                                                    <input type="text" class="form-control" id="password" name="password" required="">
-                                                    <p>說明：在加入名單的同時,將會幫學生建立好帳號與密碼</p>
+                                                    1. 檔案中的欄位以第一欄為班級、第二欄為學號、第三欄為學生姓名、第四欄為預設密碼，欄位之間以逗點(,)分隔。<br>
+                                                    2. 若匯入帳號已為此課程中的成員，則不做處理；反之則加入為成員。</p>
+                                                    <p>預設密碼說明：在加入名單的同時，將會幫學生建立好帳號與密碼</p>
                                                 </div>
                                             </div>
                                         </div>
