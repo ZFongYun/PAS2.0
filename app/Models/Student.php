@@ -11,12 +11,8 @@ class Student extends Model
     protected $table = 'student';  //指定資料表
 
     protected $fillable = [
-        'student_ID','name','class','password'  //欄位
+        'student_ID','name','class','password','team_id','role','position'  //欄位
     ];
-
-    public function team_member(){
-        return $this->hasMany('App\Models\TeamMember');
-    }
 
     public function student_score(){
         return $this->hasMany('App\Models\StudentScore');
@@ -36,5 +32,9 @@ class Student extends Model
 
     public function student_scoring_team(){  //評分者
         return $this->hasMany('App\Models\StudentScoringTeam');
+    }
+
+    public function team(){
+        return $this->belongsTo('App\Models\Team','team_id');
     }
 }

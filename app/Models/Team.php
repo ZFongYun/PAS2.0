@@ -18,8 +18,8 @@ class Team extends Model
         return $this->hasMany('App\Models\Report');
     }
 
-    public function team_member(){
-        return $this->hasMany('App\Models\TeamMember');
+    public function student(){
+        return $this->hasMany('App\Models\Student');
     }
 
     public function team_score(){
