@@ -44,9 +44,9 @@ Route::resource('ImportStudent','ImportStudentController',['except'=>[
 ]]);
 
 Route::resource('GroupList','GroupListController',['only'=>[
-    'index','create'
+    'index','create','store'
 ]]);
 
 Route::resource('GroupList','GroupListController',['except'=>[
-    'edit','show','update','show','store'
+    'edit','show','update'
 ]]);
