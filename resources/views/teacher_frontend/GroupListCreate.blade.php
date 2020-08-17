@@ -16,7 +16,7 @@
                             {{ csrf_field() }}
                             <div class="col-lg-10">
                                     <div class="form-group row">
-                                        <label for="name" class="col-sm-1 control-label form-title" >組別名稱</label>
+                                        <label for="name" class="col-sm-2 control-label form-title" >組別名稱</label>
                                         <div class="col-md-5" >
                                             <input type="text" class="form-control" id="name" name="name" required="">
                                         </div>
