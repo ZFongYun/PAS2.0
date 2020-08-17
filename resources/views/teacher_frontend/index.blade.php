@@ -85,7 +85,7 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="modal-title mt-0" id="myModalLabel">新增公告</h4>
+                                                <h4 class="modal-title mt-0" id="myModalLabel">編輯公告</h4>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
