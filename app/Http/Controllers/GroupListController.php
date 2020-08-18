@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\Team;
 use Illuminate\Http\Request;
 
 class GroupListController extends Controller
@@ -36,7 +37,26 @@ class GroupListController extends Controller
      */
     public function store(Request $request)
     {
-        return 'hi';
+        $team_name = $request->input('name');
+        $team = new Team;
+        $team -> name = $team_name;
+        $team -> save();
+
+        $team_id = Team::where('name',$team_name)->value('id');
+
+        foreach($_POST['student'] as $studentid){
+            $role = $request->input('role'.$studentid);
+            $position = $request->input('position'.$studentid);
+
+            $student = Student::find($studentid);
+            $student -> role = $role;
+            $student -> position = $position;
+            $student -> team_id = $team_id;
+            $student -> save();
+        }
+
+
+
     }
 
     /**

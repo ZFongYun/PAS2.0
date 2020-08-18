@@ -12,7 +12,7 @@
                             <h4 class="page-title">新增組別</h4>
                         </div>
 
-                        <form method="post" id="update_form">
+                        <form method="post" action="{{route('GroupList.store')}}">
                             {{ csrf_field() }}
                             <div class="col-lg-10">
                                     <div class="form-group row">
@@ -38,7 +38,7 @@
                                         <tbody>
                                         @foreach($student as $row)
                                             <tr>
-                                                <td><input type='checkbox' name='student[]' id="{{$row['id']}}" data-id="{{$row['student_ID']}}" data-name="{{$row['name']}}" data-class="{{$row['class']}}" data-role="{{$row['role']}}" data-position="{{$row['position']}}" class="check_box"></td>
+                                                <td><input type='checkbox' name='student[]' value="{{$row['id']}}" id="{{$row['id']}}" data-id="{{$row['student_ID']}}" data-name="{{$row['name']}}" data-class="{{$row['class']}}" data-role="{{$row['role']}}" data-position="{{$row['position']}}" class="check_box"></td>
                                                 <td>{{$row['student_ID']}}</td>
                                                 <td>{{$row['name']}}</td>
                                                 <td>{{$row['class']}}</td>
@@ -82,16 +82,16 @@
                 var html = '';
                 if(this.checked)
                 {
-                    html = '<td><input type="checkbox" id="'+$(this).attr('id')+'" data-id="'+$(this).data('id')+'" data-name="'+$(this).data('name')+'" data-class="'+$(this).data('class')+'" data-role="'+$(this).data('role')+'" data-position="'+$(this).data('position')+'" class="check_box" checked /></td>';
+                    html = '<td><input type="checkbox" name="student[]" value="'+$(this).attr('id')+'" id="'+$(this).attr('id')+'" data-id="'+$(this).data('id')+'" data-name="'+$(this).data('name')+'" data-class="'+$(this).data('class')+'" data-role="'+$(this).data('role')+'" data-position="'+$(this).data('position')+'" class="check_box" checked /></td>';
                     html += '<td>'+$(this).data('id')+'</td>';
                     html += '<td>'+$(this).data('name')+'</td>';
                     html += '<td>'+$(this).data('class')+'</td>';
-                    html += '<td><select id="role" name="role"><option value="0">組長</option> <option value="1" selected>組員</option> </select></td>';
-                    html += '<td><select id="position" name="position"><option value="0">企劃</option><option value="1">程式</option><option value="1">美術</option> </select></td>';
+                    html += '<td><select id="role" name="role'+$(this).attr('id')+'"><option value="0">組長</option> <option value="1" selected>組員</option> </select></td>';
+                    html += '<td><select id="position" name="position'+$(this).attr('id')+'"><option value="0">企劃</option><option value="1">程式</option><option value="2">美術</option> </select></td>';
                 }
                 else
                 {
-                    html = '<td><input type="checkbox" id="'+$(this).attr('id')+'" data-id="'+$(this).data('id')+'" data-name="'+$(this).data('name')+'" data-class="'+$(this).data('class')+'" data-role="'+$(this).data('role')+'" data-position="'+$(this).data('position')+'" class="check_box" /></td>';
+                    html = '<td><input type="checkbox" name="student[]" value="'+$(this).attr('id')+'" id="'+$(this).attr('id')+'" data-id="'+$(this).data('id')+'" data-name="'+$(this).data('name')+'" data-class="'+$(this).data('class')+'" data-role="'+$(this).data('role')+'" data-position="'+$(this).data('position')+'" class="check_box" /></td>';
                     html += '<td>'+$(this).data('id')+'</td>';
                     html += '<td>'+$(this).data('name')+'</td>';
                     html += '<td>'+$(this).data('class')+'</td>';
@@ -102,24 +102,25 @@
                 // $('#gender_'+$(this).attr('id')+'').val($(this).data('gender'));
             });
 
-            $('#update_form').on('submit', function(event){
-                event.preventDefault();
-                if($('.check_box:checked').length > 0)
-                {
-                    $.ajax({
-                        url:'{{route('GroupList.store')}}',
-                        method:"POST",
-                        data:$(this).serialize(),
-                        success:function()
-                        {
-                            alert('Data Updated');
-                            // fetch_data();
+            {{--$('#update_form').on('submit', function(event){--}}
+            {{--    event.preventDefault();--}}
+            {{--    var formdata = $(this).serialize();--}}
+            {{--    if($('.check_box:checked').length > 0)--}}
+            {{--    {--}}
+            {{--        $.ajax({--}}
+            {{--            url:'{{route('GroupList.store')}}',--}}
+            {{--            method:"POST",--}}
+            {{--            data:formdata,--}}
+            {{--            success:function(data)--}}
+            {{--            {--}}
+            {{--                alert(data);--}}
+            {{--                // fetch_data();--}}
 
-                        }
-                    })
-                }
-                console.log($(this).serialize())
-            });
+            {{--            }--}}
+            {{--        })--}}
+            {{--    }--}}
+            {{--    console.log(formdata)--}}
+            {{--});--}}
         });
 
 
