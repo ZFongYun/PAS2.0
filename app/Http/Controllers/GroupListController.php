@@ -37,23 +37,38 @@ class GroupListController extends Controller
      */
     public function store(Request $request)
     {
-        $team_name = $request->input('name');
-        $team = new Team;
-        $team -> name = $team_name;
-        $team -> save();
+        if(isset($_POST['student'])){
+            $team_name = $request->input('name');
+            $team = new Team;
+            $team -> name = $team_name;
+//            $team -> save();
 
-        $team_id = Team::where('name',$team_name)->value('id');
+            $team_id = Team::where('name',$team_name)->value('id');
 
-        foreach($_POST['student'] as $studentid){
-            $role = $request->input('role'.$studentid);
-            $position = $request->input('position'.$studentid);
+            $leader = 0;
 
-            $student = Student::find($studentid);
-            $student -> role = $role;
-            $student -> position = $position;
-            $student -> team_id = $team_id;
-            $student -> save();
+            foreach($_POST['student'] as $studentId){
+                $role = $request->input('role'.$studentId);
+                $position = $request->input('position'.$studentId);
+
+                if($role == 0){
+                    $leader++;
+                    if ($leader >= 2){
+                        return back()->with('error','組長已重複，請重新選擇');
+                    }
+                }
+
+//                $student = Student::find($studentId);
+//                $student -> role = $role;
+//                $student -> position = $position;
+//                $student -> team_id = $team_id;
+//                $student -> save();
+            }
+            return redirect('GroupList');
+        }else{
+            return back()->with('warning','請選擇組員');
         }
+
 
 
 

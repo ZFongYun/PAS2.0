@@ -23,6 +23,21 @@
                                     </div>
 
                                 <p class="form-title">選擇組員</p>
+
+                                @if($messageWarning = Session::get('warning'))
+                                    <div class="alert alert-warning alert-block" style="color: #f0b360">
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                        {{ $messageWarning }}
+                                    </div>
+                                @endif
+
+                                @if($messageError = Session::get('error'))
+                                    <div class="alert alert-danger alert-block" style="color: #EE5959">
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                        {{ $messageError }}
+                                    </div>
+                                @endif
+
                                 <div class="table-responsive">
                                     <table class="table table-hover m-0">
                                         <thead>
@@ -102,25 +117,7 @@
                 // $('#gender_'+$(this).attr('id')+'').val($(this).data('gender'));
             });
 
-            {{--$('#update_form').on('submit', function(event){--}}
-            {{--    event.preventDefault();--}}
-            {{--    var formdata = $(this).serialize();--}}
-            {{--    if($('.check_box:checked').length > 0)--}}
-            {{--    {--}}
-            {{--        $.ajax({--}}
-            {{--            url:'{{route('GroupList.store')}}',--}}
-            {{--            method:"POST",--}}
-            {{--            data:formdata,--}}
-            {{--            success:function(data)--}}
-            {{--            {--}}
-            {{--                alert(data);--}}
-            {{--                // fetch_data();--}}
 
-            {{--            }--}}
-            {{--        })--}}
-            {{--    }--}}
-            {{--    console.log(formdata)--}}
-            {{--});--}}
         });
 
 
