@@ -13,6 +13,36 @@
                             <a href="{{route('GroupList.create')}}" class="btn btn-primary waves-effect m-l-15 waves-light m-b-5">新增組別</a>
                         </div>
 
+
+                        <div class="table-responsive">
+                            <table class="table table-hover m-0">
+                                <thead>
+                                <tr>
+                                    <th>組別名稱</th>
+                                    <th>組長</th>
+                                    <th>組員</th>
+                                    <th width="10%">加入成員</th>
+                                    <th width="10%">編輯</th>
+                                    <th width="10%">刪除</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>x</td>
+                                        <td>a</td>
+                                        <td>s</td>
+                                        <td><a href="#" class="btn btn-icon waves-effect waves-light btn-primary"><i class="fa fa-user-plus"></i></a></td>
+                                        <td><a href="#" class="btn btn-icon waves-effect waves-light btn-info"><i class="zmdi zmdi-edit"></i></a></td>
+{{--                                        <form action="{{route('GroupList.destroy',$row['id'])}}" method="post">--}}
+                                            <td><button type="submit" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="return(confirm('是否刪除此筆資料？'))"> <i class="fa fa-remove"></i> </button></td>
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+{{--                                        </form>--}}
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
 

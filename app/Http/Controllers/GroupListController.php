@@ -13,6 +13,7 @@ class GroupListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         return view('teacher_frontend.GroupList');
@@ -81,10 +82,6 @@ class GroupListController extends Controller
         }else{
             return back()->with('warning','請選擇組員');
         }
-
-
-
-
     }
 
     /**
