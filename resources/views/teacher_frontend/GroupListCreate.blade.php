@@ -31,6 +31,13 @@
                                     </div>
                                 @endif
 
+                                @if($messageRepeat = Session::get('repeat'))
+                                    <div class="alert alert-danger alert-block" style="color: #EE5959">
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                        {{ $messageRepeat }}
+                                    </div>
+                                @endif
+
                                 @if($messageError = Session::get('error'))
                                     <div class="alert alert-danger alert-block" style="color: #EE5959">
                                         <button type="button" class="close" data-dismiss="alert">×</button>

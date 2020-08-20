@@ -25,7 +25,7 @@ class GroupListController extends Controller
      */
     public function create()
     {
-        $student = Student::all()->toArray();
+        $student = Student::where('team_id',null)->get();
         return view('teacher_frontend.GroupListCreate',compact('student'));
     }
 
@@ -41,30 +41,43 @@ class GroupListController extends Controller
             $team_name = $request->input('name');
             $team = new Team;
             $team -> name = $team_name;
-//            $team -> save();
+            $team -> save();
 
             $team_id = Team::where('name',$team_name)->value('id');
 
             $leader = 0;
+            $member = 0;
 
             foreach($_POST['student'] as $studentId){
                 $role = $request->input('role'.$studentId);
-                $position = $request->input('position'.$studentId);
-
-                if($role == 0){
+                if($role==0){
                     $leader++;
-                    if ($leader >= 2){
-                        return back()->with('error','組長已重複，請重新選擇');
-                    }
+                }else{
+                    $member++;
                 }
-
-//                $student = Student::find($studentId);
-//                $student -> role = $role;
-//                $student -> position = $position;
-//                $student -> team_id = $team_id;
-//                $student -> save();
             }
-            return redirect('GroupList');
+            if($leader != 0){
+                if($leader >=2){
+                    // 組長重複
+                    return back()->with('error','組長已重複，請重新選擇');
+                }else{
+                    // 完成條件
+                    foreach($_POST['student'] as $studentId){
+                        $role = $request->input('role'.$studentId);
+                        $position = $request->input('position'.$studentId);
+
+                        $student = Student::find($studentId);
+                        $student -> role = $role;
+                        $student -> position = $position;
+                        $student -> team_id = $team_id;
+                        $student -> save();
+                    }
+                    return redirect('GroupList');
+                }
+            }else{
+                // 未選擇組長
+                return back()->with('repeat','請選擇組長');
+            }
         }else{
             return back()->with('warning','請選擇組員');
         }
