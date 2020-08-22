@@ -74,8 +74,6 @@ class GroupListController extends Controller
         if(isset($_POST['student'])){
             $team_name = $request->input('name');
             $team = new Team;
-            $team -> name = $team_name;
-            $team -> save();
 
             $team_id = Team::where('name',$team_name)->value('id');
 
@@ -99,6 +97,9 @@ class GroupListController extends Controller
                     foreach($_POST['student'] as $studentId){
                         $role = $request->input('role'.$studentId);
                         $position = $request->input('position'.$studentId);
+
+                        $team -> name = $team_name;
+                        $team -> save();
 
                         $student = Student::find($studentId);
                         $student -> role = $role;
