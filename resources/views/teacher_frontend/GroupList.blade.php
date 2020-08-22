@@ -13,6 +13,11 @@
                             <a href="{{route('GroupList.create')}}" class="btn btn-primary waves-effect m-l-15 waves-light m-b-5">新增組別</a>
                         </div>
 
+{{--                        @if(isset($arr_leader))--}}
+{{--                        <div>{{$arr_leader[0]}}</div>--}}
+{{--                        <div>{{$arr_leader[1]}}</div>--}}
+{{--                        @endif--}}
+
 
                         <div class="table-responsive">
                             <table class="table table-hover m-0">
@@ -27,10 +32,12 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @for($i=0; $i<$team_length; $i++)
+
                                     <tr>
-                                        <td>x</td>
-                                        <td>a</td>
-                                        <td>s</td>
+                                        <td>{{$arr_team[0][$i]['name']}}</td>
+                                        <td>{{$arr_leader[$i]}}</td>
+                                        <td>{{$arr_member[$i]}}</td>
                                         <td><a href="#" class="btn btn-icon waves-effect waves-light btn-primary"><i class="fa fa-user-plus"></i></a></td>
                                         <td><a href="#" class="btn btn-icon waves-effect waves-light btn-info"><i class="zmdi zmdi-edit"></i></a></td>
 {{--                                        <form action="{{route('GroupList.destroy',$row['id'])}}" method="post">--}}
@@ -39,6 +46,8 @@
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 {{--                                        </form>--}}
                                     </tr>
+
+                                @endfor
                                 </tbody>
                             </table>
                         </div>

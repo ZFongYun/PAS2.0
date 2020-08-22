@@ -16,7 +16,40 @@ class GroupListController extends Controller
 
     public function index()
     {
-        return view('teacher_frontend.GroupList');
+        $teamName = Team::all('name')->toArray();
+        $teamId = Team::all('id')->toArray();
+
+        $team_length = count($teamId);
+
+        $student = Student::whereHas('team',function ($q){
+            $q->where('team_id','1');
+        })->get('name');
+        $arr_leader = array();
+        $arr_member = array();
+        $arr_team = array($teamName);
+
+        foreach ($teamId as $id){
+            $student = Student::whereHas('team',function ($q) use ($id) {
+                $q->where('team_id',$id);
+            })->get(['name','role'])->toArray();
+            $student_length = count($student);
+            $leader = "";
+            $member = "";
+
+            for ($i = 0; $i < $student_length; $i++){
+                if ($student[$i]['role'] == 0){
+                    $leader = $leader." ".$student[$i]['name'];
+                }else if($student[$i]['role'] == 1){
+                    $member = $member." ".$student[$i]['name'];
+                }
+
+            }
+            array_push($arr_leader,$leader);
+            array_push($arr_member,$member);
+
+        }
+
+        return view('teacher_frontend.GroupList',compact('arr_team','arr_leader','arr_member','team_length'));
     }
 
     /**
