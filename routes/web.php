@@ -44,9 +44,14 @@ Route::resource('ImportStudent','ImportStudentController',['except'=>[
 ]]);
 
 Route::resource('GroupList','GroupListController',['only'=>[
-    'index','create','store'
+    'index','create','store','show'
 ]]);
 
 Route::resource('GroupList','GroupListController',['except'=>[
-    'edit','show','update'
+    'edit','update'
 ]]);
+
+Route::prefix('GroupList')->group(function (){
+    Route::get('plus','GroupListController@plus');
+    Route::post('destroy_member/{id}','GroupListController@destroy_member');
+});

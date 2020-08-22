@@ -27,6 +27,7 @@ class GroupListController extends Controller
         $arr_leader = array();
         $arr_member = array();
         $arr_team = array($teamName);
+        $arr_id = array($teamId);
 
         foreach ($teamId as $id){
             $student = Student::whereHas('team',function ($q) use ($id) {
@@ -49,7 +50,7 @@ class GroupListController extends Controller
 
         }
 
-        return view('teacher_frontend.GroupList',compact('arr_team','arr_leader','arr_member','team_length'));
+        return view('teacher_frontend.GroupList',compact('arr_id','arr_team','arr_leader','arr_member','team_length'));
     }
 
     /**
@@ -126,7 +127,13 @@ class GroupListController extends Controller
      */
     public function show($id)
     {
-        //
+        $team_name = Team::where('id',$id)->value('name');
+        $student = Student::whereHas('team',function ($q) use ($id) {
+            $q->where('team_id',$id);
+        })->get(['id','name','student_id','role','position'])->toArray();
+        $student_length = count($student);
+
+        return view('teacher_frontend.GroupListShow',compact('team_name','student_length','student'));
     }
 
     /**
@@ -161,5 +168,21 @@ class GroupListController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function plus()
+    {
+        return 'hi';
+    }
+
+    public function destroy_member($id)
+    {
+        $student = Student::find($id);
+        $student -> team_id = null;
+        $student -> role = null;
+        $student -> position = null;
+        $student -> save();
+
+        return back();
     }
 }
