@@ -38,7 +38,7 @@
                                         <td>{{$arr_leader[$i]}}</td>
                                         <td>{{$arr_member[$i]}}</td>
                                         <td><a href="{{action('GroupListController@plus')}}" class="btn btn-icon waves-effect waves-light btn-primary"><i class="fa fa-user-plus"></i></a></td>
-                                        <td><a href="#" class="btn btn-icon waves-effect waves-light btn-info"><i class="zmdi zmdi-edit"></i></a></td>
+                                        <td><a href="{{route('GroupList.edit',$arr_id[0][$i]['id'])}}" class="btn btn-icon waves-effect waves-light btn-info"><i class="zmdi zmdi-edit"></i></a></td>
 {{--                                        <form action="{{route('GroupList.destroy',$row['id'])}}" method="post">--}}
                                             <td><button type="submit" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="return(confirm('是否刪除此筆資料？'))"> <i class="fa fa-remove"></i> </button></td>
                                             <input type="hidden" name="_method" value="DELETE">

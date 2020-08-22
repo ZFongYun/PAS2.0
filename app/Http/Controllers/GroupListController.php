@@ -144,7 +144,13 @@ class GroupListController extends Controller
      */
     public function edit($id)
     {
-        //
+        $team_name = Team::where('id',$id)->value('name');
+        $student = Student::whereHas('team',function ($q) use ($id) {
+            $q->where('team_id',$id);
+        })->get(['id','name','student_id','role','position'])->toArray();
+        $student_length = count($student);
+
+        return view('teacher_frontend.GroupListEdit',compact('team_name','student_length','student'));
     }
 
     /**
@@ -156,7 +162,7 @@ class GroupListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**

@@ -44,11 +44,11 @@ Route::resource('ImportStudent','ImportStudentController',['except'=>[
 ]]);
 
 Route::resource('GroupList','GroupListController',['only'=>[
-    'index','create','store','show'
+    'index','create','store','show','edit','update'
 ]]);
 
 Route::resource('GroupList','GroupListController',['except'=>[
-    'edit','update'
+    'destroy'
 ]]);
 
 Route::prefix('GroupList')->group(function (){
