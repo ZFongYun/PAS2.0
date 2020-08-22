@@ -75,7 +75,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-10 m-t-30" align="center">
+                            <div class="col-lg-10 m-t-30" align="right">
                                 <button type="submit" class="btn btn-success waves-effect waves-light button-font">確認</button>
                             </div><!-- end col -->
                         </form>
