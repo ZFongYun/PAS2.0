@@ -144,12 +144,13 @@ class GroupListController extends Controller
     public function edit($id)
     {
         $team_name = Team::where('id',$id)->value('name');
+        $team_id = Team::where('id',$id)->value('id');
         $student = Student::whereHas('team',function ($q) use ($id) {
             $q->where('team_id',$id);
         })->get(['id','name','student_id','role','position'])->toArray();
         $student_length = count($student);
 
-        return view('teacher_frontend.GroupListEdit',compact('team_name','student_length','student'));
+        return view('teacher_frontend.GroupListEdit',compact('team_name','team_id','student_length','student'));
     }
 
     /**
@@ -161,6 +162,43 @@ class GroupListController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $leader = 0;
+        $member = 0;
+        foreach($_POST['hidden_id'] as $hiddenId){
+            $role = $request->input('role'.$hiddenId);
+            if($role==0){
+                $leader++;
+            }else{
+                $member++;
+            }
+        }
+        if($leader != 0){
+            if($leader >=2){
+                // 組長重複
+                return back()->with('error','組長已重複，請重新選擇');
+            }else{
+                // 完成條件 更新資料
+                foreach($_POST['hidden_id'] as $hiddenId){
+                    $role = $request->input('role'.$hiddenId);
+                    $position = $request->input('position'.$hiddenId);
+                    $team_name = $request->input('name');
+
+                    $team = Team::find($id);
+                    $team -> name = $team_name;
+                    $team -> save();
+
+                    $student = Student::find($hiddenId);
+                    $student -> role = $role;
+                    $student -> position = $position;
+                    $student -> save();
+                }
+                return redirect('GroupList');
+            }
+        }else{
+            // 未選擇組長
+            return back()->with('repeat','請選擇組長');
+        }
+
 
     }
 
