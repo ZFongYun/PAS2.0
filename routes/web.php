@@ -43,13 +43,7 @@ Route::resource('ImportStudent','ImportStudentController',['except'=>[
     'edit','show','update','create'
 ]]);
 
-Route::resource('GroupList','GroupListController',['only'=>[
-    'index','create','store','show','edit','update'
-]]);
-
-Route::resource('GroupList','GroupListController',['except'=>[
-    'destroy'
-]]);
+Route::resource('GroupList','GroupListController');
 
 Route::prefix('GroupList')->group(function (){
     Route::get('plus','GroupListController@plus');
