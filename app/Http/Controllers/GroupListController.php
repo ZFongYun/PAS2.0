@@ -181,9 +181,11 @@ class GroupListController extends Controller
 
     }
 
-    public function plus()
+    public function plus_page($id)
     {
-        return 'hi';
+        $team_name = Team::where('id',$id)->value('name');
+        $student = Student::where('team_id',null)->get();
+        return view('teacher_frontend.GroupListPlus',compact('team_name','student'));
     }
 
     public function destroy_member($id)
