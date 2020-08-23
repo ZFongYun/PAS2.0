@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GroupListController extends Controller
 {
@@ -21,9 +22,9 @@ class GroupListController extends Controller
 
         $team_length = count($teamId);
 
-        $student = Student::whereHas('team',function ($q){
-            $q->where('team_id','1');
-        })->get('name');
+//        $student = Student::whereHas('team',function ($q){
+//            $q->where('team_id','1');
+//        })->get('name');
         $arr_leader = array();
         $arr_member = array();
         $arr_team = array($teamName);
@@ -73,11 +74,6 @@ class GroupListController extends Controller
     public function store(Request $request)
     {
         if(isset($_POST['student'])){
-            $team_name = $request->input('name');
-            $team = new Team;
-
-            $team_id = Team::where('name',$team_name)->value('id');
-
             $leader = 0;
             $member = 0;
 
@@ -99,8 +95,11 @@ class GroupListController extends Controller
                         $role = $request->input('role'.$studentId);
                         $position = $request->input('position'.$studentId);
 
+                        $team_name = $request->input('name');
+                        $team = new Team;
                         $team -> name = $team_name;
                         $team -> save();
+                        $team_id = Team::where('name',$team_name)->value('id');
 
                         $student = Student::find($studentId);
                         $student -> role = $role;
@@ -173,7 +172,13 @@ class GroupListController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $student = DB::table('student')->where('team_id', '=', $id)
+            ->update(array('team_id' => null,'role' => null,'position' => null));
+
+        $team = Team::find($id);
+        $team -> delete();
+        return redirect('GroupList');
+
     }
 
     public function plus()
