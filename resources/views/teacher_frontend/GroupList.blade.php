@@ -13,12 +13,6 @@
                             <a href="{{route('GroupList.create')}}" class="btn btn-primary waves-effect m-l-15 waves-light m-b-5">新增組別</a>
                         </div>
 
-{{--                        @if(isset($arr_leader))--}}
-{{--                        <div>{{$arr_leader[0]}}</div>--}}
-{{--                        <div>{{$arr_leader[1]}}</div>--}}
-{{--                        @endif--}}
-
-
                         <div class="table-responsive">
                             <table class="table table-hover m-0">
                                 <thead>
@@ -53,8 +47,6 @@
 
                     </div>
                 </div>
-
-
 
             </div> <!-- container-fluid -->
 
