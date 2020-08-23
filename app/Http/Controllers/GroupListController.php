@@ -91,15 +91,15 @@ class GroupListController extends Controller
                     return back()->with('error','組長已重複，請重新選擇');
                 }else{
                     // 完成條件
+                    $team_name = $request->input('name');
+                    $team = new Team;
+                    $team -> name = $team_name;
+                    $team -> save();
+                    $team_id = Team::where('name',$team_name)->value('id');
+
                     foreach($_POST['student'] as $studentId){
                         $role = $request->input('role'.$studentId);
                         $position = $request->input('position'.$studentId);
-
-                        $team_name = $request->input('name');
-                        $team = new Team;
-                        $team -> name = $team_name;
-                        $team -> save();
-                        $team_id = Team::where('name',$team_name)->value('id');
 
                         $student = Student::find($studentId);
                         $student -> role = $role;
