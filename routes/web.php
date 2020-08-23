@@ -47,6 +47,6 @@ Route::resource('GroupList','GroupListController');
 
 Route::prefix('GroupList')->group(function (){
     Route::get('plus/{id}','GroupListController@plus_page');
-    Route::post('plus','GroupListController@plus');
+    Route::post('plus/{id}','GroupListController@plus');
     Route::post('destroy_member/{id}','GroupListController@destroy_member');
 });

@@ -13,7 +13,7 @@
                         </div>
                         <h4>{{$team_name}}</h4>
 
-                        <form method="post" action="{{route('GroupList.store')}}">
+                        <form method="post" action="{{action('GroupListController@plus',$team_id)}}">
                             {{ csrf_field() }}
                             <div class="col-lg-10">
                                 <p class="form-title">選擇組員</p>
@@ -47,7 +47,6 @@
                                             <th>學號</th>
                                             <th>姓名</th>
                                             <th>班級</th>
-                                            <th>角色</th>
                                             <th>職位</th>
                                         </tr>
                                         </thead>
@@ -59,8 +58,6 @@
                                                 <td>{{$row['name']}}</td>
                                                 <td>{{$row['class']}}</td>
                                                 <td></td>
-                                                <td></td>
-
                                             </tr>
 
                                         @endforeach
@@ -100,7 +97,7 @@
                     html += '<td>'+$(this).data('id')+'</td>';
                     html += '<td>'+$(this).data('name')+'</td>';
                     html += '<td>'+$(this).data('class')+'</td>';
-                    html += '<td><select id="role" name="role'+$(this).attr('id')+'"><option value="0">組長</option> <option value="1" selected>組員</option> </select></td>';
+                    // html += '<td><select id="role" name="role'+$(this).attr('id')+'"><option value="0">組長</option> <option value="1" selected>組員</option> </select></td>';
                     html += '<td><select id="position" name="position'+$(this).attr('id')+'"><option value="0">企劃</option><option value="1">程式</option><option value="2">美術</option> </select></td>';
                 }
                 else
@@ -109,7 +106,7 @@
                     html += '<td>'+$(this).data('id')+'</td>';
                     html += '<td>'+$(this).data('name')+'</td>';
                     html += '<td>'+$(this).data('class')+'</td>';
-                    html += '<td>'+'</td>';
+                    // html += '<td>'+'</td>';
                     html += '<td>'+'</td>';
                 }
                 $(this).closest('tr').html(html);

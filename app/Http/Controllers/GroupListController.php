@@ -222,8 +222,26 @@ class GroupListController extends Controller
     public function plus_page($id)
     {
         $team_name = Team::where('id',$id)->value('name');
+        $team_id = Team::where('id',$id)->value('id');
         $student = Student::where('team_id',null)->get();
-        return view('teacher_frontend.GroupListPlus',compact('team_name','student'));
+        return view('teacher_frontend.GroupListPlus',compact('team_name','team_id','student'));
+    }
+
+    public function plus(Request $request,$id)
+    {
+        if(isset($_POST['student'])){
+            foreach($_POST['student'] as $studentId){
+                $position = $request->input('position'.$studentId);
+                $student = Student::find($studentId);
+                $student -> position = $position;
+                $student -> role = '1';  //固定組員
+                $student -> team_id = $id;
+                $student -> save();
+            }
+            return redirect('GroupList');
+        }else{
+            return back()->with('warning','請選擇組員');
+        }
     }
 
     public function destroy_member($id)
