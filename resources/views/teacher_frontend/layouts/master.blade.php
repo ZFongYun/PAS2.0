@@ -77,15 +77,15 @@
 
     // Time Picker
     jQuery('#timepicker-start').timepicker({
-        defaultTIme : false
+        showMeridian : false
     });
 
     jQuery('#timepicker-end').timepicker({
-        defaultTIme : false
+        showMeridian : false
     });
 
     jQuery('#timepicker-upload').timepicker({
-        defaultTIme : false
+        showMeridian : false
     });
 </script>
 
