@@ -4706,7 +4706,11 @@ File: Responsive
 }
 
 .p-l-45 {
-  padding-left: 45px !important;
+  padding-left: 45px;
+}
+
+.p-r-10 {
+  padding-right: 20px;
 }
 
 .little-title{
