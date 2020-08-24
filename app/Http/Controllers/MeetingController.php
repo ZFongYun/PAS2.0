@@ -15,7 +15,8 @@ class MeetingController extends Controller
      */
     public function index()
     {
-        return view('teacher_frontend.meeting');
+        $meeting = Meeting::all()->toArray();
+        return view('teacher_frontend.meeting',compact('meeting'));
     }
 
     /**
