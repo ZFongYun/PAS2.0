@@ -4733,3 +4733,13 @@ File: Responsive
   font-family: "Noto Sans TC", sans-serif;
   border-color: #797979;
 }
+
+.info-title{
+  font-size: 18px;
+  font-weight: 200;
+  font-family: "Noto Sans TC", sans-serif;
+}
+
+.p-l-20 {
+  padding-left: 20px;
+}
