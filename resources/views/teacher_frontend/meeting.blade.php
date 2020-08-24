@@ -17,12 +17,12 @@
                             <table class="table table-hover m-0">
                                 <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>會議名稱</th>
-                                    <th>會議日期</th>
-                                    <th>進入評分</th>
-                                    <th>詳情</th>
-                                    <th>刪除</th>
+                                    <th width="5%">#</th>
+                                    <th width="25%">會議名稱</th>
+                                    <th width="25%">會議日期</th>
+                                    <th width="10%">進入評分</th>
+                                    <th width="10%">詳情</th>
+                                    <th width="10%">刪除</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -32,7 +32,7 @@
                                         <td>{{$row['name']}}</td>
                                         <td>{{$row['meeting_date']."　".date("H : i",strtotime($row['meeting_start'])). " ~ " .date("H : i",strtotime($row['meeting_end']))}}</td>
                                         <td><a href="#" class="btn btn-icon waves-effect waves-light btn-primary"><i class="fa fa-sign-in"></i></a></td>
-                                        <td><a href="#" class="btn btn-icon waves-effect waves-light btn-info"><i class="zmdi zmdi-info-outline"></i></a></td>
+                                        <td><a href="{{route('meeting.show',$row['id'])}}" class="btn btn-icon waves-effect waves-light btn-info"><i class="zmdi zmdi-info-outline"></i></a></td>
                                         <form action="{{route('meeting.destroy',$row['id'])}}" method="post">
                                             <td><button type="submit" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="return(confirm('是否刪除此筆資料？'))"> <i class="fa fa-remove"></i> </button></td>
                                             <input type="hidden" name="_method" value="DELETE">

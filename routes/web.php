@@ -27,13 +27,7 @@ Route::resource('prof','ProfIndexController',['except'=>[
     'create','edit','show'
 ]]);
 
-Route::resource('meeting','MeetingController',['only'=>[
-    'index','create','store','destroy'
-]]);
-
-Route::resource('meeting','MeetingController',['except'=>[
-    'edit','show','update'
-]]);
+Route::resource('meeting','MeetingController');
 
 Route::resource('ImportStudent','ImportStudentController',['only'=>[
     'index','store','destroy'

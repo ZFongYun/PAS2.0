@@ -87,7 +87,8 @@ class MeetingController extends Controller
      */
     public function show($id)
     {
-        //
+        $meeting = Meeting::find($id) -> toArray();
+        return view('teacher_frontend.meetingShow',compact('meeting'));
     }
 
     /**
@@ -98,7 +99,7 @@ class MeetingController extends Controller
      */
     public function edit($id)
     {
-        //
+        return $id;
     }
 
     /**
