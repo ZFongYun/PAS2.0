@@ -56,7 +56,7 @@ class MeetingController extends Controller
         $team_length = count($team);
         $team_chk = "";
         for($i=0; $i<$team_length; $i++){
-            $team_chk = $team[$i].','.$team_chk;
+            $team_chk = $team_chk . ' ' . $team[$i];
         }
 
         $meeting = new Meeting;
