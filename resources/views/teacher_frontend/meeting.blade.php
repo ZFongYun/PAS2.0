@@ -33,11 +33,11 @@
                                         <td>{{$row['meeting_date']."　".date("H : i",strtotime($row['meeting_start'])). " ~ " .date("H : i",strtotime($row['meeting_end']))}}</td>
                                         <td><a href="#" class="btn btn-icon waves-effect waves-light btn-primary"><i class="fa fa-sign-in"></i></a></td>
                                         <td><a href="#" class="btn btn-icon waves-effect waves-light btn-info"><i class="fa fa-edit (alias)"></i></a></td>
-{{--                                        <form action="{{route('ImportStudent.destroy',$row['id'])}}" method="post">--}}
-{{--                                            <td><button type="submit" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="return(confirm('是否刪除此筆資料？'))"> <i class="fa fa-remove"></i> </button></td>--}}
-{{--                                            <input type="hidden" name="_method" value="DELETE">--}}
-{{--                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
-{{--                                        </form>--}}
+                                        <form action="{{route('meeting.destroy',$row['id'])}}" method="post">
+                                            <td><button type="submit" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="return(confirm('是否刪除此筆資料？'))"> <i class="fa fa-remove"></i> </button></td>
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        </form>
                                     </tr>
                                 @endforeach
                                 </tbody>
