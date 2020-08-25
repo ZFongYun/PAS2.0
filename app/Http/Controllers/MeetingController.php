@@ -100,14 +100,12 @@ class MeetingController extends Controller
     public function edit($id)
     {
         $meeting = Meeting::find($id) -> toArray();
-//        $team = Team::all('id','name')->toArray();
         $team_chk = $meeting['report_team'];
         $team_chk_arr = explode(" ",$team_chk);
         $team_chk_length = count($team_chk_arr);
         $team = Team::all()->toArray();
-        $team_length = count($team);
 
-        return view('teacher_frontend.meetingEdit',compact('meeting','team','team_length','team_chk_arr','team_chk_length'));
+        return view('teacher_frontend.meetingEdit',compact('meeting','team','team_chk_arr','team_chk_length'));
     }
 
     /**
