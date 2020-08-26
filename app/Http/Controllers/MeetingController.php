@@ -171,4 +171,27 @@ class MeetingController extends Controller
         $meeting -> delete();
         return redirect('meeting');
     }
+
+    public function scoring_page($id)
+    {
+        $meeting = Meeting::find($id)->toArray();
+        $report_team = $meeting['report_team'];
+        $report_team_arr = explode(' ',$report_team);
+//        for ($i=1; $i<count($report_team_arr); $i++){
+//            $team = Team::where('name',$report_team_arr[$i])->get(['id','name']);
+//
+//        }
+
+        return view('teacher_frontend.meetingScoring',compact('meeting','report_team','report_team_arr'));
+    }
+
+    public function score(Request $request){
+        if($_SERVER['REQUEST_METHOD'] == "POST"){
+            $team = $request->input('team');
+
+
+            return $team;
+
+        }
+    }
 }

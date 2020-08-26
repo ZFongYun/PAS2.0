@@ -44,3 +44,8 @@ Route::prefix('GroupList')->group(function (){
     Route::post('plus/{id}','GroupListController@plus');
     Route::post('destroy_member/{id}','GroupListController@destroy_member');
 });
+
+Route::prefix('meeting')->group(function (){
+    Route::get('score/{id}','MeetingController@scoring_page');
+    Route::post('score','MeetingController@score');
+});
