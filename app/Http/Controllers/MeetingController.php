@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meeting;
+use App\Models\TeacherScoringTeam;
 use App\Models\Team;
 use Illuminate\Http\Request;
 
@@ -177,20 +178,29 @@ class MeetingController extends Controller
         $meeting = Meeting::find($id)->toArray();
         $report_team = $meeting['report_team'];
         $report_team_arr = explode(' ',$report_team);
-//        for ($i=1; $i<count($report_team_arr); $i++){
-//            $team = Team::where('name',$report_team_arr[$i])->get(['id','name']);
-//
-//        }
-
         return view('teacher_frontend.meetingScoring',compact('meeting','report_team','report_team_arr'));
     }
 
     public function score(Request $request){
         if($_SERVER['REQUEST_METHOD'] == "POST"){
             $team = $request->input('team');
+            $meeting_id = $request->input('meeting_id');
+            $team_id = Team::where('name',$team)->value('id');
+            $team_name = Team::where('name',$team)->value('name');
+
+            $scoring_team = TeacherScoringTeam::whereHas('meeting',function ($q) use ($meeting_id,$team_id){
+                $q->where('meeting_id',$meeting_id)->where('object_team_id',$team_id);
+            })->get(['point'])->toArray();
+
+            if ($scoring_team == null){
+                $arr_f = [$team_name,'0'];
+                echo json_encode($arr_f);
+            }else{
+                $arr = [$team_name,$scoring_team];
+                echo json_encode($arr);
+            }
 
 
-            return $team;
 
         }
     }

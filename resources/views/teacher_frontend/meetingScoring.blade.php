@@ -22,6 +22,39 @@
                                 </select>
                             </div>
                         </div>
+                        <p class="form-title">◎ 評分組別</p>
+                        <div class="table-responsive">
+                            <table class="table table-hover m-0" id="team_table" style="display: none">
+                                <thead>
+                                <tr>
+                                    <th>組別名稱</th>
+                                    <th>分數</th>
+                                    <th width="10%"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+{{--                        <p class="form-title p-t-10">◎ 評分組員</p>--}}
+{{--                        <div class="table-responsive">--}}
+{{--                            <table class="table table-hover m-0" id="member_table" style="display: none">--}}
+{{--                                <thead>--}}
+{{--                                <tr>--}}
+{{--                                    <th>學號</th>--}}
+{{--                                    <th>姓名</th>--}}
+{{--                                    <th>職務</th>--}}
+{{--                                    <th>分數</th>--}}
+{{--                                    <th width="10%"></th>--}}
+{{--                                </tr>--}}
+{{--                                </thead>--}}
+{{--                                <tbody>--}}
+
+{{--                                </tbody>--}}
+{{--                            </table>--}}
+{{--                        </div>--}}
 
 
                     </div>
@@ -40,15 +73,34 @@
             });
 
             var check=function(){
+                var html = '';
                 var team = $("#team").val();
                 $(document).ready(function() {
                     $.ajax({
                         type:'POST',
                         url:'/meeting/score',
-                        data:{team:team, _token: '{{csrf_token()}}'},
+                        data:{team:team,
+                            meeting_id: {{$meeting['id']}},
+                            _token: '{{csrf_token()}}'},
+                        dataType: 'json',
                         success: function(data) {
-                            alert(data);
-                            console.log(data);
+                            if (data[1][0] == '0'){
+                                alert('no scoring')
+                                $('#team_table').show();
+                                html += '<tr>';
+                                html += '<td>'+data[0]+'</td>';
+                                html += '<td>'+data[1][0]+'</td>';
+                                html += '<td>'+'</td></tr>';
+                                $('tbody').html(html);
+                            }else {
+                                alert('has scoring')
+                                $('#team_table').show();
+                                html += '<tr>';
+                                html += '<td>'+data[0]+'</td>';
+                                html += '<td>'+data[1][0]['point']+'</td>';
+                                html += '<td>'+'</td></tr>';
+                                $('tbody').html(html);
+                            }
                         },
                         error: function (){
                             alert('加入失敗');
