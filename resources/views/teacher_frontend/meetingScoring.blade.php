@@ -38,24 +38,23 @@
                             </table>
                         </div>
 
-{{--                        <p class="form-title p-t-10">◎ 評分組員</p>--}}
-{{--                        <div class="table-responsive">--}}
-{{--                            <table class="table table-hover m-0" id="member_table" style="display: none">--}}
-{{--                                <thead>--}}
-{{--                                <tr>--}}
-{{--                                    <th>學號</th>--}}
-{{--                                    <th>姓名</th>--}}
-{{--                                    <th>職務</th>--}}
-{{--                                    <th>分數</th>--}}
-{{--                                    <th width="10%"></th>--}}
-{{--                                </tr>--}}
-{{--                                </thead>--}}
-{{--                                <tbody>--}}
+                        <p class="form-title p-t-10">◎ 評分組員</p>
+                        <div class="table-responsive">
+                            <table class="table table-hover m-0" id="member_table" style="display: none">
+                                <thead>
+                                <tr>
+                                    <th>學號</th>
+                                    <th>姓名</th>
+                                    <th>職務</th>
+                                    <th>分數</th>
+                                    <th width="10%"></th>
+                                </tr>
+                                </thead>
+                                <tbody id="stu">
 
-{{--                                </tbody>--}}
-{{--                            </table>--}}
-{{--                        </div>--}}
-
+                                </tbody>
+                            </table>
+                        </div>
 
                     </div>
                 </div>
@@ -74,6 +73,7 @@
 
             var check=function(){
                 var html = '';
+                var html_stu = '';
                 var team = $("#team").val();
                 $(document).ready(function() {
                     $.ajax({
@@ -84,22 +84,55 @@
                             _token: '{{csrf_token()}}'},
                         dataType: 'json',
                         success: function(data) {
-                            if (data[1][0] == '0'){
-                                alert('no scoring')
+                            console.log(data)
+                            if (data[1] == '0'){
                                 $('#team_table').show();
                                 html += '<tr>';
                                 html += '<td>'+data[0]+'</td>';
-                                html += '<td>'+data[1][0]+'</td>';
+                                html += '<td>'+data[1]+'</td>';
                                 html += '<td>'+'</td></tr>';
                                 $('tbody').html(html);
                             }else {
-                                alert('has scoring')
                                 $('#team_table').show();
                                 html += '<tr>';
                                 html += '<td>'+data[0]+'</td>';
                                 html += '<td>'+data[1][0]['point']+'</td>';
                                 html += '<td>'+'</td></tr>';
                                 $('tbody').html(html);
+                            }
+                            $('#member_table').show();
+                            for (var i=3; i<data.length; i+=2){
+                                console.log(i)
+                                if (data[i] == '0'){
+                                    html_stu += '<tr>';
+                                    html_stu += '<td>'+data[i-1]['student_id']+'</td>';
+                                    html_stu += '<td>'+data[i-1]['name']+'</td>';
+                                    if (data[i-1]['position'] == 0){
+                                        html_stu += '<td>'+'企劃'+'</td>'
+                                    }else if(data[i-1]['position'] == 1){
+                                        html_stu += '<td>'+'程式'+'</td>'
+                                    }else{
+                                        html_stu += '<td>'+'美術'+'</td>'
+                                    }
+                                    html_stu += '<td>'+data[i]+'</td>';
+                                    html_stu += '<td>'+'</td></tr>';
+                                    $('#stu').html(html_stu);
+
+                                }else {
+                                    html_stu += '<tr>';
+                                    html_stu += '<td>'+data[i-1]['student_id']+'</td>';
+                                    html_stu += '<td>'+data[i-1]['name']+'</td>';
+                                    if (data[i-1]['position'] == 0){
+                                        html_stu += '<td>'+'企劃'+'</td>'
+                                    }else if(data[i-1]['position'] == 1){
+                                        html_stu += '<td>'+'程式'+'</td>'
+                                    }else{
+                                        html_stu += '<td>'+'美術'+'</td>'
+                                    }
+                                    html_stu += '<td>'+data[i][0]['point']+'</td>';
+                                    html_stu += '<td>'+'</td></tr>';
+                                    $('#stu').html(html_stu);
+                                }
                             }
                         },
                         error: function (){
