@@ -77,7 +77,8 @@ class MeetingController extends Controller
         $meeting -> member_bonus = $member_bonus;
         $meeting -> save();
 
-        return view('teacher_frontend.meeting');
+        $meeting = Meeting::all()->toArray();
+        return view('teacher_frontend.meeting',compact('meeting'));
     }
 
     /**
