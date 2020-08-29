@@ -187,44 +187,42 @@ class MeetingController extends Controller
     public function score(Request $request){
         if($_SERVER['REQUEST_METHOD'] == "POST"){
             $team = $request->input('team');
-            $meeting_id = $request->input('meeting_id');
-            $team_id = Team::where('name',$team)->value('id');
-            $team_name = Team::where('name',$team)->value('name');
-            $stu_id = Student::where('team_id',$team_id)->get(['id','student_id','name','position'])->toArray();
-            $stu_id_length = count($stu_id);
-            $arr = [];
-
-            $scoring_team = TeacherScoringTeam::whereHas('meeting',function ($q) use ($meeting_id,$team_id){
-                $q->where('meeting_id',$meeting_id)->where('object_team_id',$team_id);
-            })->get(['point'])->toArray();
-
-            if ($scoring_team == null){
-//                $arr_f = [$team_name,'0'];
-                array_push($arr,$team_name,'0');
-
+            if ($team == '請選擇'){
+                $arr = ['null'];
+                echo json_encode($arr);
             }else{
-//                $arr = [$team_name,$scoring_team];
-                array_push($arr,$team_name,$scoring_team);
-            }
+                $meeting_id = $request->input('meeting_id');
+                $team_id = Team::where('name',$team)->value('id');
+                $team_name = Team::where('name',$team)->value('name');
+                $stu_id = Student::where('team_id',$team_id)->get(['id','student_id','name','position'])->toArray();
+                $stu_id_length = count($stu_id);
+                $arr = [];
 
-
-            for ($i=0; $i<$stu_id_length; $i++){
-                $scoring_student = TeacherScoringStudent::wherehas('meeting',function ($q)use($meeting_id,$stu_id,$i){
-                    $q->where('meeting_id',$meeting_id)->where('object_student_id',$stu_id[$i]['id']);
-
+                $scoring_team = TeacherScoringTeam::whereHas('meeting',function ($q) use ($meeting_id,$team_id){
+                    $q->where('meeting_id',$meeting_id)->where('object_team_id',$team_id);
                 })->get(['point'])->toArray();
-                if ($scoring_student == null){
-                    array_push($arr,$stu_id[$i],'0');
+
+                if ($scoring_team == null){
+                    array_push($arr,$team_name,'0');
+
+                }else{
+                    array_push($arr,$team_name,$scoring_team);
                 }
-                else{
-                    array_push($arr,$stu_id[$i],$scoring_student);
+
+                for ($i=0; $i<$stu_id_length; $i++){
+                    $scoring_student = TeacherScoringStudent::wherehas('meeting',function ($q)use($meeting_id,$stu_id,$i){
+                        $q->where('meeting_id',$meeting_id)->where('object_student_id',$stu_id[$i]['id']);
+
+                    })->get(['point'])->toArray();
+                    if ($scoring_student == null){
+                        array_push($arr,$stu_id[$i],'0');
+                    }
+                    else{
+                        array_push($arr,$stu_id[$i],$scoring_student);
+                    }
                 }
+                echo json_encode($arr);
             }
-
-            echo json_encode($arr);
-
-
-
         }
     }
 }

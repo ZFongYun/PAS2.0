@@ -22,7 +22,7 @@
                                 </select>
                             </div>
                         </div>
-                        <p class="form-title">◎ 評分組別</p>
+                        <p class="form-title" id="team_title" style="display: none">◎ 評分組別</p>
                         <div class="table-responsive">
                             <table class="table table-hover m-0" id="team_table" style="display: none">
                                 <thead>
@@ -38,7 +38,7 @@
                             </table>
                         </div>
 
-                        <p class="form-title p-t-10">◎ 評分組員</p>
+                        <p class="form-title p-t-10" id="member_title" style="display: none">◎ 評分組員</p>
                         <div class="table-responsive">
                             <table class="table table-hover m-0" id="member_table" style="display: none">
                                 <thead>
@@ -84,56 +84,67 @@
                             _token: '{{csrf_token()}}'},
                         dataType: 'json',
                         success: function(data) {
-                            console.log(data)
-                            if (data[1] == '0'){
-                                $('#team_table').show();
-                                html += '<tr>';
-                                html += '<td>'+data[0]+'</td>';
-                                html += '<td>'+data[1]+'</td>';
-                                html += '<td>'+'</td></tr>';
-                                $('tbody').html(html);
+                            if (data == 'null'){
+                                $('#team_table').hide();
+                                $('#team_title').hide();
+                                $('#member_table').hide();
+                                $('#member_title').hide();
+                                html = '';
+                                html_stu = '';
                             }else {
-                                $('#team_table').show();
-                                html += '<tr>';
-                                html += '<td>'+data[0]+'</td>';
-                                html += '<td>'+data[1][0]['point']+'</td>';
-                                html += '<td>'+'</td></tr>';
-                                $('tbody').html(html);
-                            }
-                            $('#member_table').show();
-                            for (var i=3; i<data.length; i+=2){
-                                console.log(i)
-                                if (data[i] == '0'){
-                                    html_stu += '<tr>';
-                                    html_stu += '<td>'+data[i-1]['student_id']+'</td>';
-                                    html_stu += '<td>'+data[i-1]['name']+'</td>';
-                                    if (data[i-1]['position'] == 0){
-                                        html_stu += '<td>'+'企劃'+'</td>'
-                                    }else if(data[i-1]['position'] == 1){
-                                        html_stu += '<td>'+'程式'+'</td>'
-                                    }else{
-                                        html_stu += '<td>'+'美術'+'</td>'
-                                    }
-                                    html_stu += '<td>'+data[i]+'</td>';
-                                    html_stu += '<td>'+'</td></tr>';
-                                    $('#stu').html(html_stu);
-
+                                if (data[1] == '0'){
+                                    $('#team_table').show();
+                                    $('#team_title').show();
+                                    html += '<tr>';
+                                    html += '<td>'+data[0]+'</td>';
+                                    html += '<td>'+data[1]+'</td>';
+                                    html += '<td>'+'</td></tr>';
+                                    $('tbody').html(html);
                                 }else {
-                                    html_stu += '<tr>';
-                                    html_stu += '<td>'+data[i-1]['student_id']+'</td>';
-                                    html_stu += '<td>'+data[i-1]['name']+'</td>';
-                                    if (data[i-1]['position'] == 0){
-                                        html_stu += '<td>'+'企劃'+'</td>'
-                                    }else if(data[i-1]['position'] == 1){
-                                        html_stu += '<td>'+'程式'+'</td>'
-                                    }else{
-                                        html_stu += '<td>'+'美術'+'</td>'
+                                    $('#team_table').show();
+                                    $('#team_title').show();
+                                    html += '<tr>';
+                                    html += '<td>'+data[0]+'</td>';
+                                    html += '<td>'+data[1][0]['point']+'</td>';
+                                    html += '<td>'+'</td></tr>';
+                                    $('tbody').html(html);
+                                }
+                                $('#member_table').show();
+                                $('#member_title').show();
+                                for (var i=3; i<data.length; i+=2){
+                                    if (data[i] == '0'){
+                                        html_stu += '<tr>';
+                                        html_stu += '<td>'+data[i-1]['student_id']+'</td>';
+                                        html_stu += '<td>'+data[i-1]['name']+'</td>';
+                                        if (data[i-1]['position'] == 0){
+                                            html_stu += '<td>'+'企劃'+'</td>'
+                                        }else if(data[i-1]['position'] == 1){
+                                            html_stu += '<td>'+'程式'+'</td>'
+                                        }else{
+                                            html_stu += '<td>'+'美術'+'</td>'
+                                        }
+                                        html_stu += '<td>'+data[i]+'</td>';
+                                        html_stu += '<td>'+'</td></tr>';
+                                        $('#stu').html(html_stu);
+
+                                    }else {
+                                        html_stu += '<tr>';
+                                        html_stu += '<td>'+data[i-1]['student_id']+'</td>';
+                                        html_stu += '<td>'+data[i-1]['name']+'</td>';
+                                        if (data[i-1]['position'] == 0){
+                                            html_stu += '<td>'+'企劃'+'</td>'
+                                        }else if(data[i-1]['position'] == 1){
+                                            html_stu += '<td>'+'程式'+'</td>'
+                                        }else{
+                                            html_stu += '<td>'+'美術'+'</td>'
+                                        }
+                                        html_stu += '<td>'+data[i][0]['point']+'</td>';
+                                        html_stu += '<td>'+'</td></tr>';
+                                        $('#stu').html(html_stu);
                                     }
-                                    html_stu += '<td>'+data[i][0]['point']+'</td>';
-                                    html_stu += '<td>'+'</td></tr>';
-                                    $('#stu').html(html_stu);
                                 }
                             }
+
                         },
                         error: function (){
                             alert('加入失敗');
