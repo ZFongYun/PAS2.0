@@ -59,7 +59,51 @@
                     </div>
                 </div>
 
-
+                <!-- 評分Modal -->
+                <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title mt-0" id="myModalLabel">進行評分</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="title" class="control-label">得分</label>
+                                            <select name="score" id="score" class="form-control">
+                                                <option value="100">100</option>
+                                                <option value="90">90</option>
+                                                <option value="80">80</option>
+                                                <option value="70">70</option>
+                                                <option value="60">60</option>
+                                                <option value="50">50</option>
+                                                <option value="40">40</option>
+                                                <option value="30">30</option>
+                                                <option value="20">20</option>
+                                                <option value="10">10</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group no-margin">
+                                            <label for="feedback" class="control-label">回饋</label>
+                                            <textarea class="form-control autogrow" id="feedback" name="feedback" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success waves-effect waves-light">送出</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
 
             </div> <!-- container-fluid -->
 
@@ -124,7 +168,7 @@
                                             html_stu += '<td>'+'美術'+'</td>'
                                         }
                                         html_stu += '<td>'+data[i]+'</td>';
-                                        html_stu += '<td>'+'</td></tr>';
+                                        html_stu += '<td>'+'<button class="btn btn-primary waves-effect waves-light m-l-10 button-font" data-toggle="modal" data-target="#myModal">評分</button>'+'</td></tr>';
                                         $('#stu').html(html_stu);
 
                                     }else {
