@@ -48,4 +48,6 @@ Route::prefix('GroupList')->group(function (){
 Route::prefix('meeting')->group(function (){
     Route::get('score/{id}','MeetingController@scoring_page');
     Route::post('score','MeetingController@score');
+    Route::post('scoring_team','MeetingController@scoring_team');
+    Route::post('edit_team','MeetingController@edit_team');
 });

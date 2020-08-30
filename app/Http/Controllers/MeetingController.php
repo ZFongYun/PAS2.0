@@ -200,7 +200,7 @@ class MeetingController extends Controller
 
                 $scoring_team = TeacherScoringTeam::whereHas('meeting',function ($q) use ($meeting_id,$team_id){
                     $q->where('meeting_id',$meeting_id)->where('object_team_id',$team_id);
-                })->get(['point'])->toArray();
+                })->get(['point','feedback'])->toArray();
 
                 if ($scoring_team == null){
                     array_push($arr,$team_name,'0');
@@ -224,5 +224,39 @@ class MeetingController extends Controller
                 echo json_encode($arr);
             }
         }
+    }
+    public function scoring_team(Request $request){
+        $meeting_id = $request->input('meeting_id');
+        $team_name = $request->input('team');
+        $team_id = Team::where('name',$team_name)->value('id');
+        $score = $request->input('score');
+        $feedback = $request->input('feedback');
+
+        $teacher_scoring_team = new TeacherScoringTeam;
+        $teacher_scoring_team->meeting_id = $meeting_id;
+        $teacher_scoring_team->raters_teacher_id = '1';
+        $teacher_scoring_team->object_team_id = $team_id;
+        $teacher_scoring_team->point = $score;
+        $teacher_scoring_team->feedback = $feedback;
+        $teacher_scoring_team->save();
+
+        $arr = ['完成評分'];
+        echo json_encode($arr);
+    }
+
+    public function edit_team(Request $request){
+        $meeting_id = $request->input('meeting_id');
+        $team_name = $request->input('team');
+        $team_id = Team::where('name',$team_name)->value('id');
+        $score = $request->input('score');
+        $feedback = $request->input('feedback');
+
+        $teacher_scoring_team = TeacherScoringTeam::where('meeting_id',$meeting_id)->where('object_team_id',$team_id)->first();
+        $teacher_scoring_team->point = $score;
+        $teacher_scoring_team->feedback = $feedback;
+        $teacher_scoring_team->save();
+
+        $arr = ['完成編輯'];
+        echo json_encode($arr);
     }
 }

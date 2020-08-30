@@ -59,8 +59,8 @@
                     </div>
                 </div>
 
-                <!-- 評分Modal -->
-                <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <!-- 評分組別Modal -->
+                <div id="ScoringTeamModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -74,7 +74,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="title" class="control-label">得分</label>
-                                            <select name="score" id="score" class="form-control">
+                                            <select name="score_team" id="score_team" class="form-control">
                                                 <option value="100">100</option>
                                                 <option value="90">90</option>
                                                 <option value="80">80</option>
@@ -92,14 +92,60 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group no-margin">
-                                            <label for="feedback" class="control-label">回饋</label>
-                                            <textarea class="form-control autogrow" id="feedback" name="feedback" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                                            <label for="feedback_team" class="control-label">回饋</label>
+                                            <textarea class="form-control autogrow" id="feedback_team" name="feedback_team" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-success waves-effect waves-light">送出</button>
+                                <button type="submit" class="btn btn-success waves-effect waves-light"  id="team_send">送出</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+                <!-- 編輯組別Modal -->
+                <div id="EditTeamModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title mt-0" id="myModalLabel">編輯評分</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="title" class="control-label">得分</label>
+                                            <select name="edit_score_team" id="edit_score_team" class="form-control">
+                                                <option value="100">100</option>
+                                                <option value="90">90</option>
+                                                <option value="80">80</option>
+                                                <option value="70">70</option>
+                                                <option value="60">60</option>
+                                                <option value="50">50</option>
+                                                <option value="40">40</option>
+                                                <option value="30">30</option>
+                                                <option value="20">20</option>
+                                                <option value="10">10</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group no-margin">
+                                            <label for="edit_feedback_team" class="control-label">回饋</label>
+                                            <textarea class="form-control autogrow" id="edit_feedback_team" name="edit_feedback_team" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success waves-effect waves-light"  id="team_edit">送出</button>
                             </div>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
@@ -142,7 +188,7 @@
                                     html += '<tr>';
                                     html += '<td>'+data[0]+'</td>';
                                     html += '<td>'+data[1]+'</td>';
-                                    html += '<td>'+'</td></tr>';
+                                    html += '<td>'+'<button class="btn btn-primary waves-effect waves-light m-l-10 button-font" data-toggle="modal" data-target="#ScoringTeamModal">評分</button>'+'</td></tr>';
                                     $('tbody').html(html);
                                 }else {
                                     $('#team_table').show();
@@ -150,7 +196,7 @@
                                     html += '<tr>';
                                     html += '<td>'+data[0]+'</td>';
                                     html += '<td>'+data[1][0]['point']+'</td>';
-                                    html += '<td>'+'</td></tr>';
+                                    html += '<td><button class="edit_team_modal btn btn-warning waves-effect waves-light m-l-10 button-font" id="edit_team_modal" data-toggle="modal" data-target="#EditTeamModal" data-feedback="'+data[1][0]['feedback']+'" data-point="'+data[1][0]['point']+'" data-team="'+data[0]+'">編輯</button>'+'</td></tr>';
                                     $('tbody').html(html);
                                 }
                                 $('#member_table').show();
@@ -168,7 +214,7 @@
                                             html_stu += '<td>'+'美術'+'</td>'
                                         }
                                         html_stu += '<td>'+data[i]+'</td>';
-                                        html_stu += '<td>'+'<button class="btn btn-primary waves-effect waves-light m-l-10 button-font" data-toggle="modal" data-target="#myModal">評分</button>'+'</td></tr>';
+                                        html_stu += '<td>'+'</td></tr>';
                                         $('#stu').html(html_stu);
 
                                     }else {
@@ -196,6 +242,66 @@
                     })
                 });
             }
+
+            $('#team_send').click(function () {
+                //評分組別
+                var score = $("#score_team").val();
+                var feedback = $("#feedback_team").val();
+                var team = $("#team").val();
+                $(document).ready(function() {
+                    $.ajax({
+                        type:'POST',
+                        url:'/meeting/scoring_team',
+                        data:{team:team,
+                            score:score,
+                            feedback:feedback,
+                            meeting_id: {{$meeting['id']}},
+                            _token: '{{csrf_token()}}'},
+                        dataType: 'json',
+                        success: function(data) {
+                            alert(data)
+                            $('#ScoringTeamModal').modal('hide')
+                            check()
+                        },
+                        error: function (){
+                            alert('評分失敗')
+                        }
+
+                    });
+                });
+            });
+
+            $(document).on('click', '.edit_team_modal', function() {
+                //開啟編輯組別modal
+                $('#edit_feedback_team').val($(this).data('feedback'));
+                $('#edit_score_team').val($(this).data('point'));
+            });
+
+            $('#team_edit').click(function () {
+                //編輯組別
+                var score = $("#edit_score_team").val();
+                var feedback = $("#edit_feedback_team").val();
+                var team = $("#team").val();
+                $(document).ready(function() {
+                    $.ajax({
+                        type:'POST',
+                        url:'/meeting/edit_team',
+                        data:{team:team,
+                            score:score,
+                            feedback:feedback,
+                            meeting_id: {{$meeting['id']}},
+                            _token: '{{csrf_token()}}'},
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#EditTeamModal').modal('hide')
+                            check()
+                        },
+                        error: function (){
+                            alert('編輯失敗')
+                        }
+                    });
+                });
+            });
         </script>
 @endsection
 @section('title','會議評分')
