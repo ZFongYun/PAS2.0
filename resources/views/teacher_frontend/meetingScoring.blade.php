@@ -166,7 +166,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="title" class="control-label">得分</label>
-                                            <select name="score_team" id="score_team" class="form-control">
+                                            <select name="score_stu" id="score_stu" class="form-control">
                                                 <option value="100">100</option>
                                                 <option value="90">90</option>
                                                 <option value="80">80</option>
@@ -184,14 +184,62 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group no-margin">
-                                            <label for="feedback_team" class="control-label">回饋</label>
-                                            <textarea class="form-control autogrow" id="feedback_team" name="feedback_team" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                                            <label for="feedback_stu" class="control-label">回饋</label>
+                                            <textarea class="form-control autogrow" id="feedback_stu" name="feedback_stu" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                                            <input type="hidden" name="score_stu_id" id="score_stu_id">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-success waves-effect waves-light"  id="stu_send">送出</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+                <!-- 編輯組員Modal -->
+                <div id="EditStuModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title mt-0" id="myModalLabel">編輯評分</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="title" class="control-label">得分</label>
+                                            <select name="edit_score_stu" id="edit_score_stu" class="form-control">
+                                                <option value="100">100</option>
+                                                <option value="90">90</option>
+                                                <option value="80">80</option>
+                                                <option value="70">70</option>
+                                                <option value="60">60</option>
+                                                <option value="50">50</option>
+                                                <option value="40">40</option>
+                                                <option value="30">30</option>
+                                                <option value="20">20</option>
+                                                <option value="10">10</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group no-margin">
+                                            <label for="edit_feedback_stu" class="control-label">回饋</label>
+                                            <textarea class="form-control autogrow" id="edit_feedback_stu" name="edit_feedback_stu" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                                            <input type="hidden" name="edit_stu_id" id="edit_stu_id">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success waves-effect waves-light"  id="stu_edit">送出</button>
                             </div>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
@@ -228,7 +276,6 @@
                                 html = '';
                                 html_stu = '';
                             }else {
-                                console.log(data)
                                 if (data[1] == '0'){
                                     $('#team_table').show();
                                     $('#team_title').show();
@@ -261,11 +308,8 @@
                                             html_stu += '<td>'+'美術'+'</td>'
                                         }
                                         html_stu += '<td>'+data[i]+'</td>';
-                                        html_stu += '<td>'+'<button class="score_stu btn btn-primary waves-effect waves-light m-l-10 button-font" data-toggle="modal" data-target="#ScoringStudentModal" data-sid="'+data[i-1]['student_id']+'">評分</button>'+'</td></tr>';
+                                        html_stu += '<td>'+'<button class="score_stu_modal btn btn-primary waves-effect waves-light m-l-10 button-font" data-toggle="modal" data-target="#ScoringStudentModal" data-sid="'+data[i-1]['id']+'">評分</button>'+'</td></tr>';
                                         $('#stu').html(html_stu);
-                                        console.log($('.score_stu').data('sid'))
-
-
                                     }else {
                                         html_stu += '<tr>';
                                         html_stu += '<td>'+data[i-1]['student_id']+'</td>';
@@ -278,7 +322,7 @@
                                             html_stu += '<td>'+'美術'+'</td>'
                                         }
                                         html_stu += '<td>'+data[i][0]['point']+'</td>';
-                                        html_stu += '<td>'+'</td></tr>';
+                                        html_stu += '<td><button class="edit_stu_modal btn btn-warning waves-effect waves-light m-l-10 button-font" data-toggle="modal" data-target="#EditStuModal" data-sid="'+data[i-1]['id']+'" data-point="'+data[i][0]['point']+'" data-feedback="'+data[i][0]['feedback']+'">編輯</button>'+'</td></tr>';
                                         $('#stu').html(html_stu);
                                     }
                                 }
@@ -321,7 +365,7 @@
             });
 
             $(document).on('click', '.edit_team_modal', function() {
-                //開啟編輯組別modal
+                //開啟編輯組別modal, 輸入編輯前的值
                 $('#edit_feedback_team').val($(this).data('feedback'));
                 $('#edit_score_team').val($(this).data('point'));
             });
@@ -342,6 +386,7 @@
                             _token: '{{csrf_token()}}'},
                         dataType: 'json',
                         success: function(data) {
+                            alert(data)
                             $('#EditTeamModal').modal('hide')
                             check()
                         },
@@ -352,34 +397,72 @@
                 });
             });
 
-            $('#stu_send').click(function () {
-                //評分組別
-                console.log($('.score_stu').data('sid'))
-                // var score = $("#score_team").val();
-                // var feedback = $("#feedback_team").val();
-                // var team = $("#team").val();
-                {{--$(document).ready(function() {--}}
-                {{--    $.ajax({--}}
-                {{--        type:'POST',--}}
-                {{--        url:'/meeting/scoring_team',--}}
-                {{--        data:{team:team,--}}
-                {{--            score:score,--}}
-                {{--            feedback:feedback,--}}
-                {{--            meeting_id: {{$meeting['id']}},--}}
-                {{--            _token: '{{csrf_token()}}'},--}}
-                {{--        dataType: 'json',--}}
-                {{--        success: function(data) {--}}
-                {{--            alert(data)--}}
-                {{--            $('#ScoringTeamModal').modal('hide')--}}
-                {{--            check()--}}
-                {{--        },--}}
-                {{--        error: function (){--}}
-                {{--            alert('評分失敗')--}}
-                {{--        }--}}
-
-                {{--    });--}}
-                {{--});--}}
+            $(document).on('click', '.score_stu_modal', function() {
+                //開啟編輯組別modal
+                $('#score_stu_id').val($(this).data('sid'));
             });
+
+            $('#stu_send').click(function () {
+                //評分組員
+                var score = $("#score_stu").val();
+                var feedback = $("#feedback_stu").val();
+                var id = $('#score_stu_id').val();
+                $(document).ready(function() {
+                    $.ajax({
+                        type:'POST',
+                        url:'/meeting/scoring_stu',
+                        data:{id:id,
+                            score:score,
+                            feedback:feedback,
+                            meeting_id: {{$meeting['id']}},
+                            _token: '{{csrf_token()}}'},
+                        dataType: 'json',
+                        success: function(data) {
+                            alert(data)
+                            $('#ScoringStudentModal').modal('hide')
+                            check()
+                        },
+                        error: function (){
+                            alert('評分失敗')
+                        }
+                    });
+                });
+            });
+
+            $(document).on('click', '.edit_stu_modal', function() {
+                //開啟編輯組員modal, 輸入編輯前的值
+                $('#edit_score_stu').val($(this).data('point'));
+                $('#edit_feedback_stu').val($(this).data('feedback'));
+                $('#edit_stu_id').val($(this).data('sid'));
+            });
+
+            $('#stu_edit').click(function () {
+                //編輯組員
+                var score = $("#edit_score_stu").val();
+                var feedback = $("#edit_feedback_stu").val();
+                var id = $('#edit_stu_id').val();
+                $(document).ready(function() {
+                    $.ajax({
+                        type:'POST',
+                        url:'/meeting/edit_stu',
+                        data:{id:id,
+                            score:score,
+                            feedback:feedback,
+                            meeting_id: {{$meeting['id']}},
+                            _token: '{{csrf_token()}}'},
+                        dataType: 'json',
+                        success: function(data) {
+                            alert(data)
+                            $('#EditStuModal').modal('hide')
+                            check()
+                        },
+                        error: function (){
+                            alert('編輯失敗')
+                        }
+                    });
+                });
+            });
+
         </script>
 @endsection
 @section('title','會議評分')

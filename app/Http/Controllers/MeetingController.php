@@ -213,7 +213,7 @@ class MeetingController extends Controller
                     $scoring_student = TeacherScoringStudent::wherehas('meeting',function ($q)use($meeting_id,$stu_id,$i){
                         $q->where('meeting_id',$meeting_id)->where('object_student_id',$stu_id[$i]['id']);
 
-                    })->get(['point'])->toArray();
+                    })->get(['point','feedback'])->toArray();
                     if ($scoring_student == null){
                         array_push($arr,$stu_id[$i],'0');
                     }
@@ -257,6 +257,40 @@ class MeetingController extends Controller
         $teacher_scoring_team->save();
 
         $arr = ['完成編輯'];
+        echo json_encode($arr);
+    }
+
+    public function scoring_stu(Request $request){
+        $meeting_id = $request->input('meeting_id');
+        $id = $request->input('id');
+        $score = $request->input('score');
+        $feedback = $request->input('feedback');
+
+        $teacher_scoring_student = new TeacherScoringStudent;
+        $teacher_scoring_student->meeting_id = $meeting_id;
+        $teacher_scoring_student->raters_teacher_id = '1';
+        $teacher_scoring_student->object_student_id = $id;
+        $teacher_scoring_student->point = $score;
+        $teacher_scoring_student->feedback = $feedback;
+        $teacher_scoring_student->save();
+
+        $arr = ['完成評分'];
+        echo json_encode($arr);
+    }
+
+    public function edit_stu(Request $request){
+        $meeting_id = $request->input('meeting_id');
+        $id = $request->input('id');
+        $score = $request->input('score');
+        $feedback = $request->input('feedback');
+
+        $teacher_scoring_student = TeacherScoringStudent::where('meeting_id',$meeting_id)->where('object_student_id',$id)->first();
+        $teacher_scoring_student->point = $score;
+        $teacher_scoring_student->feedback = $feedback;
+        $teacher_scoring_student->save();
+
+        $arr = ['完成編輯'];
+
         echo json_encode($arr);
     }
 }
