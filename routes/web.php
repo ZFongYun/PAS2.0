@@ -17,7 +17,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login','ProfLoginController@index');
+//Route::get('/login','ProfLoginController@index');
+
+Route::prefix('ProLogin')->group(function (){
+    Route::get('/','ProfLoginController@index');
+    Route::post('/login','ProfLoginController@login');
+    Route::get('/logout','ProfLoginController@logout');
+});
+
 
 Route::resource('prof','ProfIndexController',['only'=>[
     'index','store','update','destroy'

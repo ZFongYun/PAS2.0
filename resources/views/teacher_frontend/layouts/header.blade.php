@@ -12,9 +12,8 @@
                 </div>
 
                 <div class="float-right">
-                    <a class="logout" href="#"><i class="fa fa-sign-out"></i><span> 登出 </span></a>
+                    <a class="logout" href="{{action('ProfLoginController@logout')}}"><i class="fa fa-sign-out"></i><span> 登出 </span></a>
                 </div>
-
 
             </div>
             <!--/.nav-collapse -->

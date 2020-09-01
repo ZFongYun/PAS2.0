@@ -31,19 +31,30 @@
             <h4 class="text-uppercase font-bold">登入</h4>
         </div>
         <div class="p-2">
-            <form class="form-horizontal m-t-10" action="#">
-
+            <form class="form-horizontal m-t-10" action="{{action('ProfLoginController@login')}}" method="post">
+                {{ csrf_field() }}
                 <div class="form-group ">
                     <div class="col-12">
-                        <input class="form-control" type="text" required="" placeholder="帳號">
+                        <input class="form-control" type="text" required="" name="account" placeholder="帳號">
                     </div>
                 </div>
+
+                @if($messageWaining = Session::get('warning'))
+                    <label style="color: crimson;font-size: 10px">{{$messageWaining}}</label>
+                @endif
 
                 <div class="form-group">
                     <div class="col-12">
-                        <input class="form-control" type="password" required="" placeholder="密碼">
+                        <input class="form-control" type="password" required="" name="password" placeholder="密碼">
                     </div>
                 </div>
+
+                @if($messageWaining = Session::get('warning'))
+                    <label style="color: crimson;font-size: 10px">{{$messageWaining}}</label>
+                @endif
+                @if($messageError = Session::get('error'))
+                    <label style="color: crimson;font-size: 10px">{{$messageError}}</label>
+                @endif
 
                 <div class="form-group text-center m-t-30">
                     <div class="col-12">
