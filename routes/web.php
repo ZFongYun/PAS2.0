@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 //Route::get('/login','ProfLoginController@index');
 
@@ -59,4 +59,10 @@ Route::prefix('meeting')->group(function (){
     Route::post('edit_team','MeetingController@edit_team');
     Route::post('scoring_stu','MeetingController@scoring_stu');
     Route::post('edit_stu','MeetingController@edit_stu');
+});
+
+Route::prefix('StuLogin')->group(function (){
+    Route::get('/','StuLoginController@index');
+    Route::post('/login','StuLoginController@login');
+//    Route::get('/logout','ProfLoginController@logout');
 });
