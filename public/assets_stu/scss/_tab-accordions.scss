@@ -1,0 +1,149 @@
+
+
+/* Tabs */
+.tab-content {
+  padding: 20px;
+  border: 2px solid darken($lightdark,5%);
+  border-top: none;
+  background: $white
+}
+.nav.nav-tabs {
+  border-bottom: 2px solid darken($lightdark,5%);
+  .nav-item {
+    margin-bottom: -2px;
+    .nav-link{
+      padding: 12px 18px;
+      color: $dark;
+      font-weight: 600;
+      border: 2px solid transparent;
+      &.active, &:focus, &:hover {
+        border: 2px solid darken($lightdark,5%);
+        border-bottom-color: transparent;
+        background-color: $white; 
+      }
+    }
+  }
+}
+
+.nav-tabs.nav-justified>.active>a, .nav-tabs.nav-justified>.active>a:focus, .nav-tabs.nav-justified>.active>a:hover {
+  border: 2px solid darken($lightdark,5%);
+}
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+    background-color: $lightdark;
+    border-color: darken($lightdark,5%);
+}
+
+.tabs-vertical-env {
+  .tab-content {
+    margin-bottom: 0px;
+  }
+}
+
+.nav-pills > .active > a > .badge {
+  color: $custom;
+}
+
+/* Panel tabs */
+.panel-tabs {
+  .nav-pills {
+    .nav-item {
+      .nav-link{
+        background-color: transparent !important;
+        font-weight: 600;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        color: $white !important;
+        padding: 9px 15px;
+      }
+    }
+    .nav-item{
+      .nav-link.active{
+        background-color: $white !important;
+        color: $dark !important;
+      }
+    }
+  }
+  .tab-content {
+    padding: 0px;
+    border: none;
+  }
+}
+
+/* Card tabs */
+.card-tabs {
+  .nav-pills {
+    .nav-item {
+      .nav-link{
+        padding: 8px 14px;
+        font-size: 13px;
+        background-color: transparent !important;
+        font-weight: 600;
+        color: $dark !important;
+      }
+    }
+    .nav-item {
+      .nav-link.active {
+        background-color: $custom !important;
+        color: $white !important;
+      }
+    }
+  }
+  .tab-content {
+    padding: 0px;
+    border: none;
+  }
+}
+
+/* accordion */
+
+.card-box {
+  .card {
+    .card-header {
+      border-color: $lightdark;
+      a[data-toggle=collapse].collapsed {
+        &:before {
+          content: '\f055';
+        }
+      }
+      .accordion-toggle.collapsed {
+        &:before {
+          content: '\f055';
+        }
+      }
+      a[data-toggle=collapse] {
+        display: block;
+        &:before {
+          content: '\f056';
+          display: block;
+          float: right;
+          font-family: 'FontAwesome';
+          font-size: 14px;
+          text-align: right;
+          width: 25px;
+        }
+      }
+      .accordion-toggle {
+        display: block;
+        &:before {
+          content: '\f0d8';
+          display: block;
+          float: right;
+          font-family: 'FontAwesome';
+          font-size: 14px;
+          text-align: right;
+          width: 25px;
+        }
+      }
+    }
+    .card-header + .card-collapse {
+      .card-body {
+        border: 1px solid $lightdark;
+        border-top: none;
+      }
+    }
+  }
+  .card-header {
+    padding: 12px 26px;
+  }
+}
+

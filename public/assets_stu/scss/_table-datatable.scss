@@ -1,0 +1,66 @@
+
+
+/* Data tables */
+#datatable {
+  td {
+    font-weight: normal;
+  }
+}
+.paginate_button {
+  display: inline-block !important;
+}
+
+div.dataTables_paginate {
+  ul.pagination {
+    margin-top: 30px !important;
+  }
+}
+
+div.dataTables_info {
+  padding-top: 38px !important;
+}
+
+.dt-buttons {
+  float: left;
+}
+div#datatable-buttons_info {
+  float: left;
+}
+
+.dataTables_wrapper{
+  .dataTables_length{
+    select{
+      width: 75px !important;
+    }
+  }
+  .form-control{
+    padding: 4px 12px;
+    height: 30px;
+    width: auto;
+  }
+}
+
+
+/* Responsive data table */
+table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before,
+table.dataTable.dtr-inline.collapsed>tbody>tr>th:first-child:before{
+    box-shadow: 0 0 3px fade($dark,20%);
+    background-color: $primary;
+}
+table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before,
+table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th:first-child:before {
+  background-color: $danger;
+}
+/* Fixed table */
+.fixedHeader-floating {
+  top: 62px !important;
+}
+
+/* Key Table */
+table.dataTable th.focus, table.dataTable td.focus {
+  outline: 3px solid $custom !important;
+  outline-offset: -1px
+}
+div.DTS tbody tr.even {
+  background-color: $lightdark;
+}

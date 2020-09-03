@@ -1,0 +1,26 @@
+
+
+/* Form wizard */
+.navtab-wizard {
+  li:first-of-type {
+    a{
+      border-left: none !important;
+
+      &:hover,&:focus,&:active {
+        border-left: none !important;
+      }
+    }
+  }
+  li:last-of-type {
+    a{
+      border-right: none !important;
+
+      &:hover,&:focus,&:active {
+        border-right: none !important;
+      }
+    }
+  }
+}
+.wizard.pager .disabled > a {
+  opacity: 0.5;
+}

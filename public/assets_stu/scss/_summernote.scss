@@ -1,0 +1,32 @@
+
+
+/* Summernote */
+.note-editor {
+  .btn {
+    background-color: transparent !important;
+    border-color: transparent;
+  }
+}
+.note-editor.note-frame {
+  border: 1px solid $light;
+  position: relative;
+}
+.note-editor .note-toolbar {
+  background-color: $lightdark;
+  border-bottom: 1px solid $light;
+  margin: 0;
+}
+.note-editor .note-statusbar {
+  border-top: none !important;
+  .note-resizebar {
+    height: 15px;
+    padding-top: 3px;
+  }
+}
+
+.note-popover .popover .popover-content {
+  padding: 5px 0 10px 5px;
+}
+.note-toolbar {
+  padding: 5px 0 10px 5px;
+}
