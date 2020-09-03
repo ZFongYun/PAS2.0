@@ -1113,7 +1113,7 @@ body.fixed-left .side-menu.left {
   display: block;
   padding: 12px 20px;
   margin: 4px 0px;
-  font-size: 15px;
+  font-size: 16px;
   border-left: 3px solid transparent;
 }
 
@@ -1228,7 +1228,7 @@ body.fixed-left .side-menu.left {
   margin-left: 180px;
 }
 
-#wrapper.enlarged .menu-title, #wrapper.enlarged .menu-arrow {
+#wrapper.enlarged .menu-title, #wrapper.enlarged .user-title, #wrapper.enlarged .menu-arrow {
   display: none !important;
 }
 
@@ -4673,3 +4673,10 @@ File: Responsive
   }
 }
 /*# sourceMappingURL=style.css.map */
+
+.user-title{
+  color: #ffffff;
+  font-size: 16px;
+  margin-top: 15px;
+  text-align: center;
+}
