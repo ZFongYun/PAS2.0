@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MeetingBulletin;
 use Illuminate\Http\Request;
 
 class StuIndexController extends Controller
@@ -13,7 +14,8 @@ class StuIndexController extends Controller
      */
     public function index()
     {
-        return view('student_frontend.index');
+        $bulletin = MeetingBulletin::all()->toArray();
+        return view('student_frontend.index',compact('bulletin'));
     }
 
     /**

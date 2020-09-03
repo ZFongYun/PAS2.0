@@ -12,7 +12,7 @@
                 <li class="text-muted menu-title">功能列表</li>
 
                 <li class="has_sub">
-                    <a href="#" class="waves-effect"><i class="fa fa-home"></i> <span> 首頁 </span> </a>
+                    <a href="{{route('stu.index')}}" class="waves-effect"><i class="fa fa-home"></i> <span> 首頁 </span> </a>
                 </li>
 
                 <li class="has_sub">

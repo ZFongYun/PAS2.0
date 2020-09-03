@@ -8,18 +8,22 @@
                 <!-- Page-Title -->
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="btn-group float-right m-b-20">
-                            <button type="button" class="btn btn-custom dropdown-toggle page-title-drop waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">Settings <span class="m-l-5"><i class="fa fa-cog"></i></span></button>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a href="#" class="dropdown-item">Action</a></li>
-                                <li><a href="#" class="dropdown-item">Another action</a></li>
-                                <li><a href="#" class="dropdown-item">Something else here</a></li>
-                                <li class="dropdown-divider"></li>
-                                <li><a href="#" class="dropdown-item">Separated link</a></li>
-                            </ul>
-                        </div>
-                        <h4 class="page-title">Starter Page</h4>
-
+                        <h4 class="page-title p-b-10">會議公告</h4>
+                        @foreach($bulletin as $row)
+                        <div class="col-lg-8">
+                            <div class="card card-custom card-border">
+                                <div class="card-heading">
+                                    <h2 class="card-title text-custom m-0">{{$row['title']}}</h2>
+                                    <h4 class="card-title text-dark m-0" style="font-size: 10px">發布日期：{{date("Y/m/d　H : i",strtotime($row['created_at']))}}</h4>
+                                </div>
+                                <div class="card-body">
+                                    <p class="mb-0">
+                                        {{$row['content']}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+                        @endforeach
                     </div>
                 </div>
 
