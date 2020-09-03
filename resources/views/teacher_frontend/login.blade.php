@@ -28,7 +28,7 @@
 
     <div class="m-t-30 card card-body">
         <div class="text-center">
-            <h4 class="text-uppercase font-bold">登入</h4>
+            <h4 class="text-uppercase font-bold">教師登入</h4>
         </div>
         <div class="p-2">
             <form class="form-horizontal m-t-10" action="{{action('ProfLoginController@login')}}" method="post">
