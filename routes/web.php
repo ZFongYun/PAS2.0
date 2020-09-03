@@ -64,5 +64,13 @@ Route::prefix('meeting')->group(function (){
 Route::prefix('StuLogin')->group(function (){
     Route::get('/','StuLoginController@index');
     Route::post('/login','StuLoginController@login');
-//    Route::get('/logout','ProfLoginController@logout');
+    Route::get('/logout','StuLoginController@logout');
 });
+
+Route::resource('stu','StuIndexController',['only'=>[
+    'index'
+]]);
+
+Route::resource('stu','StuIndexController',['except'=>[
+    'create','edit','show','store','update','destroy'
+]]);
