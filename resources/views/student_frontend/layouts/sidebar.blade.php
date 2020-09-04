@@ -28,13 +28,12 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="#" class="waves-effect"><i class="fa fa-undo"></i> <span> 修改密碼 </span> </a>
+                    <a href="{{route('ResetPassword.index')}}" class="waves-effect"><i class="fa fa-undo"></i> <span> 修改密碼 </span> </a>
                 </li>
 
                 <li class="has_sub">
                     <a href="{{action('StuLoginController@logout')}}" class="waves-effect"><i class="fa fa-sign-out"></i> <span> 登出 </span> </a>
                 </li>
-
 
             </ul>
             <div class="clearfix"></div>

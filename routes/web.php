@@ -82,3 +82,11 @@ Route::resource('StuGroupList','StuGroupListController',['only'=>[
 Route::resource('StuGroupList','StuGroupListController',['except'=>[
     'create','show','store','destroy'
 ]]);
+
+Route::resource('ResetPassword','ResetPasswordController',['only'=>[
+    'index','update'
+]]);
+
+Route::resource('ResetPassword','ResetPasswordController',['except'=>[
+    'create','show','store','destroy','edit'
+]]);
