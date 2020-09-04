@@ -7,8 +7,6 @@
     <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
     <meta name="author" content="Coderthemes">
 
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
-
     <title>@yield('title')</title>
 
     <link href="assets_stu/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
