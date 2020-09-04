@@ -67,10 +67,18 @@ Route::prefix('StuLogin')->group(function (){
     Route::get('/logout','StuLoginController@logout');
 });
 
-Route::resource('stu','StuIndexController',['only'=>[
+Route::resource('StuIndex','StuIndexController',['only'=>[
     'index'
 ]]);
 
-Route::resource('stu','StuIndexController',['except'=>[
+Route::resource('StuIndex','StuIndexController',['except'=>[
     'create','edit','show','store','update','destroy'
+]]);
+
+Route::resource('StuGroupList','StuGroupListController',['only'=>[
+    'index','edit','update'
+]]);
+
+Route::resource('StuGroupList','StuGroupListController',['except'=>[
+    'create','show','store','destroy'
 ]]);

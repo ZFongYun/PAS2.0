@@ -25,7 +25,7 @@ class StuLoginController extends Controller
 
             if (Auth::guard('student')->attempt(['student_ID' => $student_ID, 'password' => $password])) {
                 //登入成功...
-                return redirect('/stu');
+                return redirect('/StuIndex');
             }else{
                 //登入失敗
                 return back()->with('error','帳號或密碼錯誤，請再次確認');

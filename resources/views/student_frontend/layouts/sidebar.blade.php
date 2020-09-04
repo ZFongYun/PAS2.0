@@ -5,14 +5,14 @@
         <div id="sidebar-menu">
             <ul>
 
-                <div class="col-md-10 col-6 center" style="text-align: center">
+                <div class="col-md-10 col-10 center" style="text-align: center">
                     <p class="user-title">觀迎 {{auth('student')->user()->name}} 使用 ᐠ( ᐛ )ᐟ</p>
                 </div>
 
                 <li class="text-muted menu-title">功能列表</li>
 
                 <li class="has_sub">
-                    <a href="{{route('stu.index')}}" class="waves-effect"><i class="fa fa-home"></i> <span> 首頁 </span> </a>
+                    <a href="{{route('StuIndex.index')}}" class="waves-effect"><i class="fa fa-home"></i> <span> 首頁 </span> </a>
                 </li>
 
                 <li class="has_sub">
@@ -20,7 +20,7 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="#" class="waves-effect"><i class="fa fa-users"></i> <span> 小組專區 </span> </a>
+                    <a href="{{route('StuGroupList.index')}}" class="waves-effect"><i class="fa fa-users"></i> <span> 小組專區 </span> </a>
                 </li>
 
                 <li class="has_sub">
