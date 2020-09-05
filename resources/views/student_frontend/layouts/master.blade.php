@@ -13,7 +13,7 @@
     <link href="{{ URL::asset('assets_stu/css/icons.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('assets_stu/css/style.css') }}" rel="stylesheet" type="text/css" />
 
-    <script src="assets_stu/js/modernizr.min.js"></script>
+    <script src="{{ URL::asset('assets/js/modernizr.min.js') }}"></script>
 
 </head>
 
