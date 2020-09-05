@@ -90,3 +90,9 @@ Route::resource('ResetPassword','ResetPasswordController',['only'=>[
 Route::resource('ResetPassword','ResetPasswordController',['except'=>[
     'create','show','store','destroy','edit'
 ]]);
+
+Route::prefix('StuMeeting')->group(function (){
+    Route::get('/','StuMeetingController@index')->name('StuMeeting.index');
+    Route::get('/{id}','StuMeetingController@show')->name('StuMeeting.show');
+//    Route::get('/logout','StuLoginController@logout');
+});
