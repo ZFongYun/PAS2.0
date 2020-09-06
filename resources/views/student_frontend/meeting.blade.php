@@ -4,7 +4,6 @@
         <!-- Start content -->
         <div class="content">
             <div class="container-fluid">
-
                 <!-- Page-Title -->
                 <div class="row">
                     <div class="col-sm-12">
@@ -19,8 +18,8 @@
                                     <p >會議日期：{{$row['meeting_date']."　".date("H : i",strtotime($row['meeting_start'])). " ~ " .date("H : i",strtotime($row['meeting_end']))}}</p>
                                     <a href="{{route('StuMeeting.show',$row['id'])}}" class="btn waves-effect btn-rounded waves-light btn-primary">詳情</a>
                                     @if(auth('student')->user()->role == 0)
-                                        @if(strtotime(date("Y-m-d")) < strtotime($row['upload_date']) AND strtotime(date("H:i:s")) < strtotime($row['upload_time']))
-                                            <a href="#" class="btn waves-effect btn-rounded waves-light btn-primary">繳交報告</a>
+                                        @if(strtotime(date("Y-m-d H:i:s")) < strtotime($row['upload_date'].' '.$row['upload_time']))
+                                            <a href="{{route('StuMeeting.report',$row['id'])}}" class="btn waves-effect btn-rounded waves-light btn-primary">繳交報告</a>
                                         @else
                                             <button class="btn btn-rounded btn-secondary disabled">停止繳交</button>
                                         @endif
@@ -34,13 +33,8 @@
                         @endforeach
                     <!-- end row -->
                 </div>
-
-
-
             </div> <!-- container-fluid -->
-
         </div> <!-- content -->
-
     </div>
 @endsection
 @section('title','會議')

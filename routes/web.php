@@ -94,5 +94,6 @@ Route::resource('ResetPassword','ResetPasswordController',['except'=>[
 Route::prefix('StuMeeting')->group(function (){
     Route::get('/','StuMeetingController@index')->name('StuMeeting.index');
     Route::get('/{id}','StuMeetingController@show')->name('StuMeeting.show');
-//    Route::get('/logout','StuLoginController@logout');
+    Route::get('/report/{id}','StuMeetingController@report')->name('StuMeeting.report');
+    Route::post('/report/{id}/upload','StuMeetingController@upload')->name('StuMeeting.upload');
 });
