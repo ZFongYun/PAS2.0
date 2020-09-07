@@ -96,4 +96,5 @@ Route::prefix('StuMeeting')->group(function (){
     Route::get('/{id}','StuMeetingController@show')->name('StuMeeting.show');
     Route::get('/report/{id}','StuMeetingController@report')->name('StuMeeting.report');
     Route::post('/report/{id}/upload','StuMeetingController@upload')->name('StuMeeting.upload');
+    Route::post('/report/{id}/edit','StuMeetingController@report_edit')->name('StuMeeting.report_edit');
 });
