@@ -76,8 +76,7 @@ class StuMeetingController extends Controller
         if($request->file('file')){
             $upload_team = auth('student')->user()->team_id;
             $report = Report::where('meeting_id',$id)->where('team_id',$upload_team)->first();
-            File::delete(public_path().'/storage/'.$report['file_name']);
-            dd(public_path().''.$report['file_name']);
+//            File::delete(public_path().'/storage/'.$report['file_name']);
             $name = $file->getClientOriginalName();
             $file_path = $file->storeAs('public',$name);
             $report->file_name = $name;
