@@ -98,3 +98,10 @@ Route::prefix('StuMeeting')->group(function (){
     Route::post('/report/{id}/upload','StuMeetingController@upload')->name('StuMeeting.upload');
     Route::post('/report/{id}/edit','StuMeetingController@report_edit')->name('StuMeeting.report_edit');
 });
+
+Route::prefix('ReportList')->group(function (){
+    Route::get('/','ReportListController@index')->name('ReportList.index');
+    Route::get('/{id}','ReportListController@show')->name('ReportList.show');
+    Route::get('/{id}/download','ReportListController@download')->name('ReportList.download');
+    Route::get('/{id}/downloadALL','ReportListController@downloadALL')->name('ReportList.downloadALL');
+});
