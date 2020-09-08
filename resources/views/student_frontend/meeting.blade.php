@@ -26,7 +26,7 @@
                                     @else
                                         <a href="#" class="btn waves-effect btn-rounded waves-light btn-primary" style="display: none">繳交報告</a>
                                     @endif
-                                    <a href="#" class="btn waves-effect btn-rounded waves-light btn-primary">進入評分</a>
+                                    <a href="{{route('StuMeeting.scoring_page',$row['id'])}}" class="btn waves-effect btn-rounded waves-light btn-primary">進入評分</a>
                                 </div>
                             </div>
                         </div><!-- end col -->

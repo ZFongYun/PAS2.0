@@ -61,6 +61,13 @@ Route::prefix('meeting')->group(function (){
     Route::post('edit_stu','MeetingController@edit_stu');
 });
 
+Route::prefix('ReportList')->group(function (){
+    Route::get('/','ReportListController@index')->name('ReportList.index');
+    Route::get('/{id}','ReportListController@show')->name('ReportList.show');
+    Route::get('/{id}/download','ReportListController@download')->name('ReportList.download');
+    Route::get('/{id}/downloadALL','ReportListController@downloadALL')->name('ReportList.downloadALL');
+});
+
 Route::prefix('StuLogin')->group(function (){
     Route::get('/','StuLoginController@index');
     Route::post('/login','StuLoginController@login');
@@ -97,11 +104,10 @@ Route::prefix('StuMeeting')->group(function (){
     Route::get('/report/{id}','StuMeetingController@report')->name('StuMeeting.report');
     Route::post('/report/{id}/upload','StuMeetingController@upload')->name('StuMeeting.upload');
     Route::post('/report/{id}/edit','StuMeetingController@report_edit')->name('StuMeeting.report_edit');
-});
-
-Route::prefix('ReportList')->group(function (){
-    Route::get('/','ReportListController@index')->name('ReportList.index');
-    Route::get('/{id}','ReportListController@show')->name('ReportList.show');
-    Route::get('/{id}/download','ReportListController@download')->name('ReportList.download');
-    Route::get('/{id}/downloadALL','ReportListController@downloadALL')->name('ReportList.downloadALL');
+    Route::get('score/{id}','StuMeetingController@scoring_page')->name('StuMeeting.scoring_page');
+    Route::post('score','StuMeetingController@score');
+    Route::post('scoring_team','StuMeetingController@scoring_team');
+    Route::post('edit_team','StuMeetingController@edit_team');
+    Route::post('scoring_stu','StuMeetingController@scoring_stu');
+    Route::post('edit_stu','StuMeetingController@edit_stu');
 });
