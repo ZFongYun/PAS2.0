@@ -19,7 +19,11 @@
                                     <a href="{{route('StuMeeting.show',$row['id'])}}" class="btn waves-effect btn-rounded waves-light btn-primary">詳情</a>
                                     @if(auth('student')->user()->role == 0)
                                         @if(strtotime(date("Y-m-d H:i:s")) < strtotime($row['upload_date'].' '.$row['upload_time']))
-                                            <a href="{{route('StuMeeting.report',$row['id'])}}" class="btn waves-effect btn-rounded waves-light btn-primary">繳交報告</a>
+                                            @if($row[0]=='null')
+                                                <a href="{{route('StuMeeting.report',$row['id'])}}" class="btn waves-effect btn-rounded waves-light btn-primary">繳交報告</a>
+                                            @else
+                                                <a href="{{route('StuMeeting.report',$row['id'])}}" class="btn waves-effect btn-rounded waves-light btn-custom">檢視報告</a>
+                                            @endif
                                         @else
                                             <button class="btn btn-rounded btn-secondary disabled">停止繳交</button>
                                         @endif

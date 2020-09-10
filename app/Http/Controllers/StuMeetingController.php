@@ -17,6 +17,18 @@ class StuMeetingController extends Controller
     public function index()
     {
         $meeting = Meeting::all()->toArray();
+        $meeting_length = count($meeting);
+        $upload_team = auth('student')->user()->team_id;
+        for ($i = 0; $i < $meeting_length; $i++){
+            $report = Report::where('meeting_id',$meeting[$i]['id'])->where('team_id',$upload_team)->get()->toArray();
+            if ($report == null){
+                array_push($meeting[$i], 'null');
+            }else{
+                array_push($meeting[$i], 'has');
+            }
+//            print_r($meeting[$i]['id']);
+        }
+
         return view('student_frontend.meeting',compact('meeting'));
     }
 
