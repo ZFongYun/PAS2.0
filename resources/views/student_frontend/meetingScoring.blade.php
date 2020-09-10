@@ -10,7 +10,34 @@
                     <div class="col-sm-12">
                         <div class="btn-group m-b-20">
                             <h4 class="page-title">[ 互評 ] {{$meeting['name']}}</h4>
+                            <button class="btn btn-info btn-xs m-l-15" style="height: 10%" data-toggle="modal" data-target="#myModal"><i class="fa fa-question-circle"></i></button>
                         </div>
+
+                        <!-- 分數計算詳情Modal -->
+                        <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title mt-0" id="myModalLabel">分數計算詳情</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h5>小組總得分計算</h5>
+                                        <p>得分 = 老師評分的分數 x 老師評分比重 + 學生互評的分數 x 學生互評比重</p>
+                                        <p>組別參與互評的加分 = 學生評分組別的平均份數 x 每評分一份的加分</p>
+                                        <p>小組總得分 = 得分 + 組別參與互評的加分</p>
+                                        <hr>
+                                        <h5>個人總得分計算</h5>
+                                        <p>得分 = 老師評分的分數 x 老師評分比重 + 學生互評的分數 x 學生互評比重</p>
+                                        <p>學生參與互評的加分 = 學生評分組員的份數 x 每評分一份的加分</p>
+                                        <p>個人總得分 = 得分 + 學生參與互評的加分</p>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+
                         <div class="form-group row">
                             <label for="public" class="col-sm-1 control-label form-title">選擇評分組別</label>
                             <div class="col-md-5">
