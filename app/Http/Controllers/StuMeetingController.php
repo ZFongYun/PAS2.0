@@ -26,9 +26,7 @@ class StuMeetingController extends Controller
             }else{
                 array_push($meeting[$i], 'has');
             }
-//            print_r($meeting[$i]['id']);
         }
-
         return view('student_frontend.meeting',compact('meeting'));
     }
 

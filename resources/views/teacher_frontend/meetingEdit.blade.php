@@ -22,7 +22,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="content" class="col-md-2 control-label form-title">會議摘要*</label>
+                                    <label for="content" class="col-md-2 control-label form-title">會議摘要</label>
                                     <div class="col-md-8">
                                         <textarea id="content" name="content" class="form-control" maxlength="225" rows="2">{{$meeting['content']}}</textarea>
                                     </div>
