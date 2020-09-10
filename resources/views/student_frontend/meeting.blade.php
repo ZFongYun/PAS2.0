@@ -30,7 +30,7 @@
                                     @else
                                         <a href="#" class="btn waves-effect btn-rounded waves-light btn-primary" style="display: none">繳交報告</a>
                                     @endif
-                                    <a href="{{route('StuMeeting.scoring_page',$row['id'])}}" class="btn waves-effect btn-rounded waves-light btn-primary">進入評分</a>
+                                    <a href="{{route('StuMeeting.scoring_page',$row['id'])}}" class="btn waves-effect btn-rounded waves-light btn-primary" onclick="return(confirm('！評分時間為會議開始至結束，請隨時注意評分時間！'))">進入評分</a>
                                 </div>
                             </div>
                         </div><!-- end col -->
