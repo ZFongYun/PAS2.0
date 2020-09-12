@@ -101,9 +101,15 @@ class StuMeetingController extends Controller
 
     public function scoring_page($id){
         $meeting = Meeting::find($id)->toArray();
-        $report_team = $meeting['report_team'];
-        $report_team_arr = explode(' ',$report_team);
-        return view('student_frontend.meetingScoring',compact('meeting','report_team_arr'));
+        if (strtotime(date("Y-m-d H:i:s")) > strtotime($meeting['meeting_date'].' '.$meeting['meeting_start']) && strtotime(date("Y-m-d H:i:s")) < strtotime($meeting['meeting_date'].' '.$meeting['meeting_end'])){
+            $report_team = $meeting['report_team'];
+            $report_team_arr = explode(' ',$report_team);
+            return view('student_frontend.meetingScoring',compact('meeting','report_team_arr'));
+        }else{
+            echo "<script>alert('會議尚未開始。')</script>";
+            echo '<meta http-equiv=REFRESH CONTENT=0.5;url=/StuMeeting>';
+        }
+
     }
 
     public function score(Request $request){
