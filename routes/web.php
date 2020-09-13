@@ -111,3 +111,7 @@ Route::prefix('StuMeeting')->group(function (){
     Route::post('scoring_stu','StuMeetingController@scoring_stu');
     Route::post('edit_stu','StuMeetingController@edit_stu');
 });
+
+Route::prefix('score')->group(function(){
+    Route::post('/','ScoreController@scoring');
+});

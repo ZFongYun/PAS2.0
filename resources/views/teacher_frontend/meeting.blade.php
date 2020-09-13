@@ -40,24 +40,45 @@
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         </form>
                                         <td><a href="{{action('MeetingController@scoring_page',$row['id'])}}" class="btn btn-icon waves-effect waves-light btn-primary"><i class="fa fa-sign-in"></i></a></td>
-                                        <td><button type="submit" class="btn btn-icon waves-effect waves-light btn-success"  id="stu_edit"><i class="fa fa-file-o"></i></button></td>
+                                        <td><button type="submit" class="send btn btn-icon waves-effect waves-light btn-success" data-mid="{{$row['id']}}"><i class="fa fa-file-o"> </i></button><input type="hidden" id="score_send"></td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
-
-
-
             </div> <!-- container-fluid -->
-
         </div> <!-- content -->
-
-
-
     </div>
+
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).on('click', '.send', function() {
+            $('#score_send').val($(this).data('mid'));
+            var id = $("#score_send").val();
+            $(document).ready(function() {
+                $.ajax({
+                    type:'POST',
+                    url:'/score',
+                    data:{id:id,
+                        _token: '{{csrf_token()}}'},
+                    success: function(data) {
+                        alert(data)
+                    },
+                    error: function (){
+                        alert('結算失敗')
+                    }
+
+                });
+            });
+        });
+
+    </script>
 @endsection
 @section('title','會議管理')
