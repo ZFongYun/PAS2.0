@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meeting;
+use App\Models\Student;
+use App\Models\StudentScore;
+use App\Models\StudentScoringPeer;
 use App\Models\StudentScoringTeam;
+use App\Models\TeacherScoringStudent;
 use App\Models\TeacherScoringTeam;
 use App\Models\Team;
 use App\Models\TeamScore;
@@ -35,9 +39,31 @@ class ScoreController extends Controller
             $team_score->count = 0;
             $team_score->save();
         }
+
+        for ($i = 1; $i < count($report_team_arr); $i++){
+            $team_id = Team::where('name',$report_team_arr[$i])->value('id');
+            $student = Student::where('team_id',$team_id)->get('id')->toArray();
+            for ($j = 0; $j < count($student); $j++){
+                $teacher_score_stu = TeacherScoringStudent::where('meeting_id',$id)->where('object_student_id',$student[$j])->value('point');
+                $peer_count = StudentScoringPeer::where('meeting_id',$id)->where('object_student_id',$student[$j])->count();
+                $peer_score = StudentScoringPeer::where('meeting_id',$id)->where('object_student_id',$student[$j])->sum('point');
+                $teacher_peer = $teacher_score_stu*$TS;
+                $student_peer = ($peer_score / $peer_count)*$PA;
+                $total_peer = $teacher_peer+$student_peer;
+                $stu_score = new StudentScore;
+                $stu_score->student_id = $student[$j]['id'];
+                $stu_score->meeting_id = $id;
+                $stu_score->score = $total_peer;
+                $stu_score->bonus = 0;
+                $stu_score->total = 0;
+                $stu_score->count = 0;
+                $stu_score->save();
+            }
+        }
         $meeting = Meeting::find($id)->first();
         $meeting->is_End = 1;
         $meeting->save();
         return '結算成功';
+
     }
 }
