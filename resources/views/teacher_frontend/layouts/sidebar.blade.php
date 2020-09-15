@@ -30,7 +30,7 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="#" class="waves-effect"><i class="fa fa-search"></i> <span> 學生成績 </span> </a>
+                    <a href="{{route('Transcript.index')}}" class="waves-effect"><i class="fa fa-search"></i> <span> 學生成績 </span> </a>
                 </li>
 
                 <li class="has_sub">

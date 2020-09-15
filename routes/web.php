@@ -36,6 +36,15 @@ Route::resource('prof','ProfIndexController',['except'=>[
 
 Route::resource('meeting','MeetingController');
 
+Route::prefix('meeting')->group(function (){
+    Route::get('score/{id}','MeetingController@scoring_page');
+    Route::post('score','MeetingController@score');
+    Route::post('scoring_team','MeetingController@scoring_team');
+    Route::post('edit_team','MeetingController@edit_team');
+    Route::post('scoring_stu','MeetingController@scoring_stu');
+    Route::post('edit_stu','MeetingController@edit_stu');
+});
+
 Route::resource('ImportStudent','ImportStudentController',['only'=>[
     'index','store','destroy'
 ]]);
@@ -52,13 +61,10 @@ Route::prefix('GroupList')->group(function (){
     Route::post('destroy_member/{id}','GroupListController@destroy_member');
 });
 
-Route::prefix('meeting')->group(function (){
-    Route::get('score/{id}','MeetingController@scoring_page');
-    Route::post('score','MeetingController@score');
-    Route::post('scoring_team','MeetingController@scoring_team');
-    Route::post('edit_team','MeetingController@edit_team');
-    Route::post('scoring_stu','MeetingController@scoring_stu');
-    Route::post('edit_stu','MeetingController@edit_stu');
+Route::prefix('Transcript')->group(function (){
+    Route::get('/','TranscriptController@index')->name('Transcript.index');
+    Route::post('/search','TranscriptController@search');
+
 });
 
 Route::prefix('ReportList')->group(function (){
@@ -67,6 +73,8 @@ Route::prefix('ReportList')->group(function (){
     Route::get('/{id}/download','ReportListController@download')->name('ReportList.download');
     Route::get('/{id}/downloadALL','ReportListController@downloadALL')->name('ReportList.downloadALL');
 });
+
+
 
 Route::prefix('StuLogin')->group(function (){
     Route::get('/','StuLoginController@index');
