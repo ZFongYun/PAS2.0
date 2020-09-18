@@ -93,7 +93,6 @@
                         team:team,
                         _token: '{{csrf_token()}}'},
                     success: function(data) {
-                        console.log(data)
                         $('#date_title').html('日期　'+data[0]);
                         $('#team_title').show();
                         $('#team_table').show();
