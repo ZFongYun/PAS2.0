@@ -58,11 +58,41 @@ class TranscriptController extends Controller
                 ->select('student_scoring_peer.*','student.name')
                 ->get();
             array_push($stu_peer_feedback_arr,$stu_peer_feedback);
-
         }
-
         array_push($all_data_arr,$meeting_date,$team_name,$team_score,$teacher_team_feedback,$student_team_feedback,$stu_score_arr,$teacher_stu_feedback_arr,$stu_peer_feedback_arr);
 
         return $all_data_arr;
+    }
+
+    public function StuTranscript_index(){
+        $meeting = Meeting::all()->toArray();
+        return view('student_frontend.Transcript',compact('meeting'));
+    }
+
+    public function StuTranscript_search(Request $request){
+        $meeting_id = $request->input('meeting');
+        $choose = $request->input('choose');
+        $all_data_arr = array();  //全部資料
+        $meeting_date = Meeting::where('id',$meeting_id)->value('meeting_date');  //會議日期
+
+        if ($choose == 0){
+            $stu_team_id = auth('student')->user()->team_id;
+            $team_score = TeamScore::where('team_id',$stu_team_id)->where('meeting_id',$meeting_id)->get()->toArray();  //組別成績
+            $teacher_team_feedback = TeacherScoringTeam::where('meeting_id',$meeting_id)->where('object_team_id',$stu_team_id)->get(['point','feedback'])->toArray();  //老師評分組別回饋
+            $stu_peer_feedback = StudentScoringTeam::where('meeting_id',$meeting_id)->where('object_team_id',$stu_team_id)->get(['point','feedback'])->toArray();  //學生評分同儕回饋
+
+            array_push($all_data_arr,$meeting_date,$team_score,$teacher_team_feedback,$stu_peer_feedback);
+            return $all_data_arr;
+
+        }else{
+            $stu_id = auth('student')->user()->id;
+            $stu_score = StudentScore::where('student_id',$stu_id)->where('meeting_id',$meeting_id)->get()->toArray();  //組別成績
+            $teacher_stu_feedback = TeacherScoringStudent::where('meeting_id',$meeting_id)->where('object_student_id',$stu_id)->get()->toArray();  //老師評分組員回饋
+            $stu_peer_feedback = StudentScoringPeer::where('meeting_id',$meeting_id)->where('object_student_id',$stu_id)->get()->toArray();  //老師評分組員回饋
+
+            array_push($all_data_arr,$meeting_date,$stu_score,$teacher_stu_feedback,$stu_peer_feedback);
+            return $all_data_arr;
+        }
+
     }
 }

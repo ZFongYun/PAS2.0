@@ -123,3 +123,9 @@ Route::prefix('StuMeeting')->group(function (){
 Route::prefix('score')->group(function(){
     Route::post('/','ScoreController@scoring');
 });
+
+Route::prefix('StuTranscript')->group(function (){
+    Route::get('/','TranscriptController@StuTranscript_index')->name('StuTranscript.index');
+    Route::post('/stu_search','TranscriptController@StuTranscript_search');
+
+});
