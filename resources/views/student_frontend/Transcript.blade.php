@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <label class="form-title p-t-10" id="date_title"></label><br>
-                <label class="form-title p-t-10" id="team_title" style="display: none">小組得分結果</label>
+                <label class="form-title p-t-10" id="feedback_title" style="display: none"></label>
                 <div class="table-responsive">
                     <table class="table m-0" id="team_table" style="display: none">
                         <thead>
@@ -59,7 +59,6 @@
                     </table>
                 </div>
 
-                <label class="form-title p-t-10" id="stu_feedback_title" style="display: none">其他同學給的評論</label>
                 <div class="table-responsive">
                     <table class="table m-0" id="stu_feedback_table" style="display: none">
                         <thead>
@@ -100,6 +99,7 @@
                         choose:choose,
                         _token: '{{csrf_token()}}'},
                     success: function(data) {
+                        console.log(data)
                         $('#date_title').html('日期　'+data[0]);
                         $('#team_title').show();
                         $('#team_table').show();
@@ -109,14 +109,15 @@
                         html_team += '<td>'+data[1][0]['total']+'</td></tr>';
                         $('#team_body').html(html_team);
 
-                        $('#prof_feedback_title').show();
+                        $('#feedback_title').show();
+                        $('#feedback_title').html(data[4]);
+
                         $('#prof_feedback_table').show();
                         html_prof_feedback += '<tr>';
                         html_prof_feedback += '<td>'+data[2][0]['point']+'</td>';
                         html_prof_feedback += '<td>'+data[2][0]['feedback']+'</td></tr>';
                         $('#prof_feedback_body').html(html_prof_feedback);
 
-                        $('#stu_feedback_title').show();
                         $('#stu_feedback_table').show();
                         html_stu_feedback += '<tr>';
                         for (var i = 0; i < data[3].length; i++){

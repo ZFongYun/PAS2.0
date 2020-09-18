@@ -76,21 +76,23 @@ class TranscriptController extends Controller
         $meeting_date = Meeting::where('id',$meeting_id)->value('meeting_date');  //會議日期
 
         if ($choose == 0){
+            $title = '小組得分結果';
             $stu_team_id = auth('student')->user()->team_id;
             $team_score = TeamScore::where('team_id',$stu_team_id)->where('meeting_id',$meeting_id)->get()->toArray();  //組別成績
             $teacher_team_feedback = TeacherScoringTeam::where('meeting_id',$meeting_id)->where('object_team_id',$stu_team_id)->get(['point','feedback'])->toArray();  //老師評分組別回饋
             $stu_peer_feedback = StudentScoringTeam::where('meeting_id',$meeting_id)->where('object_team_id',$stu_team_id)->get(['point','feedback'])->toArray();  //學生評分同儕回饋
 
-            array_push($all_data_arr,$meeting_date,$team_score,$teacher_team_feedback,$stu_peer_feedback);
+            array_push($all_data_arr,$meeting_date,$team_score,$teacher_team_feedback,$stu_peer_feedback,$title);
             return $all_data_arr;
 
         }else{
+            $title = '個人得分結果';
             $stu_id = auth('student')->user()->id;
             $stu_score = StudentScore::where('student_id',$stu_id)->where('meeting_id',$meeting_id)->get()->toArray();  //組別成績
             $teacher_stu_feedback = TeacherScoringStudent::where('meeting_id',$meeting_id)->where('object_student_id',$stu_id)->get()->toArray();  //老師評分組員回饋
             $stu_peer_feedback = StudentScoringPeer::where('meeting_id',$meeting_id)->where('object_student_id',$stu_id)->get()->toArray();  //老師評分組員回饋
 
-            array_push($all_data_arr,$meeting_date,$stu_score,$teacher_stu_feedback,$stu_peer_feedback);
+            array_push($all_data_arr,$meeting_date,$stu_score,$teacher_stu_feedback,$stu_peer_feedback,$title);
             return $all_data_arr;
         }
 
