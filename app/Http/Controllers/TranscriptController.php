@@ -31,8 +31,12 @@ class TranscriptController extends Controller
         $stu_peer_feedback_arr = array();  //學生評分組員回饋
 
         $meeting_date = Meeting::where('id',$meeting_id)->value('meeting_date');  //會議日期
-        $team_score = TeamScore::where('team_id',$team_id)->where('meeting_id',$meeting_id)->get()->toArray();  //組別成績
-        $team_name = Team::where('id',$team_score[0]['team_id'])->value('name');  //組別名稱
+        $team_score = DB::table('team_score')
+            ->join('team','team_score.team_id','=','team.id')
+            ->where('team_id',$team_id)->where('meeting_id',$meeting_id)
+            ->select('team_score.*','team.name')
+            ->get();  //組別成績
+
         $teacher_team_feedback = TeacherScoringTeam::where('meeting_id',$meeting_id)->where('object_team_id',$team_id)->get(['point','feedback'])->toArray();  //老師評分組別回饋
         $student_team_feedback = DB::Table('student_scoring_team')
             ->join('student','student_scoring_team.raters_student_id','=','student.id')
@@ -59,7 +63,7 @@ class TranscriptController extends Controller
                 ->get();
             array_push($stu_peer_feedback_arr,$stu_peer_feedback);
         }
-        array_push($all_data_arr,$meeting_date,$team_name,$team_score,$teacher_team_feedback,$student_team_feedback,$stu_score_arr,$teacher_stu_feedback_arr,$stu_peer_feedback_arr);
+        array_push($all_data_arr,$meeting_date,$team_score,$teacher_team_feedback,$student_team_feedback,$stu_score_arr,$teacher_stu_feedback_arr,$stu_peer_feedback_arr);
 
         return $all_data_arr;
     }

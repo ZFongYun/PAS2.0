@@ -96,50 +96,71 @@
                         $('#date_title').html('日期　'+data[0]);
                         $('#team_title').show();
                         $('#team_table').show();
-                        html_team += '<tr>';
-                        html_team += '<td>'+data[1]+'</td>';
-                        html_team += '<td>'+data[2][0]['score']+'</td>';
-                        html_team += '<td>'+data[2][0]['bonus']+'</td>';
-                        html_team += '<td>'+data[2][0]['total']+'</td>';
-                        html_team += '<td>'+data[2][0]['count']+'</td>';
-                        html_team += '<td><button class="btn btn-custom type="button" data-toggle="collapse" data-target="#team_feedback">詳情</button></td></tr>';
-                        html_team += '<tr>';
-                        html_team += '<td colspan="6" class="hiddenRow"><div class="collapse" id="team_feedback"><label>'+'老師評論'+'</label>' +
-                            '<table class="table"><thead><tr><th>評分</th><th>回饋</th></tr></thead><tbody><tr><td>'+data[3][0]['point']+'</td><td>'+data[3][0]['feedback']+'</td></tr></tbody></table>' +
-                            '<label>'+'其他同學給的評論'+'</label>' +
-                            '<table class="table"><thead><tr><th>姓名</th><th>評分</th><th>回饋</th></tr></thead><tbody><tr>';
-                        for (var i = 0; i<data[4].length; i++){
-                            html_team += '<td>'+data[4][i]['name']+'</td>';
-                            html_team += '<td>'+data[4][i]['point']+'</td>';
-                            html_team += '<td>'+data[4][i]['feedback']+'</td></tr>';
+                        if (data[1] == ''){
+                            html_team += '<tr>';
+                            html_team += '<td>-</td>';
+                            html_team += '<td>-</td>';
+                            html_team += '<td>-</td>';
+                            html_team += '<td>-</td>';
+                            html_team += '<td>-</td></tr>';
+                            $('#team_body').html(html_team);
+                        }else {
+                            html_team += '<tr>';
+                            html_team += '<td>'+data[1][0]['name']+'</td>';
+                            html_team += '<td>'+data[1][0]['score']+'</td>';
+                            html_team += '<td>'+data[1][0]['bonus']+'</td>';
+                            html_team += '<td>'+data[1][0]['total']+'</td>';
+                            html_team += '<td>'+data[1][0]['count']+'</td>';
+                            html_team += '<td><button class="btn btn-custom type="button" data-toggle="collapse" data-target="#team_feedback">詳情</button></td></tr>';
+                            html_team += '<tr>';
+                            html_team += '<td colspan="6" class="hiddenRow"><div class="collapse" id="team_feedback"><label>'+'老師評論'+'</label>' +
+                                '<table class="table"><thead><tr><th>評分</th><th>回饋</th></tr></thead><tbody><tr><td>'+data[2][0]['point']+'</td><td>'+data[2][0]['feedback']+'</td></tr></tbody></table>' +
+                                '<label>'+'其他同學給的評論'+'</label>' +
+                                '<table class="table"><thead><tr><th>姓名</th><th>評分</th><th>回饋</th></tr></thead><tbody><tr>';
+                            for (var i = 0; i<data[3].length; i++){
+                                html_team += '<td>'+data[3][i]['name']+'</td>';
+                                html_team += '<td>'+data[3][i]['point']+'</td>';
+                                html_team += '<td>'+data[3][i]['feedback']+'</td></tr>';
+                            }
+                            html_team += '</tbody></table></div></td></tr>';
+                            $('#team_body').html(html_team);
                         }
-                        html_team += '</tbody></table></div></td></tr>';
-                        $('#team_body').html(html_team);
 
                         $('#member_title').show();
                         $('#member_table').show();
-                        for (var j = 0; j<data[5].length; j++){
+                        if (data[1] == ''){
                             html_member += '<tr>';
-                            html_member += '<td>'+ data[5][j][0]['student_ID'] +'</td>';
-                            html_member += '<td>'+ data[5][j][0]['name'] +'</td>';
-                            html_member += '<td>'+ data[5][j][0]['score'] +'</td>';
-                            html_member += '<td>'+ data[5][j][0]['bonus'] +'</td>';
-                            html_member += '<td>'+ data[5][j][0]['total'] +'</td>';
-                            html_member += '<td>'+ data[5][j][0]['count'] +'</td>';
-                            html_member += '<td><button class="btn btn-custom type="button" data-toggle="collapse" data-target="#member_feedback'+data[5][j][0]['student_id']+'">詳情</button></td></tr>';
-                            html_member += '<tr>';
-                            html_member += '<td colspan="7" class="hiddenRow"><div class="collapse" id="member_feedback'+data[5][j][0]['student_id']+'"><label>'+'老師評論'+'</label>'
-                            html_member += '<table class="table"><thead><tr><th>評分</th><th>回饋</th></tr></thead><tbody><tr><td>'+data[6][j][0]['point']+'</td><td>'+data[6][j][0]['feedback']+'</td></tr></tbody></table>'
-                            html_member += '<label>'+'其他同學給的評論'+'</label>';
-                            html_member += '<table class="table"><thead><tr><th>姓名</th><th>評分</th><th>回饋</th></tr></thead><tbody><tr>';
-                            for (var n = 0; n<data[7][j].length; n++){
-                                html_member += '<td>'+data[7][j][n]['name']+'</td>';
-                                html_member += '<td>'+data[7][j][n]['point']+'</td>';
-                                html_member += '<td>'+data[7][j][n]['feedback']+'</td></tr>';
+                            html_member += '<td>-</td>';
+                            html_member += '<td>-</td>';
+                            html_member += '<td>-</td>';
+                            html_member += '<td>-</td>';
+                            html_member += '<td>-</td>';
+                            html_member += '<td>-</td></tr>';
+                            $('#member_body').html(html_member);
+                        }else {
+                            for (var j = 0; j<data[4].length; j++){
+                                html_member += '<tr>';
+                                html_member += '<td>'+ data[4][j][0]['student_ID'] +'</td>';
+                                html_member += '<td>'+ data[4][j][0]['name'] +'</td>';
+                                html_member += '<td>'+ data[4][j][0]['score'] +'</td>';
+                                html_member += '<td>'+ data[4][j][0]['bonus'] +'</td>';
+                                html_member += '<td>'+ data[4][j][0]['total'] +'</td>';
+                                html_member += '<td>'+ data[4][j][0]['count'] +'</td>';
+                                html_member += '<td><button class="btn btn-custom type="button" data-toggle="collapse" data-target="#member_feedback'+data[4][j][0]['student_id']+'">詳情</button></td></tr>';
+                                html_member += '<tr>';
+                                html_member += '<td colspan="7" class="hiddenRow"><div class="collapse" id="member_feedback'+data[4][j][0]['student_id']+'"><label>'+'老師評論'+'</label>'
+                                html_member += '<table class="table"><thead><tr><th>評分</th><th>回饋</th></tr></thead><tbody><tr><td>'+data[5][j][0]['point']+'</td><td>'+data[5][j][0]['feedback']+'</td></tr></tbody></table>'
+                                html_member += '<label>'+'其他同學給的評論'+'</label>';
+                                html_member += '<table class="table"><thead><tr><th>姓名</th><th>評分</th><th>回饋</th></tr></thead><tbody><tr>';
+                                for (var n = 0; n<data[6][j].length; n++){
+                                    html_member += '<td>'+data[6][j][n]['name']+'</td>';
+                                    html_member += '<td>'+data[6][j][n]['point']+'</td>';
+                                    html_member += '<td>'+data[6][j][n]['feedback']+'</td></tr>';
+                                }
+                                html_member += '</tbody></table></div></td></tr>';
                             }
-                            html_member += '</tbody></table></div></td></tr>';
+                            $('#member_body').html(html_member);
                         }
-                        $('#member_body').html(html_member);
 
                     },
                     error: function (){
