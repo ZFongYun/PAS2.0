@@ -4743,3 +4743,8 @@ File: Responsive
 .p-l-20 {
   padding-left: 20px;
 }
+
+.hiddenRow {
+  padding: 0 4px !important;
+  background-color: #eeeeee;
+}
