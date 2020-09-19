@@ -60,7 +60,7 @@ class ScoreController extends Controller
                 $stu_score->save();
             }
         }
-        $meeting = Meeting::find($id)->first();
+        $meeting = Meeting::where('id','=',$id)->first();
         $meeting->is_End = 1;
         $meeting->save();
         return '結算成功';
