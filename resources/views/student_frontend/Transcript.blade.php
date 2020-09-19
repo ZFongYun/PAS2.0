@@ -59,6 +59,7 @@
                     </table>
                 </div>
 
+                <label class="form-title p-t-10" id="stu_feedback_title" style="display: none">其他同學給的評論</label>
                 <div class="table-responsive">
                     <table class="table m-0" id="stu_feedback_table" style="display: none">
                         <thead>
@@ -99,32 +100,55 @@
                         choose:choose,
                         _token: '{{csrf_token()}}'},
                     success: function(data) {
-                        console.log(data)
                         $('#date_title').html('日期　'+data[0]);
-                        $('#team_title').show();
-                        $('#team_table').show();
-                        html_team += '<tr>';
-                        html_team += '<td>'+data[1][0]['score']+'</td>';
-                        html_team += '<td>'+data[1][0]['bonus']+'</td>';
-                        html_team += '<td>'+data[1][0]['total']+'</td></tr>';
-                        $('#team_body').html(html_team);
-
                         $('#feedback_title').show();
                         $('#feedback_title').html(data[4]);
 
-                        $('#prof_feedback_table').show();
-                        html_prof_feedback += '<tr>';
-                        html_prof_feedback += '<td>'+data[2][0]['point']+'</td>';
-                        html_prof_feedback += '<td>'+data[2][0]['feedback']+'</td></tr>';
-                        $('#prof_feedback_body').html(html_prof_feedback);
-
-                        $('#stu_feedback_table').show();
-                        html_stu_feedback += '<tr>';
-                        for (var i = 0; i < data[3].length; i++){
-                            html_stu_feedback += '<td>'+data[3][i]['point']+'</td>';
-                            html_stu_feedback += '<td>'+data[3][i]['feedback']+'</td></tr>';
+                        $('#team_title').show();
+                        $('#team_table').show();
+                        if (data[1] == ''){
+                            html_team += '<tr>';
+                            html_team += '<td>-</td>';
+                            html_team += '<td>-</td>';
+                            html_team += '<td>-</td></tr>';
+                            $('#team_body').html(html_team);
+                        }else {
+                            html_team += '<tr>';
+                            html_team += '<td>'+data[1][0]['score']+'</td>';
+                            html_team += '<td>'+data[1][0]['bonus']+'</td>';
+                            html_team += '<td>'+data[1][0]['total']+'</td></tr>';
+                            $('#team_body').html(html_team);
                         }
-                        $('#stu_feedback_body').html(html_stu_feedback);
+
+                        $('#prof_feedback_title').show();
+                        $('#prof_feedback_table').show();
+                        if (data[2] == ''){
+                            html_prof_feedback += '<tr>';
+                            html_prof_feedback += '<td>-</td>';
+                            html_prof_feedback += '<td>-</td></tr>';
+                            $('#prof_feedback_body').html(html_prof_feedback);
+                        }else {
+                            html_prof_feedback += '<tr>';
+                            html_prof_feedback += '<td>'+data[2][0]['point']+'</td>';
+                            html_prof_feedback += '<td>'+data[2][0]['feedback']+'</td></tr>';
+                            $('#prof_feedback_body').html(html_prof_feedback);
+                        }
+
+                        $('#stu_feedback_title').show();
+                        $('#stu_feedback_table').show();
+                        if (data[3] == ''){
+                            html_stu_feedback += '<tr>';
+                            html_stu_feedback += '<td>-</td>';
+                            html_stu_feedback += '<td>-</td></tr>';
+                            $('#stu_feedback_body').html(html_stu_feedback);
+                        }else {
+                            html_stu_feedback += '<tr>';
+                            for (var i = 0; i < data[3].length; i++){
+                                html_stu_feedback += '<td>'+data[3][i]['point']+'</td>';
+                                html_stu_feedback += '<td>'+data[3][i]['feedback']+'</td></tr>';
+                            }
+                            $('#stu_feedback_body').html(html_stu_feedback);
+                        }
 
                     },
                     error: function (){
