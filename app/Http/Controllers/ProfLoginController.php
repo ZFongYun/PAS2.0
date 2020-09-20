@@ -4,9 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
+
 
 class ProfLoginController extends Controller
 {
+    use AuthenticatesUsers;
+
+    protected $redirectTo = '/prof';
+
+    public function __construct()
+    {
+        $this->middleware('guest:teacher', ['except' => 'logout']);
+    }
+
+    protected function guard()
+    {
+        return Auth::guard('teacher');
+    }
+
     public function index(){
         return view('teacher_frontend.login');
     }
