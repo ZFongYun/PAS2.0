@@ -79,8 +79,7 @@ class MeetingController extends Controller
         $meeting -> member_bonus = $member_bonus;
         $meeting -> save();
 
-        $meeting = Meeting::all()->toArray();
-        return view('teacher_frontend.meeting',compact('meeting'));
+        return redirect('/meeting');
     }
 
     /**
@@ -159,8 +158,8 @@ class MeetingController extends Controller
         $meeting -> member_bonus = $member_bonus;
         $meeting -> save();
 
-        $meeting = Meeting::all()->toArray();
-        return view('teacher_frontend.meeting',compact('meeting'));
+        return redirect('/meeting');
+
     }
 
     /**
