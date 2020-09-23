@@ -76,50 +76,52 @@ Route::prefix('StuLogin')->group(function (){
     Route::get('/logout','StuLoginController@logout');
 });
 
-Route::resource('StuIndex','StuIndexController',['only'=>[
-    'index'
-]]);
+Route::group(['middleware' => 'auth.student'], function() {
+    Route::resource('StuIndex','StuIndexController',['only'=>[
+        'index'
+    ]]);
 
-Route::resource('StuIndex','StuIndexController',['except'=>[
-    'create','edit','show','store','update','destroy'
-]]);
+    Route::resource('StuIndex','StuIndexController',['except'=>[
+        'create','edit','show','store','update','destroy'
+    ]]);
 
-Route::resource('StuGroupList','StuGroupListController',['only'=>[
-    'index','edit','update'
-]]);
+    Route::resource('StuGroupList','StuGroupListController',['only'=>[
+        'index','edit','update'
+    ]]);
 
-Route::resource('StuGroupList','StuGroupListController',['except'=>[
-    'create','show','store','destroy'
-]]);
+    Route::resource('StuGroupList','StuGroupListController',['except'=>[
+        'create','show','store','destroy'
+    ]]);
 
-Route::resource('ResetPassword','ResetPasswordController',['only'=>[
-    'index','update'
-]]);
+    Route::resource('ResetPassword','ResetPasswordController',['only'=>[
+        'index','update'
+    ]]);
 
-Route::resource('ResetPassword','ResetPasswordController',['except'=>[
-    'create','show','store','destroy','edit'
-]]);
+    Route::resource('ResetPassword','ResetPasswordController',['except'=>[
+        'create','show','store','destroy','edit'
+    ]]);
 
-Route::prefix('StuMeeting')->group(function (){
-    Route::get('/','StuMeetingController@index')->name('StuMeeting.index');
-    Route::get('/{id}','StuMeetingController@show')->name('StuMeeting.show');
-    Route::get('/report/{id}','StuMeetingController@report')->name('StuMeeting.report');
-    Route::post('/report/{id}/upload','StuMeetingController@upload')->name('StuMeeting.upload');
-    Route::post('/report/{id}/edit','StuMeetingController@report_edit')->name('StuMeeting.report_edit');
-    Route::get('score/{id}','StuMeetingController@scoring_page')->name('StuMeeting.scoring_page');
-    Route::post('score','StuMeetingController@score');
-    Route::post('scoring_team','StuMeetingController@scoring_team');
-    Route::post('edit_team','StuMeetingController@edit_team');
-    Route::post('scoring_stu','StuMeetingController@scoring_stu');
-    Route::post('edit_stu','StuMeetingController@edit_stu');
-});
+    Route::prefix('StuMeeting')->group(function (){
+        Route::get('/','StuMeetingController@index')->name('StuMeeting.index');
+        Route::get('/{id}','StuMeetingController@show')->name('StuMeeting.show');
+        Route::get('/report/{id}','StuMeetingController@report')->name('StuMeeting.report');
+        Route::post('/report/{id}/upload','StuMeetingController@upload')->name('StuMeeting.upload');
+        Route::post('/report/{id}/edit','StuMeetingController@report_edit')->name('StuMeeting.report_edit');
+        Route::get('score/{id}','StuMeetingController@scoring_page')->name('StuMeeting.scoring_page');
+        Route::post('score','StuMeetingController@score');
+        Route::post('scoring_team','StuMeetingController@scoring_team');
+        Route::post('edit_team','StuMeetingController@edit_team');
+        Route::post('scoring_stu','StuMeetingController@scoring_stu');
+        Route::post('edit_stu','StuMeetingController@edit_stu');
+    });
 
-Route::prefix('score')->group(function(){
-    Route::post('/','ScoreController@scoring');
-});
+    Route::prefix('score')->group(function(){
+        Route::post('/','ScoreController@scoring');
+    });
 
-Route::prefix('StuTranscript')->group(function (){
-    Route::get('/','TranscriptController@StuTranscript_index')->name('StuTranscript.index');
-    Route::post('/stu_search','TranscriptController@StuTranscript_search');
+    Route::prefix('StuTranscript')->group(function (){
+        Route::get('/','TranscriptController@StuTranscript_index')->name('StuTranscript.index');
+        Route::post('/stu_search','TranscriptController@StuTranscript_search');
 
+    });
 });

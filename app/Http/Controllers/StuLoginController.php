@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class StuLoginController extends Controller
 {
+    use AuthenticatesUsers;
+
     public function index(){
+        if (Auth::guard('student')->check()){
+            return redirect('/StuIndex');
+        }
         return view('student_frontend.login');
     }
 
