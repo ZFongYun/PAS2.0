@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MeetingBulletin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfIndexController extends Controller
 {
@@ -12,6 +13,7 @@ class ProfIndexController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $bulletin = MeetingBulletin::all()->toArray();

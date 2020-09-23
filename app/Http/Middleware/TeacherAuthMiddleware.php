@@ -12,21 +12,13 @@ class TeacherAuthMiddleware
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
+     * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next, $guard = 'teacher')
     {
-//        if (Auth::guard($guard)->guest()) {
-//            if ($request->ajax() || $request->wantsJson()) {
-//                return response('Unauthorized.', 401);
-//            } else {
-//                return redirect()->guest('/ProLogin/prof');
-//            }
-//        }
-//        return $next($request);
-
-        if (Auth::guard($guard)->check()) {
-            return redirect('/prof'); //改成『若登入後再回到登入頁面時你要跳轉』的頁面，這邊應該會在LoginController的屬性$redirectTo一樣。
+        if (!Auth::guard($guard)->check()) {
+            return redirect('/ProLogin'); //改成『若登入後再回到登入頁面時你要跳轉』的頁面，這邊應該會在LoginController的屬性$redirectTo一樣。
         }
 
         return $next($request);

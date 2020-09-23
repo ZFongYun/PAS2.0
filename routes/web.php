@@ -13,68 +13,62 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
-//Route::get('/login','ProfLoginController@index');
-
 Route::prefix('ProLogin')->group(function (){
     Route::get('/','ProfLoginController@index');
     Route::post('/login','ProfLoginController@login');
     Route::get('/logout','ProfLoginController@logout');
 });
 
+Route::group(['middleware' => 'auth.teacher'], function() {
+    Route::resource('prof','ProfIndexController',['only'=>[
+        'index','store','update','destroy'
+    ]]);
 
-Route::resource('prof','ProfIndexController',['only'=>[
-    'index','store','update','destroy'
-]]);
+    Route::resource('prof','ProfIndexController',['except'=>[
+        'create','edit','show'
+    ]]);
 
-Route::resource('prof','ProfIndexController',['except'=>[
-    'create','edit','show'
-]]);
+    Route::resource('meeting','MeetingController');
 
-Route::resource('meeting','MeetingController');
+    Route::prefix('meeting')->group(function (){
+        Route::get('score/{id}','MeetingController@scoring_page');
+        Route::post('score','MeetingController@score');
+        Route::post('scoring_team','MeetingController@scoring_team');
+        Route::post('edit_team','MeetingController@edit_team');
+        Route::post('scoring_stu','MeetingController@scoring_stu');
+        Route::post('edit_stu','MeetingController@edit_stu');
+    });
 
-Route::prefix('meeting')->group(function (){
-    Route::get('score/{id}','MeetingController@scoring_page');
-    Route::post('score','MeetingController@score');
-    Route::post('scoring_team','MeetingController@scoring_team');
-    Route::post('edit_team','MeetingController@edit_team');
-    Route::post('scoring_stu','MeetingController@scoring_stu');
-    Route::post('edit_stu','MeetingController@edit_stu');
+    Route::resource('ImportStudent','ImportStudentController',['only'=>[
+        'index','store','destroy'
+    ]]);
+
+    Route::resource('ImportStudent','ImportStudentController',['except'=>[
+        'edit','show','update','create'
+    ]]);
+
+    Route::resource('GroupList','GroupListController');
+
+    Route::prefix('GroupList')->group(function (){
+        Route::get('plus/{id}','GroupListController@plus_page');
+        Route::post('plus/{id}','GroupListController@plus');
+        Route::post('destroy_member/{id}','GroupListController@destroy_member');
+    });
+
+    Route::prefix('Transcript')->group(function (){
+        Route::get('/','TranscriptController@index')->name('Transcript.index');
+        Route::post('/search','TranscriptController@search');
+
+    });
+
+    Route::prefix('ReportList')->group(function (){
+        Route::get('/','ReportListController@index')->name('ReportList.index');
+        Route::get('/{id}','ReportListController@show')->name('ReportList.show');
+        Route::get('/{id}/download','ReportListController@download')->name('ReportList.download');
+        Route::get('/{id}/downloadALL','ReportListController@downloadALL')->name('ReportList.downloadALL');
+    });
+
 });
-
-Route::resource('ImportStudent','ImportStudentController',['only'=>[
-    'index','store','destroy'
-]]);
-
-Route::resource('ImportStudent','ImportStudentController',['except'=>[
-    'edit','show','update','create'
-]]);
-
-Route::resource('GroupList','GroupListController');
-
-Route::prefix('GroupList')->group(function (){
-    Route::get('plus/{id}','GroupListController@plus_page');
-    Route::post('plus/{id}','GroupListController@plus');
-    Route::post('destroy_member/{id}','GroupListController@destroy_member');
-});
-
-Route::prefix('Transcript')->group(function (){
-    Route::get('/','TranscriptController@index')->name('Transcript.index');
-    Route::post('/search','TranscriptController@search');
-
-});
-
-Route::prefix('ReportList')->group(function (){
-    Route::get('/','ReportListController@index')->name('ReportList.index');
-    Route::get('/{id}','ReportListController@show')->name('ReportList.show');
-    Route::get('/{id}/download','ReportListController@download')->name('ReportList.download');
-    Route::get('/{id}/downloadALL','ReportListController@downloadALL')->name('ReportList.downloadALL');
-});
-
-
 
 Route::prefix('StuLogin')->group(function (){
     Route::get('/','StuLoginController@index');
