@@ -22,9 +22,6 @@ class GroupListController extends Controller
 
         $team_length = count($teamId);
 
-//        $student = Student::whereHas('team',function ($q){
-//            $q->where('team_id','1');
-//        })->get('name');
         $arr_leader = array();
         $arr_member = array();
         $arr_team = array($teamName);

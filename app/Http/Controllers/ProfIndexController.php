@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\MeetingBulletin;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ProfIndexController extends Controller
 {

@@ -6,7 +6,6 @@ use App\Imports\ImportContacts;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-//use Illuminate\Support\Facades\Hash;
 
 class ImportStudentController extends Controller
 {
