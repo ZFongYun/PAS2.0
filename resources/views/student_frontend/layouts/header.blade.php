@@ -6,7 +6,7 @@
             <div class="">
                 <div class="float-left">
                     <button class="button-menu-mobile open-left waves-effect waves-light">
-                        <i class="zmdi zmdi-menu"></i><span>　同儕互評系統-學生端　</span></span>
+                        <i class="zmdi zmdi-menu"></i><span>　同儕互評系統-學生端　</span>
                     </button>
                 </div>
             </div>

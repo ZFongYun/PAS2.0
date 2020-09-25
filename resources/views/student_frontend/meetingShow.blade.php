@@ -26,7 +26,7 @@
                                 </div>
                                 <p class="info-title">報告組別</p>
                                 <div class="p-l-20 p-b-10">
-                                    <label class="form-title">{{$meeting['report_team']}}</label>
+                                    <p class="form-title m-l-15">{{$meeting['report_team']}}</p>
                                 </div>
                                 <p class="info-title">比重設定</p>
                                 <div class="p-l-20 p-b-10">

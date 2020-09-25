@@ -19,7 +19,6 @@
                             @endif
 
                             @if($report == null)
-                                <p>未上傳</p>
                                 <form action="{{route('StuMeeting.upload',$meeting['id'])}}" method="post" enctype="multipart/form-data">
                                     {{ csrf_field() }}
                                     <input name="file" type="file" accept=".pptx,.rar,.zip" value="">
@@ -32,7 +31,6 @@
                                     <button type="submit" class="btn waves-effect btn-rounded waves-light btn-success">上傳</button>
                                 </form>
                             @else
-                                <p>已上傳</p>
                                 <form action="{{route('StuMeeting.report_edit',$meeting['id'])}}" method="post" enctype="multipart/form-data">
                                     {{ csrf_field() }}
                                     <input name="file" type="file" accept=".pptx,.rar,.zip" value="">
@@ -43,9 +41,11 @@
                                     <p class="m-t-15">*上傳格式：pptx、zip、rar<br>
                                         *檔案大小限制；1GB</p>
                                     <button type="submit" class="btn waves-effect btn-rounded waves-light btn-success">重新上傳</button>
-                                    <p style="color: #3ec845;font-size: 20px">已繳交！</p>
-                                    <p>繳交時間：{{date("Y-m-d H:i:s",strtotime($report[0]['created_at']))}}</p>
-                                    <p>{{$report[0]['file_name']}}</p>
+                                    <div class="p-t-10">
+                                        <p style="color: #3ec845;font-size: 20px">已繳交！</p>
+                                        <p>繳交時間：{{date("Y-m-d H:i:s",strtotime($report[0]['created_at']))}}</p>
+                                        <p>{{$report[0]['file_name']}}</p>
+                                    </div>
                                 </form>
                             @endif
                         </div>

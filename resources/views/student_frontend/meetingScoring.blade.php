@@ -271,12 +271,10 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-
             </div> <!-- container-fluid -->
-
         </div> <!-- content -->
-
     </div>
+
     <script type="text/javascript">
         $.ajaxSetup({
             headers: {
@@ -311,7 +309,7 @@
                                 html += '<tr>';
                                 html += '<td>'+data[0]+'</td>';
                                 html += '<td>'+data[1]+'</td>';
-                                html += '<td>'+'<button class="btn btn-primary waves-effect waves-light m-l-10 button-font" data-toggle="modal" data-target="#ScoringTeamModal">評分</button>'+'</td></tr>';
+                                html += '<td>'+'<button class="btn btn-primary waves-effect waves-light m-l-10 button-font w-xs" data-toggle="modal" data-target="#ScoringTeamModal">評分</button>'+'</td></tr>';
                                 $('tbody').html(html);
                             }else {
                                 $('#team_table').show();
@@ -319,7 +317,7 @@
                                 html += '<tr>';
                                 html += '<td>'+data[0]+'</td>';
                                 html += '<td>'+data[1][0]['point']+'</td>';
-                                html += '<td><button class="edit_team_modal btn btn-warning waves-effect waves-light m-l-10 button-font" id="edit_team_modal" data-toggle="modal" data-target="#EditTeamModal" data-feedback="'+data[1][0]['feedback']+'" data-point="'+data[1][0]['point']+'" data-team="'+data[0]+'">編輯</button>'+'</td></tr>';
+                                html += '<td><button class="edit_team_modal btn btn-warning waves-effect waves-light m-l-10 button-font w-xs" id="edit_team_modal" data-toggle="modal" data-target="#EditTeamModal" data-feedback="'+data[1][0]['feedback']+'" data-point="'+data[1][0]['point']+'" data-team="'+data[0]+'">編輯</button>'+'</td></tr>';
                                 $('tbody').html(html);
                             }
                             $('#member_table').show();
@@ -337,7 +335,7 @@
                                         html_stu += '<td>'+'美術'+'</td>'
                                     }
                                     html_stu += '<td>'+data[i]+'</td>';
-                                    html_stu += '<td>'+'<button class="score_stu_modal btn btn-primary waves-effect waves-light m-l-10 button-font" data-toggle="modal" data-target="#ScoringStudentModal" data-sid="'+data[i-1]['id']+'">評分</button>'+'</td></tr>';
+                                    html_stu += '<td>'+'<button class="score_stu_modal btn btn-primary waves-effect waves-light m-l-10 button-font w-xs" data-toggle="modal" data-target="#ScoringStudentModal" data-sid="'+data[i-1]['id']+'">評分</button>'+'</td></tr>';
                                     $('#stu').html(html_stu);
                                 }else {
                                     html_stu += '<tr>';
@@ -351,12 +349,11 @@
                                         html_stu += '<td>'+'美術'+'</td>'
                                     }
                                     html_stu += '<td>'+data[i][0]['point']+'</td>';
-                                    html_stu += '<td><button class="edit_stu_modal btn btn-warning waves-effect waves-light m-l-10 button-font" data-toggle="modal" data-target="#EditStuModal" data-sid="'+data[i-1]['id']+'" data-point="'+data[i][0]['point']+'" data-feedback="'+data[i][0]['feedback']+'">編輯</button>'+'</td></tr>';
+                                    html_stu += '<td><button class="edit_stu_modal btn btn-warning waves-effect waves-light m-l-10 button-font w-xs" data-toggle="modal" data-target="#EditStuModal" data-sid="'+data[i-1]['id']+'" data-point="'+data[i][0]['point']+'" data-feedback="'+data[i][0]['feedback']+'">編輯</button>'+'</td></tr>';
                                     $('#stu').html(html_stu);
                                 }
                             }
                         }
-
                     },
                     error: function (){
                         alert('加入失敗');
@@ -387,7 +384,6 @@
                     error: function (){
                         alert('評分失敗')
                     }
-
                 });
             });
         });

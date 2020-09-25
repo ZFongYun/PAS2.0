@@ -4,31 +4,33 @@
         <!-- Start content -->
         <div class="content">
             <div class="container-fluid">
-
                 <!-- Page-Title -->
-                <div class="col-sm-12">
+                <div class="col-sm-12 m-t-10">
                     <h4 class="page-title">學生成績</h4>
-                    <div class="col-sm-12 m-t-10">
-                        <form class="form-inline">
-                            <div class="form-group m-r-10 col-sm-3">
-                                <label for="meeting" class="m-r-10">會議記錄</label>
-                                <select class="form-control col-sm-8" id="meeting" name="meeting">
-                                    @foreach($meeting as $row_meeting)
-                                        <option value="{{$row_meeting['id']}}">{{$row_meeting['name']}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group m-r-10 col-sm-3">
-                                <label for="choose" class="m-r-10">小組/個人</label>
-                                <select class="form-control col-sm-8" id="choose" name="choose">
-                                    <option value="0">小組</option>
-                                    <option value="1">個人</option>
-                                </select>
-                            </div>
-                            <button type="button" class="search btn btn-primary waves-effect waves-light btn-md">搜尋</button>
-                        </form>
-                    </div>
                 </div>
+                <div class="col-sm-12 ">
+                    <form class="form-inline">
+                        <div class="form-group m-r-10 col-sm-3">
+                            <label for="meeting" class="m-r-10">會議記錄</label>
+                            <select class="form-control col-sm-8" id="meeting" name="meeting">
+                                @foreach($meeting as $row_meeting)
+                                    <option value="{{$row_meeting['id']}}">{{$row_meeting['name']}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group m-r-10 col-sm-3">
+                            <label for="choose" class="m-r-10">小組/個人</label>
+                            <select class="form-control col-sm-8" id="choose" name="choose">
+                                <option value="0">小組</option>
+                                <option value="1">個人</option>
+                            </select>
+                        </div>
+                        <div class="form-group m-r-10 col-sm-3">
+                            <button type="button" class="search btn btn-primary waves-effect waves-light btn-md">搜尋</button>
+                        </div>
+                    </form>
+                </div>
+
                 <label class="form-title p-t-10" id="date_title"></label><br>
                 <label class="form-title p-t-10" id="feedback_title" style="display: none"></label>
                 <div class="table-responsive">
@@ -72,11 +74,8 @@
                         </tbody>
                     </table>
                 </div>
-
             </div> <!-- container-fluid -->
-
         </div> <!-- content -->
-
     </div>
 
     <script type="text/javascript">
@@ -149,12 +148,10 @@
                             }
                             $('#stu_feedback_body').html(html_stu_feedback);
                         }
-
                     },
                     error: function (){
                         alert('error')
                     }
-
                 });
             });
         });
