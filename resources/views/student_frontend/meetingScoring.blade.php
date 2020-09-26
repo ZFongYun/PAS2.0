@@ -282,6 +282,17 @@
             }
         });
 
+        var meeting = "{{$meeting ['meeting_date']}}" + " " + "{{$meeting ['meeting_end']}}";
+        var interval = setInterval(function(){
+            var today = new Date();
+            var current = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
+            if(Date.parse(meeting) < Date.parse(current)){
+                clearInterval(interval);
+                alert("今天會議結束囉~!");
+                window.location.href='/StuMeeting';
+            }
+        }, 2000);
+
         var check=function(){
             var html = '';
             var html_stu = '';
