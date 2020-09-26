@@ -38,11 +38,15 @@ class StuMeetingController extends Controller
 
     public function report($id)
     {
-        $upload_team = auth('student')->user()->team_id;
-        $report = Report::where('meeting_id',$id)->where('team_id',$upload_team)->get()->toArray();
-
-        $meeting = Meeting::find($id) -> toArray();
-        return view('student_frontend.meetingReport',compact('meeting','report'));
+        $meeting = Meeting::find($id)->toArray();
+        if (strtotime(date("Y-m-d H:i:s")) < strtotime($meeting['upload_date'].' '.$meeting['upload_time'])){
+            $upload_team = auth('student')->user()->team_id;
+            $report = Report::where('meeting_id',$id)->where('team_id',$upload_team)->get()->toArray();
+            return view('student_frontend.meetingReport',compact('meeting','report'));
+        }else{
+            echo "<script>alert('已截止繳交報告。')</script>";
+            echo '<meta http-equiv=REFRESH CONTENT=0.5;url=/StuMeeting>';
+        }
     }
 
     public function upload(Request $request,$id)
