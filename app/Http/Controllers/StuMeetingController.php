@@ -103,6 +103,12 @@ class StuMeetingController extends Controller
         }
     }
 
+    public function download($id){
+        $report = Report::where('id',$id)->value('file_name');
+        $file = public_path('storage/'.$report);
+        return  response()->download($file);
+    }
+
     public function scoring_page($id){
         $meeting = Meeting::find($id)->toArray();
         if (strtotime(date("Y-m-d H:i:s")) > strtotime($meeting['meeting_date'].' '.$meeting['meeting_start']) && strtotime(date("Y-m-d H:i:s")) < strtotime($meeting['meeting_date'].' '.$meeting['meeting_end'])){

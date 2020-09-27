@@ -107,6 +107,7 @@ Route::group(['middleware' => 'auth.student'], function() {
         Route::get('/report/{id}','StuMeetingController@report')->name('StuMeeting.report');
         Route::post('/report/{id}/upload','StuMeetingController@upload')->name('StuMeeting.upload');
         Route::post('/report/{id}/edit','StuMeetingController@report_edit')->name('StuMeeting.report_edit');
+        Route::get('/report/{id}/download','StuMeetingController@download')->name('StuMeeting.download');
         Route::get('score/{id}','StuMeetingController@scoring_page')->name('StuMeeting.scoring_page');
         Route::post('score','StuMeetingController@score');
         Route::post('scoring_team','StuMeetingController@scoring_team');

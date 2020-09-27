@@ -44,7 +44,7 @@
                                     <div class="p-t-10">
                                         <p style="color: #3ec845;font-size: 20px">已繳交！</p>
                                         <p>繳交時間：{{date("Y-m-d H:i:s",strtotime($report[0]['created_at']))}}</p>
-                                        <p>{{$report[0]['file_name']}}</p>
+                                        <a href="{{route('StuMeeting.download',$report[0]['id'])}}">{{$report[0]['file_name']}}</a>
                                     </div>
                                 </form>
                             @endif
