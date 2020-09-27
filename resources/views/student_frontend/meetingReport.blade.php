@@ -26,19 +26,19 @@
                                         <label for="file"></label>
                                         <span class="text-danger"> {{ $errors->first('file') }}</span>
                                     </div>
-                                    <p class="m-t-15">*上傳格式：pptx、zip、rar<br>
+                                    <p class="m-t-15">*上傳格式：ppt、pptx、zip、rar<br>
                                         *檔案大小限制；1GB</p>
                                     <button type="submit" class="btn waves-effect btn-rounded waves-light btn-success">上傳</button>
                                 </form>
                             @else
                                 <form action="{{route('StuMeeting.report_edit',$meeting['id'])}}" method="post" enctype="multipart/form-data">
                                     {{ csrf_field() }}
-                                    <input name="file" type="file" accept=".pptx,.rar,.zip" value="">
+                                    <input name="file" type="file" accept=".ppt,.pptx,.rar,.zip" value="">
                                     <div class="form-group" {{ $errors->has('file') ? 'has-error' : '' }}>
                                         <label for="file"></label>
                                         <span class="text-danger"> {{ $errors->first('file') }}</span>
                                     </div>
-                                    <p class="m-t-15">*上傳格式：pptx、zip、rar<br>
+                                    <p class="m-t-15">*上傳格式：ppt、pptx、zip、rar<br>
                                         *檔案大小限制；1GB</p>
                                     <button type="submit" class="btn waves-effect btn-rounded waves-light btn-success">重新上傳</button>
                                     <div class="p-t-10">
