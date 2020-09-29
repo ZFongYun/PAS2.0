@@ -39,6 +39,10 @@ Route::group(['middleware' => 'auth.teacher'], function() {
         Route::post('edit_stu','MeetingController@edit_stu');
     });
 
+    Route::prefix('score')->group(function(){
+        Route::post('/','ScoreController@scoring');
+    });
+
     Route::resource('ImportStudent','ImportStudentController',['only'=>[
         'index','store','destroy'
     ]]);
@@ -114,10 +118,6 @@ Route::group(['middleware' => 'auth.student'], function() {
         Route::post('edit_team','StuMeetingController@edit_team');
         Route::post('scoring_stu','StuMeetingController@scoring_stu');
         Route::post('edit_stu','StuMeetingController@edit_stu');
-    });
-
-    Route::prefix('score')->group(function(){
-        Route::post('/','ScoreController@scoring');
     });
 
     Route::prefix('StuTranscript')->group(function (){
