@@ -30,15 +30,15 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @for($i = 0; $i < $report_length; $i++)
+                                @foreach($report as $row)
                                     <tr>
-                                        <td>{{$report[$i]['id']}}</td>
-                                        <td>{{$team_list[$i][0]['name']}}</td>
-                                        <td>{{$report[$i]['file_name']}}</td>
-                                        <td>{{date("Y-m-d　H:i",strtotime($report[$i]['created_at']))}}</td>
-                                        <td><a href="{{route('ReportList.download',$report[$i]['id'])}}" class="btn btn-icon waves-effect waves-light btn-primary"><i class="zmdi zmdi-download"></i></a></td>
+                                        <td>{{$row->id}}</td>
+                                        <td>{{$row->name}}</td>
+                                        <td>{{$row->file_name}}</td>
+                                        <td>{{date("Y-m-d　H:i",strtotime($row->created_at))}}</td>
+                                        <td><a href="{{route('ReportList.download',$row->id)}}" class="btn btn-icon waves-effect waves-light btn-primary"><i class="zmdi zmdi-download"></i></a></td>
                                     </tr>
-                                @endfor
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
