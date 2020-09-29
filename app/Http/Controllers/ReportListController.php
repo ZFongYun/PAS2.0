@@ -6,6 +6,7 @@ use App\Models\Meeting;
 use App\Models\Report;
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use ZipArchive;
 
 class ReportListController extends Controller
@@ -24,15 +25,13 @@ class ReportListController extends Controller
 
     public function show($id){
         $meeting_id = $id;
-        $report = Report::where('meeting_id',$id)->get()->toArray();
-        $report_id = Report::all('team_id')->toArray();
-        $report_length = count($report);
-        $team_list = array();
-        foreach ($report_id as $id){
-            $team = Team::where('id',$id)->get('name')->toArray();
-            array_push($team_list,$team);
-        }
-        return view('teacher_frontend.ReportListShow',compact('meeting_id','report_length','report','team_list'));
+        $report = DB::table('report')
+            ->where('meeting_id',$id)
+            ->join('team','report.team_id','=','team.id')
+            ->select('report.*','team.name')
+            ->get()->toArray();
+        return view('teacher_frontend.ReportListShow',compact('meeting_id','report'));
+
     }
 
     public function download($id){
