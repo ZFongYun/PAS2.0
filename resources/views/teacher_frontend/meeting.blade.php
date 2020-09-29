@@ -40,7 +40,7 @@
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         </form>
                                         <td><a href="{{action('MeetingController@scoring_page',$row['id'])}}" class="btn btn-icon waves-effect waves-light btn-primary"><i class="fa fa-sign-in"></i></a></td>
-                                        @if(strtotime(date("Y-m-d H:i:s")) > strtotime($row['upload_date'].' '.$row['upload_time']))
+                                        @if(strtotime(date("Y-m-d H:i:s")) > strtotime($row['meeting_date'].' '.$row['meeting_end']))
                                             @if($row['is_End'] == 0)
                                                 <td><button type="submit" class="send btn btn-icon waves-effect waves-light btn-success" data-mid="{{$row['id']}}"><i class="fa fa-file-o"> </i></button><input type="hidden" id="score_send"></td>
                                             @else
