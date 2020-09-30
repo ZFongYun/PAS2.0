@@ -55,7 +55,7 @@ class StuMeetingController extends Controller
             ['file' => 'required|mimes:pptx,rar,zip|max:100000'],
             [
                 'file.required'=>'請選擇檔案',
-                'file.mimes'=>'上傳格式為pptx、zip、rar',
+                'file.mimes'=>'上傳格式錯誤',
                 'file.max'=>'上傳檔案大小過大',
             ]);
 
