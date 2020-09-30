@@ -39,6 +39,10 @@ Route::group(['middleware' => 'auth.teacher'], function() {
         Route::post('edit_stu','MeetingController@edit_stu');
     });
 
+    Route::prefix('score')->group(function(){
+        Route::post('/','ScoreController@scoring');
+    });
+
     Route::resource('ImportStudent','ImportStudentController',['only'=>[
         'index','store','destroy'
     ]]);
