@@ -26,9 +26,13 @@ class ScoreController extends Controller
             $team_id = Team::where('name',$report_team_arr[$i])->value('id');
             $teacher_score = TeacherScoringTeam::where('meeting_id',$id)->where('object_team_id',$team_id)->value('point');  //教師評分組別的分數
             $student_count = StudentScoringTeam::where('meeting_id',$id)->where('object_team_id',$team_id)->count();  //學生評分組別的次數
-            $student_score = StudentScoringTeam::where('meeting_id',$id)->where('object_team_id',$team_id)->sum('point');  //學生評分組別的分數加總
             $teacher = $teacher_score*$TS;
-            $student = ($student_score / $student_count)*$PA;
+            if ($student_count == 0){
+                $student = 0;
+            }else{
+                $student_score = StudentScoringTeam::where('meeting_id',$id)->where('object_team_id',$team_id)->sum('point');  //學生評分組別的分數加總
+                $student = ($student_score / $student_count)*$PA;
+            }
             $total = $teacher+$student;
             $team_score = new TeamScore;
             $team_score->team_id = $team_id;
@@ -46,9 +50,13 @@ class ScoreController extends Controller
             for ($j = 0; $j < count($student); $j++){
                 $teacher_score_stu = TeacherScoringStudent::where('meeting_id',$id)->where('object_student_id',$student[$j])->value('point');
                 $peer_count = StudentScoringPeer::where('meeting_id',$id)->where('object_student_id',$student[$j])->count();
-                $peer_score = StudentScoringPeer::where('meeting_id',$id)->where('object_student_id',$student[$j])->sum('point');
                 $teacher_peer = $teacher_score_stu*$TS;
-                $student_peer = ($peer_score / $peer_count)*$PA;
+                if ($peer_count == 0){
+                    $student_peer = 0 ;
+                }else{
+                    $peer_score = StudentScoringPeer::where('meeting_id',$id)->where('object_student_id',$student[$j])->sum('point');
+                    $student_peer = ($peer_score / $peer_count)*$PA;
+                }
                 $total_peer = $teacher_peer+$student_peer;
                 $stu_score = new StudentScore;
                 $stu_score->student_id = $student[$j]['id'];

@@ -78,7 +78,6 @@
                         _token: '{{csrf_token()}}'},
                     success: function(data) {
                         alert(data)
-                        console.log(data)
                     },
                     error: function (){
                         alert('結算失敗')
