@@ -22,7 +22,7 @@
                                         <label for="team" class="m-r-10">組別</label>
                                         <select class="form-control col-sm-8" id="team" name="team">
                                             @foreach($team as $row_team)
-                                                <option value="{{$row_team['id']}}">{{$row_team['name']}}</option>
+                                                <option value="{{$row_team['name']}}">{{$row_team['name']}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -78,6 +78,28 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        $("#meeting").change(function(){
+            var meeting = $('#meeting').val();
+            $(document).ready(function() {
+                $.ajax({
+                    type:'POST',
+                    url:'/Transcript/searchTeam',
+                    data:{meeting:meeting,
+                        _token: '{{csrf_token()}}'},
+                    success: function(data) {
+                        var Sinner="";
+                        for (var i = 1; i < data.length; i++){
+                            Sinner=Sinner+'<option value='+data[i]+'>'+data[i]+'</option>';
+                        }
+                        $("#team").html(Sinner);
+                    },
+                    error: function (){
+                        alert('error')
+                    }
+                });
+            });
         });
 
         $(document).on('click', '.search', function() {

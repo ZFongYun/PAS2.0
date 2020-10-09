@@ -24,7 +24,8 @@ class TranscriptController extends Controller
 
     public function search(Request $request){
         $meeting_id = $request->input('meeting');
-        $team_id = $request->input('team');
+        $team_name = $request->input('team');
+        $team_id = Team::where('name',$team_name)->value('id');
         $all_data_arr = array();  //全部資料
         $stu_score_arr = array();  //組員成績
         $teacher_stu_feedback_arr = array();  //老師評分組員回饋
@@ -100,5 +101,13 @@ class TranscriptController extends Controller
             return $all_data_arr;
         }
 
+    }
+
+    public function searchTeam(Request $request){
+        $meeting_id = $request->input('meeting');
+        $meeting = Meeting::find($meeting_id)->toArray();
+        $team = $meeting['report_team'];
+        $team_arr = explode(" ",$team);
+        return $team_arr;
     }
 }

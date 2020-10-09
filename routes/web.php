@@ -62,7 +62,7 @@ Route::group(['middleware' => 'auth.teacher'], function() {
     Route::prefix('Transcript')->group(function (){
         Route::get('/','TranscriptController@index')->name('Transcript.index');
         Route::post('/search','TranscriptController@search');
-
+        Route::post('/searchTeam','TranscriptController@searchTeam');
     });
 
     Route::prefix('ReportList')->group(function (){
