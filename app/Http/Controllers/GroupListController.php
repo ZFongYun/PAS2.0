@@ -28,45 +28,44 @@ class GroupListController extends Controller
         $arr_team = array($teamName);
         $arr_id = array($teamId);
 
-        foreach ($teamId as $id){
-            $student = Student::whereHas('team',function ($q) use ($id) {
-                $q->where('team_id',$id);
-            })->get(['name','role'])->toArray();
-            $student_length = count($student);
-            $leader = "";
-            $member = "";
-
-            for ($i = 0; $i < $student_length; $i++){
-                if ($student[$i]['role'] == 0){
-                    $leader = $leader." ".$student[$i]['name'];
-                }else if($student[$i]['role'] == 1){
-                    $member = $member." ".$student[$i]['name'];
-                }
-
-            }
-            array_push($arr_leader,$leader);
-            array_push($arr_member,$member);
-
-        }
 //        foreach ($teamId as $id){
-//            $team_member = TeamMember::with(array('student'=>function($query){
-//                $query->select('id','name');
-//            }))->whereHas('team',function ($q) use ($id) {
+//            $student = Student::whereHas('team',function ($q) use ($id) {
 //                $q->where('team_id',$id);
-//            })->get(['student_id','role'])->toArray();
-//            $student_length = count($team_member);
-//            $leader = ":";
-//            $member = ":";
+//            })->get(['name','role'])->toArray();
+//            $student_length = count($student);
+//            $leader = "";
+//            $member = "";
+//
 //            for ($i = 0; $i < $student_length; $i++){
-//                if ($team_member[$i]['role'] == 0){
-//                    $leader = $leader." ".$team_member[$i]['student']['name'];
-//                }else if($team_member[$i]['role'] == 1){
-//                    $member = $member." ".$team_member[$i]['student']['name'];
+//                if ($student[$i]['role'] == 0){
+//                    $leader = $leader." ".$student[$i]['name'];
+//                }else if($student[$i]['role'] == 1){
+//                    $member = $member." ".$student[$i]['name'];
 //                }
+//
 //            }
 //            array_push($arr_leader,$leader);
 //            array_push($arr_member,$member);
 //        }
+        foreach ($teamId as $id){
+            $team_member = TeamMember::with(array('student'=>function($query){
+                $query->select('id','name');
+            }))->whereHas('team',function ($q) use ($id) {
+                $q->where('team_id',$id);
+            })->get(['student_id','role'])->toArray();
+            $student_length = count($team_member);
+            $leader = "";
+            $member = "";
+            for ($i = 0; $i < $student_length; $i++){
+                if ($team_member[$i]['role'] == 0){
+                    $leader = $leader." ".$team_member[$i]['student']['name'];
+                }else if($team_member[$i]['role'] == 1){
+                    $member = $member." ".$team_member[$i]['student']['name'];
+                }
+            }
+            array_push($arr_leader,$leader);
+            array_push($arr_member,$member);
+        }
 
         return view('teacher_frontend.GroupList',compact('arr_id','arr_team','arr_leader','arr_member','team_length'));
     }
@@ -118,9 +117,15 @@ class GroupListController extends Controller
                         $role = $request->input('role'.$studentId);
                         $position = $request->input('position'.$studentId);
 
+                        $team_member = new TeamMember;
+                        $team_member -> student_id = $studentId;
+                        $team_member -> team_id = $team_id;
+                        $team_member -> role = $role;
+                        $team_member -> position = $position;
+                        $team_member -> save();
                         $student = Student::find($studentId);
-                        $student -> role = $role;
-                        $student -> position = $position;
+//                        $student -> role = $role;
+//                        $student -> position = $position;
                         $student -> team_id = $team_id;
                         $student -> save();
                     }
