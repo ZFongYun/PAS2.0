@@ -33,4 +33,8 @@ class Team extends Model
     public function teacher_scoring_team(){
         return $this->hasMany('App\Models\TeacherScoringTeam');
     }
+
+    public function team_member(){
+        return $this->hasMany('App\Models\TeamMember');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Models\Team;
+use App\Models\TeamMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -47,6 +48,25 @@ class GroupListController extends Controller
             array_push($arr_member,$member);
 
         }
+//        foreach ($teamId as $id){
+//            $team_member = TeamMember::with(array('student'=>function($query){
+//                $query->select('id','name');
+//            }))->whereHas('team',function ($q) use ($id) {
+//                $q->where('team_id',$id);
+//            })->get(['student_id','role'])->toArray();
+//            $student_length = count($team_member);
+//            $leader = ":";
+//            $member = ":";
+//            for ($i = 0; $i < $student_length; $i++){
+//                if ($team_member[$i]['role'] == 0){
+//                    $leader = $leader." ".$team_member[$i]['student']['name'];
+//                }else if($team_member[$i]['role'] == 1){
+//                    $member = $member." ".$team_member[$i]['student']['name'];
+//                }
+//            }
+//            array_push($arr_leader,$leader);
+//            array_push($arr_member,$member);
+//        }
 
         return view('teacher_frontend.GroupList',compact('arr_id','arr_team','arr_leader','arr_member','team_length'));
     }
@@ -129,6 +149,15 @@ class GroupListController extends Controller
         })->get(['id','name','student_id','role','position'])->toArray();
         $student_length = count($student);
 
+//        $team_member = TeamMember::with(array('student'=>function($query){
+//            $query->select('id','name','student_id');
+//        }))->with(array('team'=>function($query){
+//            $query->select('id','name');
+//        }))->whereHas('team',function ($q) use ($id) {
+//            $q->where('team_id',$id);
+//        })->get(['id','student_id','team_id','role','position'])->toArray();
+//        $team_member_length = count($team_member);
+
         return view('teacher_frontend.GroupListShow',compact('team_name','student_length','student'));
     }
 
@@ -146,6 +175,15 @@ class GroupListController extends Controller
             $q->where('team_id',$id);
         })->get(['id','name','student_id','role','position'])->toArray();
         $student_length = count($student);
+
+//        $team_member = TeamMember::with(array('student'=>function($query){
+//            $query->select('id','name','student_id');
+//        }))->with(array('team'=>function($query){
+//            $query->select('id','name');
+//        }))->whereHas('team',function ($q) use ($id) {
+//            $q->where('team_id',$id);
+//        })->get(['id','student_id','team_id','role','position'])->toArray();
+//        $team_member_length = count($team_member);
 
         return view('teacher_frontend.GroupListEdit',compact('team_name','team_id','student_length','student'));
     }
