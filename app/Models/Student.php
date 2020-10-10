@@ -40,4 +40,8 @@ class Student extends Authenticatable
     public function team(){
         return $this->belongsTo('App\Models\Team','team_id');
     }
+
+    public function team_member(){
+        return $this->hasMany('App\Models\TeamMember');
+    }
 }
