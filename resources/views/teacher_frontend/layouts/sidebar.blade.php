@@ -18,10 +18,6 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="{{route('meeting.index')}}" class="waves-effect"><i class="fa fa-cog"></i> <span> 會議管理 </span> </a>
-                </li>
-
-                <li class="has_sub">
                     <a href="{{route('ImportStudent.index')}}" class="waves-effect"><i class="fa fa-user"></i> <span> 成員名單 </span> </a>
                 </li>
 
@@ -30,11 +26,15 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="{{route('Transcript.index')}}" class="waves-effect"><i class="fa fa-search"></i> <span> 學生成績 </span> </a>
+                    <a href="{{route('meeting.index')}}" class="waves-effect"><i class="fa fa-cog"></i> <span> 會議管理 </span> </a>
                 </li>
 
                 <li class="has_sub">
                     <a href="{{route('ReportList.index')}}" class="waves-effect"><i class="fa fa-download"></i> <span> 報告下載 </span> </a>
+                </li>
+
+                <li class="has_sub">
+                    <a href="{{route('Transcript.index')}}" class="waves-effect"><i class="fa fa-search"></i> <span> 成績查詢 </span> </a>
                 </li>
 
             </ul>
