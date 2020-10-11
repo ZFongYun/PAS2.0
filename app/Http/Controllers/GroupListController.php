@@ -149,21 +149,21 @@ class GroupListController extends Controller
     public function show($id)
     {
         $team_name = Team::where('id',$id)->value('name');
-        $student = Student::whereHas('team',function ($q) use ($id) {
-            $q->where('team_id',$id);
-        })->get(['id','name','student_id','role','position'])->toArray();
-        $student_length = count($student);
-
-//        $team_member = TeamMember::with(array('student'=>function($query){
-//            $query->select('id','name','student_id');
-//        }))->with(array('team'=>function($query){
-//            $query->select('id','name');
-//        }))->whereHas('team',function ($q) use ($id) {
+//        $student = Student::whereHas('team',function ($q) use ($id) {
 //            $q->where('team_id',$id);
-//        })->get(['id','student_id','team_id','role','position'])->toArray();
-//        $team_member_length = count($team_member);
+//        })->get(['id','name','student_id','role','position'])->toArray();
+//        $student_length = count($student);
 
-        return view('teacher_frontend.GroupListShow',compact('team_name','student_length','student'));
+        $team_member = TeamMember::with(array('student'=>function($query){
+            $query->select('id','name','student_id');
+        }))->with(array('team'=>function($query){
+            $query->select('id','name');
+        }))->whereHas('team',function ($q) use ($id) {
+            $q->where('team_id',$id);
+        })->get(['id','student_id','team_id','role','position'])->toArray();
+        $team_member_length = count($team_member);
+
+        return view('teacher_frontend.GroupListShow',compact('team_name','team_member_length','team_member'));
     }
 
     /**
@@ -176,21 +176,21 @@ class GroupListController extends Controller
     {
         $team_name = Team::where('id',$id)->value('name');
         $team_id = Team::where('id',$id)->value('id');
-        $student = Student::whereHas('team',function ($q) use ($id) {
-            $q->where('team_id',$id);
-        })->get(['id','name','student_id','role','position'])->toArray();
-        $student_length = count($student);
-
-//        $team_member = TeamMember::with(array('student'=>function($query){
-//            $query->select('id','name','student_id');
-//        }))->with(array('team'=>function($query){
-//            $query->select('id','name');
-//        }))->whereHas('team',function ($q) use ($id) {
+//        $student = Student::whereHas('team',function ($q) use ($id) {
 //            $q->where('team_id',$id);
-//        })->get(['id','student_id','team_id','role','position'])->toArray();
-//        $team_member_length = count($team_member);
+//        })->get(['id','name','student_id','role','position'])->toArray();
+//        $student_length = count($student);
 
-        return view('teacher_frontend.GroupListEdit',compact('team_name','team_id','student_length','student'));
+        $team_member = TeamMember::with(array('student'=>function($query){
+            $query->select('id','name','student_id');
+        }))->with(array('team'=>function($query){
+            $query->select('id','name');
+        }))->whereHas('team',function ($q) use ($id) {
+            $q->where('team_id',$id);
+        })->get(['id','student_id','team_id','role','position'])->toArray();
+        $team_member_length = count($team_member);
+
+        return view('teacher_frontend.GroupListEdit',compact('team_name','team_id','team_member_length','team_member'));
     }
 
     /**
@@ -227,11 +227,16 @@ class GroupListController extends Controller
                     $team -> name = $team_name;
                     $team -> save();
 
-                    $student = Student::find($hiddenId);
-                    $student -> role = $role;
-                    $student -> position = $position;
-                    $student -> save();
+//                    $student = Student::find($hiddenId);
+//                    $student -> role = $role;
+//                    $student -> position = $position;
+//                    $student -> save();
+                    $team_member = TeamMember::find($hiddenId);
+                    $team_member -> role = $role;
+                    $team_member -> position = $position;
+                    $team_member -> save();
                 }
+
                 return redirect('GroupList');
             }
         }else{
@@ -250,11 +255,16 @@ class GroupListController extends Controller
      */
     public function destroy($id)
     {
+//        $student = DB::table('student')->where('team_id', '=', $id)
+//            ->update(array('team_id' => null,'role' => null,'position' => null));
         $student = DB::table('student')->where('team_id', '=', $id)
-            ->update(array('team_id' => null,'role' => null,'position' => null));
+            ->update(array('team_id' => null));
+
+        $team_member = TeamMember::where('team_id',$id)->delete();
 
         $team = Team::find($id);
         $team -> delete();
+
         return redirect('GroupList');
 
     }
@@ -273,10 +283,17 @@ class GroupListController extends Controller
             foreach($_POST['student'] as $studentId){
                 $position = $request->input('position'.$studentId);
                 $student = Student::find($studentId);
-                $student -> position = $position;
-                $student -> role = '1';  //固定組員
+//                $student -> position = $position;
+//                $student -> role = '1';  //固定組員
                 $student -> team_id = $id;
                 $student -> save();
+
+                $team_member = new TeamMember;
+                $team_member -> student_id = $studentId;
+                $team_member -> team_id = $id;
+                $team_member -> role = '1';
+                $team_member -> position = $position;
+                $team_member -> save();
             }
             return redirect('GroupList');
         }else{
@@ -288,9 +305,12 @@ class GroupListController extends Controller
     {
         $student = Student::find($id);
         $student -> team_id = null;
-        $student -> role = null;
-        $student -> position = null;
+//        $student -> role = null;
+//        $student -> position = null;
         $student -> save();
+
+        $team_member = TeamMember::where('student_id',$id)->first();
+        $team_member -> delete();
 
         return back();
     }

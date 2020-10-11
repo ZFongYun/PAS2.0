@@ -10,6 +10,7 @@ use App\Models\StudentScoringTeam;
 use App\Models\TeacherScoringStudent;
 use App\Models\TeacherScoringTeam;
 use App\Models\Team;
+use App\Models\TeamMember;
 use App\Models\TeamScore;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,7 @@ class TranscriptController extends Controller
     public function search(Request $request){
         $meeting_id = $request->input('meeting');
         $team_name = $request->input('team');
-        $team_id = Team::where('name',$team_name)->value('id');
+        $team_id = Team::withTrashed()->where('name',$team_name)->value('id');
         $all_data_arr = array();  //全部資料
         $stu_score_arr = array();  //組員成績
         $teacher_stu_feedback_arr = array();  //老師評分組員回饋
@@ -45,11 +46,11 @@ class TranscriptController extends Controller
             ->select('student_scoring_team.*','student.name')
             ->get();  //學生評分組別回饋
 
-        $stu_team = Student::where('team_id',$team_id)->get()->toArray();
+        $stu_team = TeamMember::withTrashed()->where('team_id',$team_id)->get()->toArray();
         for ($i = 0; $i < count($stu_team); $i++){
             $stu_score = DB::Table('student_score')
                 ->join('student','student_score.student_id','=','student.id')
-                ->where('student_score.student_id',$stu_team[$i]['id'])->where('meeting_id',$meeting_id)
+                ->where('student_score.student_id',$stu_team[$i]['student_id'])->where('meeting_id',12)
                 ->select('student_score.*','student.name','student.student_ID')
                 ->get();  //組員成績
             array_push($stu_score_arr,$stu_score);
