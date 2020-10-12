@@ -39,8 +39,14 @@ Route::group(['middleware' => 'auth.teacher'], function() {
         Route::post('edit_stu','MeetingController@edit_stu');
     });
 
-    Route::prefix('score')->group(function(){
-        Route::post('/','ScoreController@scoring');
+//    Route::prefix('score')->group(function(){
+//        Route::post('/','ScoreController@scoring');
+//    });
+
+    Route::prefix('grades')->group(function(){
+        Route::get('/{id}','ScoreController@grades_page');
+        Route::post('/search','ScoreController@search');
+
     });
 
     Route::resource('ImportStudent','ImportStudentController',['only'=>[

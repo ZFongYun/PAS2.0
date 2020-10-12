@@ -40,15 +40,16 @@
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         </form>
                                         <td><a href="{{action('MeetingController@scoring_page',$row['id'])}}" class="btn btn-icon waves-effect waves-light btn-primary"><i class="fa fa-sign-in"></i></a></td>
-                                        @if(strtotime(date("Y-m-d H:i:s")) > strtotime($row['meeting_date'].' '.$row['meeting_end']))
-                                            @if($row['is_End'] == 0)
-                                                <td><button type="submit" class="send btn btn-icon waves-effect waves-light btn-success" data-mid="{{$row['id']}}"><i class="fa fa-file-o"> </i></button><input type="hidden" id="score_send"></td>
-                                            @else
-                                                <td><button type="button" class="btn btn-icon btn-success disabled"><i class="fa fa-file-o"> </i></button></td>
-                                            @endif
-                                        @else
-                                            <td><button type="button" class="btn btn-icon btn-success disabled"><i class="fa fa-file-o"> </i></button></td>
-                                        @endif
+{{--                                        @if(strtotime(date("Y-m-d H:i:s")) > strtotime($row['meeting_date'].' '.$row['meeting_end']))--}}
+{{--                                            @if($row['is_End'] == 0)--}}
+{{--                                                <td><button type="submit" class="send btn btn-icon waves-effect waves-light btn-success" data-mid="{{$row['id']}}"><i class="fa fa-file-o"> </i></button><input type="hidden" id="score_send"></td>--}}
+{{--                                            @else--}}
+{{--                                                <td><button type="button" class="btn btn-icon btn-success disabled"><i class="fa fa-file-o"> </i></button></td>--}}
+{{--                                            @endif--}}
+{{--                                        @else--}}
+{{--                                            <td><button type="button" class="btn btn-icon btn-success disabled"><i class="fa fa-file-o"> </i></button></td>--}}
+{{--                                        @endif--}}
+                                        <td><a href="{{action('ScoreController@grades_page',$row['id'])}}" class="btn btn-icon waves-effect waves-light btn-success"><i class="fa fa-file-o"></i></a></td>
                                     </tr>
                                 @endforeach
                                 </tbody>
