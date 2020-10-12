@@ -50,7 +50,7 @@ class TranscriptController extends Controller
         for ($i = 0; $i < count($stu_team); $i++){
             $stu_score = DB::Table('student_score')
                 ->join('student','student_score.student_id','=','student.id')
-                ->where('student_score.student_id',$stu_team[$i]['student_id'])->where('meeting_id',12)
+                ->where('student_score.student_id',$stu_team[$i]['student_id'])->where('meeting_id',$meeting_id)
                 ->select('student_score.*','student.name','student.student_ID')
                 ->get();  //組員成績
             array_push($stu_score_arr,$stu_score);
