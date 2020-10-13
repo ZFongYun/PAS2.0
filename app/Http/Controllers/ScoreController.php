@@ -92,7 +92,7 @@ class ScoreController extends Controller
                 echo json_encode($arr);
             }else{
                 $meeting_id = $request->input('meeting_id');
-                $team_id = Team::withTrashed()->where('name',$team)->value('id');
+                $team_id = Team::where('name',$team)->value('id');
                 $all_data_arr = array();  //全部資料
                 $stu_score_arr = array();  //組員成績
                 $teacher_stu_feedback_arr = array();  //老師評分組員回饋
@@ -111,11 +111,11 @@ class ScoreController extends Controller
                     ->select('student_scoring_team.*','student.name')
                     ->get();  //學生評分組別回饋
 
-                $stu_team = TeamMember::withTrashed()->where('team_id',$team_id)->get()->toArray();
+                $stu_team = TeamMember::where('team_id',$team_id)->get()->toArray();
                 for ($i = 0; $i < count($stu_team); $i++){
                     $stu_score = DB::Table('student_score')
                         ->join('student','student_score.student_id','=','student.id')
-                        ->where('student_score.student_id',$stu_team[$i]['student_id'])->where('meeting_id',12)
+                        ->where('student_score.student_id',$stu_team[$i]['student_id'])->where('meeting_id',$meeting_id)
                         ->select('student_score.*','student.name','student.student_ID')
                         ->get();  //組員成績
                     array_push($stu_score_arr,$stu_score);

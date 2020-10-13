@@ -24,6 +24,16 @@
                         </div>
 
                     </div>
+
+                    <div class="alert alert-success" role="alert" id="success" style="display: none; width: 60%">
+                        已完成結算。
+                    </div>
+
+                    <div class="alert alert-danger" role="alert" id="danger" style="display: none; width: 60%">
+                        未完成結算，請點選右邊按鈕進行結算。
+                        <button type="submit" class="send btn btn-icon waves-effect waves-light btn-success" data-mid="{{$meeting['id']}}">結算</button>
+                    </div>
+
                     <label class="form-title p-t-10" id="date_title"></label><br>
                     <label class="form-title p-t-10" id="team_title" style="display: none">小組成績</label>
                     <div class="table-responsive">
@@ -90,6 +100,24 @@
                     dataType: 'json',
                     success: function(data) {
                         console.log(data)
+                        if (data == 'null'){
+                            $('#team_table').hide();
+                            $('#team_title').hide();
+                            $('#member_table').hide();
+                            $('#member_title').hide();
+                            html = '';
+                            html_stu = '';
+                        }else {
+                            if (data[0] == ''){
+                                console.log('空')
+                                $('#danger').show();
+                                $('#success').hide();
+                            }else {
+                                console.log('否')
+                                $('#danger').hide();
+                                $('#success').show();
+                            }
+                        }
                     },
                     error: function (){
                         alert('加入失敗');
