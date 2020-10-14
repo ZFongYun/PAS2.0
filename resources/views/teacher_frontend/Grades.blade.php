@@ -30,11 +30,10 @@
                     </div>
 
                     <div class="alert alert-danger" role="alert" id="danger" style="display: none; width: 60%">
-                        未完成結算，請點選右邊按鈕進行結算。
-                        <button type="submit" class="send btn btn-icon waves-effect waves-light btn-success" data-mid="{{$meeting['id']}}">結算</button>
+                        未完成結算，請點選此<a href="#"> 連結 </a>進行結算。
+{{--                        <button type="submit" class="send btn btn-icon waves-effect waves-light btn-success" data-mid="{{$meeting['id']}}">結算</button>--}}
                     </div>
 
-                    <label class="form-title p-t-10" id="date_title"></label><br>
                     <label class="form-title p-t-10" id="team_title" style="display: none">小組成績</label>
                     <div class="table-responsive">
                         <table class="table m-0" id="team_table" style="display: none">
@@ -87,8 +86,8 @@
         });
 
         var check=function(){
-            var html = '';
-            var html_stu = '';
+            var html_team = '';
+            var html_member = '';
             var team = $("#team").val();
             $(document).ready(function() {
                 $.ajax({
@@ -116,6 +115,72 @@
                                 console.log('否')
                                 $('#danger').hide();
                                 $('#success').show();
+                                $('#team_title').show();
+                                $('#team_table').show();
+                                html_team += '<tr>';
+                                html_team += '<td>'+data[0][0]['name']+'</td>';
+                                html_team += '<td>'+data[0][0]['score']+'</td>';
+                                html_team += '<td>'+data[0][0]['bonus']+'</td>';
+                                html_team += '<td>'+data[0][0]['total']+'</td>';
+                                html_team += '<td>'+data[0][0]['count']+'</td>';
+                                html_team += '<td><button class="btn btn-custom type="button" data-toggle="collapse" data-target="#team_feedback">詳情</button></td></tr>';
+                                html_team += '<tr>';
+                                html_team += '<td colspan="6" class="hiddenRow"><div class="collapse" id="team_feedback"><label>'+'老師評論'+'</label>';
+                                if (data[1] == ''){
+                                    html_team += '<table class="table"><thead><tr><th>評分</th><th>回饋</th></tr></thead><tbody><tr><td>-</td><td>-</td></tr></tbody></table>';
+                                }else {
+                                    html_team += '<table class="table"><thead><tr><th>評分</th><th>回饋</th></tr></thead><tbody><tr><td>'+data[1][0]['point']+'</td><td>'+data[1][0]['feedback']+'</td></tr></tbody></table>';
+                                }
+                                html_team += '<label>'+'其他同學給的評論'+'</label>' + '<table class="table"><thead><tr><th>姓名</th><th>評分</th><th>回饋</th></tr></thead><tbody><tr>';
+                                if (data[2] == ''){
+                                    html_team += '<td>-</td>';
+                                    html_team += '<td>-</td>';
+                                    html_team += '<td>-</td></tr>';
+                                }else {
+                                    for (var i = 0; i<data[2].length; i++){
+                                        html_team += '<td>'+data[2][i]['name']+'</td>';
+                                        html_team += '<td>'+data[2][i]['point']+'</td>';
+                                        html_team += '<td>'+data[2][i]['feedback']+'</td></tr>';
+                                    }
+                                }
+                                html_team += '</tbody></table></div></td></tr>';
+                                $('#team_body').html(html_team);
+
+                                $('#member_title').show();
+                                $('#member_table').show();
+                                for (var j = 0; j<data[3].length; j++) {
+                                        html_member += '<tr>';
+                                        html_member += '<td>' + data[3][j][0]['student_ID'] + '</td>';
+                                        html_member += '<td>' + data[3][j][0]['name'] + '</td>';
+                                        html_member += '<td>' + data[3][j][0]['score'] + '</td>';
+                                        html_member += '<td>' + data[3][j][0]['bonus'] + '</td>';
+                                        html_member += '<td>' + data[3][j][0]['total'] + '</td>';
+                                        html_member += '<td>' + data[3][j][0]['count'] + '</td>';
+                                        html_member += '<td><button class="btn btn-custom type="button" data-toggle="collapse" data-target="#member_feedback' + data[3][j][0]['student_id'] + '">詳情</button></td></tr>';
+                                        html_member += '<tr>';
+                                        html_member += '<td colspan="7" class="hiddenRow"><div class="collapse" id="member_feedback' + data[3][j][0]['student_id'] + '"><label>' + '老師評論' + '</label>'
+                                        if (data[4][j] == '') {
+                                            html_member += '<table class="table"><thead><tr><th>評分</th><th>回饋</th></tr></thead><tbody><tr><td>-</td><td>-</td></tr></tbody></table>'
+                                        } else {
+                                            html_member += '<table class="table"><thead><tr><th>評分</th><th>回饋</th></tr></thead><tbody><tr><td>' + data[4][j][0]['point'] + '</td><td>' + data[4][j][0]['feedback'] + '</td></tr></tbody></table>'
+                                        }
+                                        html_member += '<label>' + '其他同學給的評論' + '</label>';
+                                        html_member += '<table class="table"><thead><tr><th>姓名</th><th>評分</th><th>回饋</th></tr></thead><tbody><tr>';
+                                        if (data[5][j] == '') {
+                                            html_member += '<td>-</td>';
+                                            html_member += '<td>-</td>';
+                                            html_member += '<td>-</td></tr>';
+                                        } else {
+                                            for (var n = 0; n < data[5][j].length; n++) {
+                                                html_member += '<td>' + data[5][j][n]['name'] + '</td>';
+                                                html_member += '<td>' + data[5][j][n]['point'] + '</td>';
+                                                html_member += '<td>' + data[5][j][n]['feedback'] + '</td></tr>';
+                                            }
+                                        }
+                                        html_member += '</tbody></table></div></td></tr>';
+
+                                    $('#member_body').html(html_member);
+                                }
                             }
                         }
                     },
