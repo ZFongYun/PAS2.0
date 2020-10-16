@@ -22,16 +22,13 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="alert alert-success" role="alert" id="success" style="display: none; width: 60%">
+                            已完成結算。
+                        </div>
 
-                    </div>
-
-                    <div class="alert alert-success" role="alert" id="success" style="display: none; width: 60%">
-                        已完成結算。
-                    </div>
-
-                    <div class="alert alert-danger" role="alert" id="danger" style="display: none; width: 60%">
-                        未完成結算，請點選此<a href="#"> 連結 </a>進行結算。
-{{--                        <button type="submit" class="send btn btn-icon waves-effect waves-light btn-success" data-mid="{{$meeting['id']}}">結算</button>--}}
+                        <div class="alert alert-danger" role="alert" id="danger" style="display: none; width: 60%">
+                            未完成結算，請點選此 <button type="submit" class="send btn waves-effect waves-light btn-success m-b-10" data-mid="{{$meeting['id']}}">按鈕</button><input type="hidden" id="score_send"> 進行結算。
+                        </div>
                     </div>
 
                     <label class="form-title p-t-10" id="team_title" style="display: none">小組成績</label>
@@ -98,7 +95,6 @@
                         _token: '{{csrf_token()}}'},
                     dataType: 'json',
                     success: function(data) {
-                        console.log(data)
                         if (data == 'null'){
                             $('#team_table').hide();
                             $('#team_title').hide();
@@ -108,11 +104,13 @@
                             html_stu = '';
                         }else {
                             if (data[0] == ''){
-                                console.log('空')
                                 $('#danger').show();
                                 $('#success').hide();
+                                $('#team_title').hide();
+                                $('#team_table').hide();
+                                $('#member_title').hide();
+                                $('#member_table').hide();
                             }else {
-                                console.log('否')
                                 $('#danger').hide();
                                 $('#success').show();
                                 $('#team_title').show();
@@ -190,6 +188,29 @@
                 })
             });
         }
+
+        $(document).on('click', '.send', function() {
+            $('#score_send').val($(this).data('mid'));
+            var meeting_id = $("#score_send").val();
+            var team = $("#team").val();
+            $(document).ready(function() {
+                $.ajax({
+                    type:'POST',
+                    url:'/grades/score',
+                    data:{meeting_id:meeting_id,
+                        team:team,
+                        _token: '{{csrf_token()}}'},
+                    success: function(data) {
+                        alert(data)
+                        check()
+                    },
+                    error: function (){
+                        alert('結算失敗')
+                    }
+
+                });
+            });
+        });
     </script>
 @endsection
 @section('title','結算成績')

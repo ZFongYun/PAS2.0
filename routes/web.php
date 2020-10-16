@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth.teacher'], function() {
     Route::prefix('grades')->group(function(){
         Route::get('/{id}','ScoreController@grades_page');
         Route::post('/search','ScoreController@search');
+        Route::post('/score','ScoreController@score');
 
     });
 

@@ -135,6 +135,61 @@ class ScoreController extends Controller
                 return $all_data_arr;
             }
         }
+    }
+
+    public function score(Request $request){
+        if($_SERVER['REQUEST_METHOD'] == "POST"){
+
+            $team = $request->input('team');
+            $team_id = Team::where('name',$team)->value('id');
+
+            $meeting_id = $request->input('meeting_id');
+            $meeting = Meeting::find($meeting_id)->toArray();
+
+            $PA = $meeting['PA']*0.01;
+            $TS = $meeting['TS']*0.01;
+            $teacher_score = TeacherScoringTeam::where('meeting_id',$meeting_id)->where('object_team_id',$team_id)->value('point');  //教師評分組別的分數
+            $student_count = StudentScoringTeam::where('meeting_id',$meeting_id)->where('object_team_id',$team_id)->count();  //學生評分組別的次數
+            $teacher = $teacher_score*$TS;
+            if ($student_count == 0){
+                $student = 0;
+            }else{
+                $student_score = StudentScoringTeam::where('meeting_id',$meeting_id)->where('object_team_id',$team_id)->sum('point');  //學生評分組別的分數加總
+                $student = ($student_score / $student_count)*$PA;
+            }
+            $total = $teacher+$student;
+            $team_score = new TeamScore;
+            $team_score->team_id = $team_id;
+            $team_score->meeting_id = $meeting_id;
+            $team_score->score = $total;
+            $team_score->bonus = 0;
+            $team_score->total = 0;
+            $team_score->count = 0;
+            $team_score->save();
+
+            $student = Student::where('team_id',$team_id)->get('id')->toArray();
+            for ($j = 0; $j < count($student); $j++){
+                $teacher_score_stu = TeacherScoringStudent::where('meeting_id',$meeting_id)->where('object_student_id',$student[$j])->value('point');
+                $peer_count = StudentScoringPeer::where('meeting_id',$meeting_id)->where('object_student_id',$student[$j])->count();
+                $teacher_peer = $teacher_score_stu*$TS;
+                if ($peer_count == 0){
+                    $student_peer = 0 ;
+                }else{
+                    $peer_score = StudentScoringPeer::where('meeting_id',$meeting_id)->where('object_student_id',$student[$j])->sum('point');
+                    $student_peer = ($peer_score / $peer_count)*$PA;
+                }
+                $total_peer = $teacher_peer+$student_peer;
+                $stu_score = new StudentScore;
+                $stu_score->student_id = $student[$j]['id'];
+                $stu_score->meeting_id = $meeting_id;
+                $stu_score->score = $total_peer;
+                $stu_score->bonus = 0;
+                $stu_score->total = 0;
+                $stu_score->count = 0;
+                $stu_score->save();
+            }
+            return '結算成功';
+        }
 
     }
 }
