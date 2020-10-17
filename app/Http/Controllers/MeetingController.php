@@ -91,7 +91,14 @@ class MeetingController extends Controller
     public function show($id)
     {
         $meeting = Meeting::find($id) -> toArray();
-        return view('teacher_frontend.meetingShow',compact('meeting'));
+        $meeting_reportTeam = $meeting['report_team'];
+        $team_chk_arr = explode(" ",$meeting_reportTeam);
+        $report_team_show = array();
+        for ($i = 1; $i < count($team_chk_arr); $i++){
+            $team_name = Team::where('id',$team_chk_arr[$i])->value('name');
+            array_push($report_team_show, $team_name);
+        }
+        return view('teacher_frontend.meetingShow',compact('meeting','report_team_show'));
     }
 
     /**
@@ -180,7 +187,12 @@ class MeetingController extends Controller
         $meeting = Meeting::find($id)->toArray();
         $report_team = $meeting['report_team'];
         $report_team_arr = explode(' ',$report_team);
-        return view('teacher_frontend.meetingScoring',compact('meeting','report_team','report_team_arr'));
+        $report_team_show = array();
+        for ($i = 1; $i < count($report_team_arr); $i++){
+            $team_name = Team::where('id',$report_team_arr[$i])->get()->toArray();
+            array_push($report_team_show, $team_name);
+        }
+        return view('teacher_frontend.meetingScoring',compact('meeting','report_team','report_team_show'));
     }
 
     public function score(Request $request){
@@ -191,14 +203,14 @@ class MeetingController extends Controller
                 echo json_encode($arr);
             }else{
                 $meeting_id = $request->input('meeting_id');
-                $team_id = Team::where('name',$team)->value('id');
-                $team_name = Team::where('name',$team)->value('name');
-                $stu_id = Student::where('team_id',$team_id)->get(['id','student_id','name','position'])->toArray();
+//                $team_id = Team::where('name',$team)->value('id');
+                $team_name = Team::where('id',$team)->value('name');
+                $stu_id = Student::where('team_id',$team)->get(['id','student_id','name','position'])->toArray();
                 $stu_id_length = count($stu_id);
                 $arr = [];
 
-                $scoring_team = TeacherScoringTeam::whereHas('meeting',function ($q) use ($meeting_id,$team_id){
-                    $q->where('meeting_id',$meeting_id)->where('object_team_id',$team_id);
+                $scoring_team = TeacherScoringTeam::whereHas('meeting',function ($q) use ($meeting_id,$team){
+                    $q->where('meeting_id',$meeting_id)->where('object_team_id',$team);
                 })->get(['point','feedback'])->toArray();
 
                 if ($scoring_team == null){
@@ -226,8 +238,8 @@ class MeetingController extends Controller
     }
     public function scoring_team(Request $request){
         $meeting_id = $request->input('meeting_id');
-        $team_name = $request->input('team');
-        $team_id = Team::where('name',$team_name)->value('id');
+        $team_id = $request->input('team');
+//        $team_id = Team::where('name',$team_name)->value('id');
         $score = $request->input('score');
         $feedback = $request->input('feedback');
 
@@ -245,8 +257,8 @@ class MeetingController extends Controller
 
     public function edit_team(Request $request){
         $meeting_id = $request->input('meeting_id');
-        $team_name = $request->input('team');
-        $team_id = Team::where('name',$team_name)->value('id');
+        $team_id = $request->input('team');
+//        $team_id = Team::where('name',$team_name)->value('id');
         $score = $request->input('score');
         $feedback = $request->input('feedback');
 

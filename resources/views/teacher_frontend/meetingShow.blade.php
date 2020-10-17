@@ -28,7 +28,9 @@
 
                                 <p class="info-title">報告組別</p>
                                 <div class="p-l-20 p-b-10">
-                                    <label class="form-title">{{$meeting['report_team']}}</label>
+                                    @foreach($report_team_show as $report_team)
+                                        <label class="form-title">{{$report_team}}</label><br>
+                                    @endforeach
                                 </div>
 
 

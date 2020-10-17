@@ -16,8 +16,11 @@
                             <div class="col-md-5">
                                 <select name="team" id="team" class="form-control" onchange="check()">
                                     <option default>請選擇</option>
-                                    @for($i=1;$i<count($report_team_arr);$i++)
-                                        <option value="{{$report_team_arr[$i]}}">{{$report_team_arr[$i]}}</option>
+{{--                                    @for($i=1;$i<count($report_team_arr);$i++)--}}
+{{--                                        <option value="{{$report_team_arr[$i]}}">{{$report_team_arr[$i]}}</option>--}}
+{{--                                    @endfor--}}
+                                    @for($i=0;$i<count($report_team_show);$i++)
+                                        <option value="{{$report_team_show[$i][0]['id']}}">{{$report_team_show[$i][0]['name']}}</option>
                                     @endfor
                                 </select>
                             </div>
@@ -95,6 +98,7 @@
                         _token: '{{csrf_token()}}'},
                     dataType: 'json',
                     success: function(data) {
+                        console.log(data)
                         if (data == 'null'){
                             $('#team_table').hide();
                             $('#team_title').hide();
@@ -147,6 +151,16 @@
                                 $('#member_title').show();
                                 $('#member_table').show();
                                 for (var j = 0; j<data[3].length; j++) {
+                                    if (data[3][j] == ''){
+                                        html_member += '<tr>';
+                                        html_member += '<td>-</td>';
+                                        html_member += '<td>-</td>';
+                                        html_member += '<td>-</td>';
+                                        html_member += '<td>-</td>';
+                                        html_member += '<td>-</td>';
+                                        html_member += '<td>-</td></tr>';
+                                        $('#member_body').html(html_member);
+                                    }else {
                                         html_member += '<tr>';
                                         html_member += '<td>' + data[3][j][0]['student_ID'] + '</td>';
                                         html_member += '<td>' + data[3][j][0]['name'] + '</td>';
@@ -176,7 +190,7 @@
                                             }
                                         }
                                         html_member += '</tbody></table></div></td></tr>';
-
+                                    }
                                     $('#member_body').html(html_member);
                                 }
                             }

@@ -81,9 +81,9 @@
                             <p class="little-title">報告組別 *</p>
                             <div class="col-md-8 p-b-10">
                                 @foreach($team as $row)
-                                    <input type="checkbox" id="team{{$row['id']}}" name="team[]" value="{{$row['name']}}"
+                                    <input type="checkbox" id="team{{$row['id']}}" name="team[]" value="{{$row['id']}}"
                                            @for($i=1; $i<$team_chk_length; $i++)
-                                                @if($team_chk_arr[$i] == $row['name'])
+                                                @if($team_chk_arr[$i] == $row['id'])
                                                     checked
                                                 @endif
                                             @endfor>
