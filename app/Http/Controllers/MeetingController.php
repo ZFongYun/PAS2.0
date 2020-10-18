@@ -8,6 +8,7 @@ use App\Models\TeacherScoringStudent;
 use App\Models\TeacherScoringTeam;
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MeetingController extends Controller
 {
@@ -203,14 +204,18 @@ class MeetingController extends Controller
                 echo json_encode($arr);
             }else{
                 $meeting_id = $request->input('meeting_id');
-//                $team_id = Team::where('name',$team)->value('id');
-                $team_name = Team::where('id',$team)->value('name');
-                $stu_id = Student::where('team_id',$team)->get(['id','student_id','name','position'])->toArray();
+                $team_id = $team;
+                $team_name = Team::where('id',$team_id)->value('name');
+                $stu_id = DB::Table('team_member')
+                    ->join('student','team_member.student_id','student.id')
+                    ->where('team_member.team_id',$team_id)
+                    ->select('team_member.*','student.id','student.student_id','student.name')
+                    ->get();
                 $stu_id_length = count($stu_id);
                 $arr = [];
 
-                $scoring_team = TeacherScoringTeam::whereHas('meeting',function ($q) use ($meeting_id,$team){
-                    $q->where('meeting_id',$meeting_id)->where('object_team_id',$team);
+                $scoring_team = TeacherScoringTeam::whereHas('meeting',function ($q) use ($meeting_id,$team_id){
+                    $q->where('meeting_id',$meeting_id)->where('object_team_id',$team_id);
                 })->get(['point','feedback'])->toArray();
 
                 if ($scoring_team == null){
@@ -222,7 +227,7 @@ class MeetingController extends Controller
 
                 for ($i=0; $i<$stu_id_length; $i++){
                     $scoring_student = TeacherScoringStudent::wherehas('meeting',function ($q)use($meeting_id,$stu_id,$i){
-                        $q->where('meeting_id',$meeting_id)->where('object_student_id',$stu_id[$i]['id']);
+                        $q->where('meeting_id',$meeting_id)->where('object_student_id',$stu_id[$i]->id);
 
                     })->get(['point','feedback'])->toArray();
                     if ($scoring_student == null){
@@ -236,10 +241,10 @@ class MeetingController extends Controller
             }
         }
     }
+
     public function scoring_team(Request $request){
         $meeting_id = $request->input('meeting_id');
         $team_id = $request->input('team');
-//        $team_id = Team::where('name',$team_name)->value('id');
         $score = $request->input('score');
         $feedback = $request->input('feedback');
 
@@ -258,7 +263,6 @@ class MeetingController extends Controller
     public function edit_team(Request $request){
         $meeting_id = $request->input('meeting_id');
         $team_id = $request->input('team');
-//        $team_id = Team::where('name',$team_name)->value('id');
         $score = $request->input('score');
         $feedback = $request->input('feedback');
 

@@ -98,7 +98,6 @@
                         _token: '{{csrf_token()}}'},
                     dataType: 'json',
                     success: function(data) {
-                        console.log(data)
                         if (data == 'null'){
                             $('#team_table').hide();
                             $('#team_title').hide();
@@ -221,7 +220,6 @@
                     error: function (){
                         alert('結算失敗')
                     }
-
                 });
             });
         });

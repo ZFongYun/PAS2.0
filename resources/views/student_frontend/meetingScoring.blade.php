@@ -43,8 +43,8 @@
                             <div class="col-md-5">
                                 <select name="team" id="team" class="form-control" onchange="check()">
                                     <option default>請選擇</option>
-                                    @for($i=1;$i<count($report_team_arr);$i++)
-                                        <option value="{{$report_team_arr[$i]}}">{{$report_team_arr[$i]}}</option>
+                                    @for($i=0;$i<count($report_team_show);$i++)
+                                        <option value="{{$report_team_show[$i][0]['id']}}">{{$report_team_show[$i][0]['name']}}</option>
                                     @endfor
                                 </select>
                             </div>
