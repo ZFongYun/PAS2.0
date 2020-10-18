@@ -95,7 +95,7 @@ class MeetingController extends Controller
         $team_chk_arr = explode(" ",$meeting_reportTeam);
         $report_team_show = array();
         for ($i = 1; $i < count($team_chk_arr); $i++){
-            $team_name = Team::where('id',$team_chk_arr[$i])->value('name');
+            $team_name = Team::withTrashed()->where('id',$team_chk_arr[$i])->value('name');
             array_push($report_team_show, $team_name);
         }
         return view('teacher_frontend.meetingShow',compact('meeting','report_team_show'));
@@ -189,7 +189,7 @@ class MeetingController extends Controller
         $report_team_arr = explode(' ',$report_team);
         $report_team_show = array();
         for ($i = 1; $i < count($report_team_arr); $i++){
-            $team_name = Team::where('id',$report_team_arr[$i])->get()->toArray();
+            $team_name = Team::withTrashed()->where('id',$report_team_arr[$i])->get()->toArray();
             array_push($report_team_show, $team_name);
         }
         return view('teacher_frontend.meetingScoring',compact('meeting','report_team','report_team_show'));

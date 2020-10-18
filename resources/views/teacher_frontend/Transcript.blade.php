@@ -90,8 +90,8 @@
                         _token: '{{csrf_token()}}'},
                     success: function(data) {
                         var Sinner="";
-                        for (var i = 1; i < data.length; i++){
-                            Sinner=Sinner+'<option value='+data[i]+'>'+data[i]+'</option>';
+                        for (var i = 0; i < data.length; i++){
+                            Sinner=Sinner+'<option value='+data[i][0]['id']+'>'+data[i][0]['name']+'</option>';
                         }
                         $("#team").html(Sinner);
                     },

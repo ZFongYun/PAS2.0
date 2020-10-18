@@ -26,7 +26,13 @@
                                 </div>
                                 <p class="info-title">報告組別</p>
                                 <div class="p-l-20 p-b-10">
-                                    <p class="form-title m-l-15">{{$meeting['report_team']}}</p>
+                                    <table class='table table-bordered'>
+                                        <tbody><tr>
+                                            @foreach($report_team_show as $report_team)
+                                                <td>{{$report_team}}</td>
+                                            @endforeach
+                                        </tr></tbody>
+                                    </table>
                                 </div>
                                 <p class="info-title">比重設定</p>
                                 <div class="p-l-20 p-b-10">
