@@ -124,7 +124,7 @@ class StuMeetingController extends Controller
             $report_team_arr = explode(' ',$report_team);
             $report_team_show = array();
             for ($i = 1; $i < count($report_team_arr); $i++){
-                $team_name = Team::withTrashed()->where('id',$report_team_arr[$i])->get()->toArray();
+                $team_name = Team::where('id',$report_team_arr[$i])->get()->toArray();
                 array_push($report_team_show, $team_name);
             }
             return view('student_frontend.meetingScoring',compact('meeting','report_team_show'));
