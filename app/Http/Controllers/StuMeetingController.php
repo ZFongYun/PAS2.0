@@ -149,6 +149,7 @@ class StuMeetingController extends Controller
                 $stu_id = DB::Table('team_member')
                     ->join('student','team_member.student_id','student.id')
                     ->where('team_member.team_id',$team_id)
+                    ->where('team_member.deleted_at',null)
                     ->select('team_member.*','student.id','student.student_id','student.name')
                     ->get();
                 $stu_id_length = count($stu_id);

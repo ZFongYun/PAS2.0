@@ -97,7 +97,6 @@ class ScoreController extends Controller
                 echo json_encode($arr);
             }else{
                 $meeting_id = $request->input('meeting_id');
-//                $team_id = Team::where('name',$team)->value('id');
                 $team_id = $team;
                 $all_data_arr = array();  //全部資料
                 $stu_score_arr = array();  //組員成績
@@ -126,12 +125,12 @@ class ScoreController extends Controller
                         ->get();  //組員成績
                     array_push($stu_score_arr,$stu_score);
 
-                    $teacher_stu_feedback = TeacherScoringStudent::where('meeting_id',$meeting_id)->where('object_student_id',$stu_team[$i]['id'])->get()->toArray();  //老師評分組員回饋
+                    $teacher_stu_feedback = TeacherScoringStudent::where('meeting_id',$meeting_id)->where('object_student_id',$stu_team[$i]['student_id'])->get()->toArray();  //老師評分組員回饋
                     array_push($teacher_stu_feedback_arr,$teacher_stu_feedback);
 
                     $stu_peer_feedback = DB::Table('student_scoring_peer')
                         ->join('student','student_scoring_peer.raters_student_id','=','student.id')
-                        ->where('meeting_id',$meeting_id)->where('object_student_id',$stu_team[$i]['id'])
+                        ->where('meeting_id',$meeting_id)->where('object_student_id',$stu_team[$i]['student_id'])
                         ->select('student_scoring_peer.*','student.name')
                         ->get();  //學生評分同儕回饋
                     array_push($stu_peer_feedback_arr,$stu_peer_feedback);
