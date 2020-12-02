@@ -9,6 +9,7 @@ use App\Models\StudentScoringPeer;
 use App\Models\StudentScoringTeam;
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,7 +34,14 @@ class StuMeetingController extends Controller
     public function show($id)
     {
         $meeting = Meeting::find($id) -> toArray();
-        return view('student_frontend.meetingShow',compact('meeting'));
+        $report_team = $meeting['report_team'];
+        $report_team_arr = explode(' ',$report_team);
+        $report_team_show = array();
+        for ($i = 1; $i < count($report_team_arr); $i++){
+            $team_name = Team::withTrashed()->where('id',$report_team_arr[$i])->value('name');
+            array_push($report_team_show, $team_name);
+        }
+        return view('student_frontend.meetingShow',compact('meeting','report_team_show'));
     }
 
     public function report($id)
@@ -114,7 +122,12 @@ class StuMeetingController extends Controller
         if (strtotime(date("Y-m-d H:i:s")) > strtotime($meeting['meeting_date'].' '.$meeting['meeting_start']) && strtotime(date("Y-m-d H:i:s")) < strtotime($meeting['meeting_date'].' '.$meeting['meeting_end'])){
             $report_team = $meeting['report_team'];
             $report_team_arr = explode(' ',$report_team);
-            return view('student_frontend.meetingScoring',compact('meeting','report_team_arr'));
+            $report_team_show = array();
+            for ($i = 1; $i < count($report_team_arr); $i++){
+                $team_name = Team::where('id',$report_team_arr[$i])->get()->toArray();
+                array_push($report_team_show, $team_name);
+            }
+            return view('student_frontend.meetingScoring',compact('meeting','report_team_show'));
         }else{
             echo "<script>alert('會議尚未開始。')</script>";
             echo '<meta http-equiv=REFRESH CONTENT=0.5;url=/StuMeeting>';
@@ -131,9 +144,14 @@ class StuMeetingController extends Controller
             }else{
                 $raters_student_id = auth('student')->user()->id;
                 $meeting_id = $request->input('meeting_id');
-                $team_id = Team::where('name',$team)->value('id');
-                $team_name = Team::where('name',$team)->value('name');
-                $stu_id = Student::where('team_id',$team_id)->get(['id','student_id','name','position'])->toArray();
+                $team_id = $team;
+                $team_name = Team::where('id',$team_id)->value('name');
+                $stu_id = DB::Table('team_member')
+                    ->join('student','team_member.student_id','student.id')
+                    ->where('team_member.team_id',$team_id)
+                    ->where('team_member.deleted_at',null)
+                    ->select('team_member.*','student.id','student.student_id','student.name')
+                    ->get();
                 $stu_id_length = count($stu_id);
                 $arr = [];
 
@@ -150,7 +168,7 @@ class StuMeetingController extends Controller
 
                 for ($i=0; $i<$stu_id_length; $i++){
                     $scoring_student = StudentScoringPeer::wherehas('meeting',function ($q)use($meeting_id,$stu_id,$i,$raters_student_id){
-                        $q->where('meeting_id',$meeting_id)->where('raters_student_id',$raters_student_id)->where('object_student_id',$stu_id[$i]['id']);
+                        $q->where('meeting_id',$meeting_id)->where('raters_student_id',$raters_student_id)->where('object_student_id',$stu_id[$i]->id);
 
                     })->get(['point','feedback'])->toArray();
                     if ($scoring_student == null){
@@ -167,8 +185,7 @@ class StuMeetingController extends Controller
 
     public function scoring_team(Request $request){
         $meeting_id = $request->input('meeting_id');
-        $team_name = $request->input('team');
-        $team_id = Team::where('name',$team_name)->value('id');
+        $team_id = $request->input('team');
         $raters_student_id = auth('student')->user()->id;
         $score = $request->input('score');
         $feedback = $request->input('feedback');
@@ -187,8 +204,7 @@ class StuMeetingController extends Controller
 
     public function edit_team(Request $request){
         $meeting_id = $request->input('meeting_id');
-        $team_name = $request->input('team');
-        $team_id = Team::where('name',$team_name)->value('id');
+        $team_id = $request->input('team');
         $raters_student_id = auth('student')->user()->id;
         $score = $request->input('score');
         $feedback = $request->input('feedback');

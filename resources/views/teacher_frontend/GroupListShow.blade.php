@@ -24,22 +24,22 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @for($i=0; $i<$student_length; $i++)
-                                    <form action="{{action('GroupListController@destroy_member',$student[$i]['id'])}}" method="post">
+                                @for($i=0; $i<$team_member_length; $i++)
+                                    <form action="{{action('GroupListController@destroy_member',$team_member[$i]['student']['id'])}}" method="post">
                                         {{ csrf_field() }}
                                         <tr>
-                                            <td>{{$student[$i]['student_id']}}</td>
-                                            <td>{{$student[$i]['name']}}</td>
-                                            @if($student[$i]['role']==0)
+                                            <td>{{$team_member[$i]['student']['student_id']}}</td>
+                                            <td>{{$team_member[$i]['student']['name']}}</td>
+                                            @if($team_member[$i]['role']==0)
                                                 <td>組長</td>
-                                            @elseif($student[$i]['role']==1)
+                                            @elseif($team_member[$i]['role']==1)
                                                 <td>組員</td>
                                             @endif
-                                            @if($student[$i]['position']==0)
+                                            @if($team_member[$i]['position']==0)
                                                 <td>企劃</td>
-                                            @elseif($student[$i]['position']==1)
+                                            @elseif($team_member[$i]['position']==1)
                                                 <td>程式</td>
-                                            @elseif($student[$i]['position']==2)
+                                            @elseif($team_member[$i]['position']==2)
                                                 <td>美術</td>
                                             @endif
                                             <td><button type="submit" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="return(confirm('是否刪除此筆資料？'))"> <i class="fa fa-remove"></i> </button></td>

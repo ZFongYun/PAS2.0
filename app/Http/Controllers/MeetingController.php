@@ -8,6 +8,7 @@ use App\Models\TeacherScoringStudent;
 use App\Models\TeacherScoringTeam;
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MeetingController extends Controller
 {
@@ -91,7 +92,14 @@ class MeetingController extends Controller
     public function show($id)
     {
         $meeting = Meeting::find($id) -> toArray();
-        return view('teacher_frontend.meetingShow',compact('meeting'));
+        $meeting_reportTeam = $meeting['report_team'];
+        $team_chk_arr = explode(" ",$meeting_reportTeam);
+        $report_team_show = array();
+        for ($i = 1; $i < count($team_chk_arr); $i++){
+            $team_name = Team::withTrashed()->where('id',$team_chk_arr[$i])->value('name');
+            array_push($report_team_show, $team_name);
+        }
+        return view('teacher_frontend.meetingShow',compact('meeting','report_team_show'));
     }
 
     /**
@@ -180,7 +188,12 @@ class MeetingController extends Controller
         $meeting = Meeting::find($id)->toArray();
         $report_team = $meeting['report_team'];
         $report_team_arr = explode(' ',$report_team);
-        return view('teacher_frontend.meetingScoring',compact('meeting','report_team','report_team_arr'));
+        $report_team_show = array();
+        for ($i = 1; $i < count($report_team_arr); $i++){
+            $team_name = Team::where('id',$report_team_arr[$i])->get()->toArray();
+            array_push($report_team_show, $team_name);
+        }
+        return view('teacher_frontend.meetingScoring',compact('meeting','report_team','report_team_show'));
     }
 
     public function score(Request $request){
@@ -191,9 +204,14 @@ class MeetingController extends Controller
                 echo json_encode($arr);
             }else{
                 $meeting_id = $request->input('meeting_id');
-                $team_id = Team::where('name',$team)->value('id');
-                $team_name = Team::where('name',$team)->value('name');
-                $stu_id = Student::where('team_id',$team_id)->get(['id','student_id','name','position'])->toArray();
+                $team_id = $team;
+                $team_name = Team::where('id',$team_id)->value('name');
+                $stu_id = DB::Table('team_member')
+                    ->join('student','team_member.student_id','student.id')
+                    ->where('team_member.team_id',$team_id)
+                    ->where('team_member.deleted_at',null)
+                    ->select('team_member.*','student.id','student.student_id','student.name')
+                    ->get();
                 $stu_id_length = count($stu_id);
                 $arr = [];
 
@@ -210,7 +228,7 @@ class MeetingController extends Controller
 
                 for ($i=0; $i<$stu_id_length; $i++){
                     $scoring_student = TeacherScoringStudent::wherehas('meeting',function ($q)use($meeting_id,$stu_id,$i){
-                        $q->where('meeting_id',$meeting_id)->where('object_student_id',$stu_id[$i]['id']);
+                        $q->where('meeting_id',$meeting_id)->where('object_student_id',$stu_id[$i]->id);
 
                     })->get(['point','feedback'])->toArray();
                     if ($scoring_student == null){
@@ -224,10 +242,10 @@ class MeetingController extends Controller
             }
         }
     }
+
     public function scoring_team(Request $request){
         $meeting_id = $request->input('meeting_id');
-        $team_name = $request->input('team');
-        $team_id = Team::where('name',$team_name)->value('id');
+        $team_id = $request->input('team');
         $score = $request->input('score');
         $feedback = $request->input('feedback');
 
@@ -245,8 +263,7 @@ class MeetingController extends Controller
 
     public function edit_team(Request $request){
         $meeting_id = $request->input('meeting_id');
-        $team_name = $request->input('team');
-        $team_id = Team::where('name',$team_name)->value('id');
+        $team_id = $request->input('team');
         $score = $request->input('score');
         $feedback = $request->input('feedback');
 
