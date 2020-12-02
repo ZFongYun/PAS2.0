@@ -57,21 +57,21 @@
                                         <tbody>
                                         @for($i=0; $i<$student_length; $i++)
                                             <tr>
-                                                <td>{{$student[$i]['student_id']}}</td>
-                                                <td>{{$student[$i]['name']}}</td>
+                                                <td>{{$team_member[$i]['student']['student_id']}}</td>
+                                                <td>{{$team_member[$i]['student']['name']}}</td>
                                                 <td>
-                                                    <select name="role{{$student[$i]['id']}}">
-                                                        <option value="0" {{$student[$i]['role'] == 0 ? 'selected' : ''}}>組長</option>
-                                                        <option value="1" {{$student[$i]['role'] == 1 ? 'selected' : ''}}>組員</option>
+                                                    <select name="role{{$team_member[$i]['id']}}">
+                                                        <option value="0" {{$team_member[$i]['role'] == 0 ? 'selected' : ''}}>組長</option>
+                                                        <option value="1" {{$team_member[$i]['role'] == 1 ? 'selected' : ''}}>組員</option>
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select name="position{{$student[$i]['id']}}">
-                                                        <option value="0" {{$student[$i]['position'] == 0 ? 'selected' : ''}}>企劃</option>
-                                                        <option value="1" {{$student[$i]['position'] == 1 ? 'selected' : ''}}>程式</option>
-                                                        <option value="2" {{$student[$i]['position'] == 2 ? 'selected' : ''}}>美術</option>
+                                                    <select name="position{{$team_member[$i]['id']}}">
+                                                        <option value="0" {{$team_member[$i]['position'] == 0 ? 'selected' : ''}}>企劃</option>
+                                                        <option value="1" {{$team_member[$i]['position'] == 1 ? 'selected' : ''}}>程式</option>
+                                                        <option value="2" {{$team_member[$i]['position'] == 2 ? 'selected' : ''}}>美術</option>
                                                     </select>
-                                                    <input type="hidden" name="hidden_id[]" value="{{$student[$i]['id']}}" />
+                                                    <input type="hidden" name="hidden_id[]" value="{{$team_member[$i]['id']}}" />
                                                 </td>
                                             </tr>
 

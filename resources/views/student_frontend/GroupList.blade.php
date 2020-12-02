@@ -33,8 +33,8 @@
                                 <tbody>
                                 @for($i=0; $i<$team_member_length; $i++)
                                         <tr>
-                                            <td>{{$team_member[$i]['student_ID']}}</td>
-                                            <td>{{$team_member[$i]['name']}}</td>
+                                            <td>{{$team_member[$i]['student']['student_id']}}</td>
+                                            <td>{{$team_member[$i]['student']['name']}}</td>
                                             @if($team_member[$i]['role']==0)
                                                 <td>組長</td>
                                             @elseif($team_member[$i]['role']==1)
