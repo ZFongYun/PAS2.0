@@ -6,7 +6,7 @@
             <ul>
 
                 <div class="col-md-10 col-10 center" style="text-align: center">
-                    <p class="user-title">觀迎 {{auth('student')->user()->name}} 使用 ᐠ( ᐛ )ᐟ</p>
+                    <p class="user-title">歡迎 {{auth('student')->user()->name}} 使用 ᐠ( ᐛ )ᐟ</p>
                 </div>
 
                 <li class="text-muted menu-title">功能列表</li>

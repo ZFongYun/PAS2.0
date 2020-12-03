@@ -8,7 +8,7 @@
 
                 <div class="col-md-6 col-6 center" style="text-align: center">
                     <img src="{{ URL::asset('assets/images/users/avatar-11.png') }}" class="img-fluid d-block rounded-circle" alt="user">
-                    <p class="user-title">觀迎教師使用</p>
+                    <p class="user-title">歡迎教師使用</p>
                 </div>
 
                 <li class="text-muted menu-title"> 功能列表</li>
