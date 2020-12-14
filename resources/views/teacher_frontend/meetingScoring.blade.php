@@ -96,7 +96,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group no-margin">
                                             <label for="feedback_team" class="control-label">回饋</label>
-                                            <textarea class="form-control autogrow" id="feedback_team" name="feedback_team" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                                            <textarea class="form-control autogrow" id="feedback_team" name="feedback_team" style="overflow: scroll; word-wrap: break-word; resize: horizontal; height: 150px;"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -142,7 +142,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group no-margin">
                                             <label for="edit_feedback_team" class="control-label">回饋</label>
-                                            <textarea class="form-control autogrow" id="edit_feedback_team" name="edit_feedback_team" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                                            <textarea class="form-control autogrow" id="edit_feedback_team" name="edit_feedback_team" style="overflow: scroll; word-wrap: break-word; resize: horizontal; height: 150px;"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -188,7 +188,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group no-margin">
                                             <label for="feedback_stu" class="control-label">回饋</label>
-                                            <textarea class="form-control autogrow" id="feedback_stu" name="feedback_stu" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                                            <textarea class="form-control autogrow" id="feedback_stu" name="feedback_stu" style="overflow: scroll; word-wrap: break-word; resize: horizontal; height: 150px;"></textarea>
                                             <input type="hidden" name="score_stu_id" id="score_stu_id">
                                         </div>
                                     </div>
@@ -235,7 +235,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group no-margin">
                                             <label for="edit_feedback_stu" class="control-label">回饋</label>
-                                            <textarea class="form-control autogrow" id="edit_feedback_stu" name="edit_feedback_stu" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                                            <textarea class="form-control autogrow" id="edit_feedback_stu" name="edit_feedback_stu" style="overflow: scroll; word-wrap: break-word; resize: horizontal; height: 150px;"></textarea>
                                             <input type="hidden" name="edit_stu_id" id="edit_stu_id">
                                         </div>
                                     </div>
