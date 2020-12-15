@@ -163,7 +163,7 @@ class ScoreController extends Controller
                 $student_score = StudentScoringTeam::where('meeting_id',$meeting_id)->where('object_team_id',$team_id)->sum('point');  //學生評分組別的分數加總
                 $student = ($student_score / $student_count)*$PA;
             }
-            $total = $teacher+$student;
+            $total = ceil($teacher+$student);
             $team_score = new TeamScore;
             $team_score->team_id = $team_id;
             $team_score->meeting_id = $meeting_id;
@@ -184,7 +184,7 @@ class ScoreController extends Controller
                     $peer_score = StudentScoringPeer::where('meeting_id',$meeting_id)->where('object_student_id',$student[$j])->sum('point');
                     $student_peer = ($peer_score / $peer_count)*$PA;
                 }
-                $total_peer = $teacher_peer+$student_peer;
+                $total_peer = ceil($teacher_peer+$student_peer);
                 $stu_score = new StudentScore;
                 $stu_score->student_id = $student[$j]['id'];
                 $stu_score->meeting_id = $meeting_id;
