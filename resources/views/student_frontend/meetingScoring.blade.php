@@ -390,6 +390,8 @@
                     success: function(data) {
                         alert(data)
                         $('#ScoringTeamModal').modal('hide')
+                        // $('#feedback_team').val();
+                        document.getElementById("feedback_team").value="";
                         check()
                     },
                     error: function (){
@@ -455,6 +457,8 @@
                     success: function(data) {
                         alert(data)
                         $('#ScoringStudentModal').modal('hide')
+                        // $('#feedback_stu').val();
+                        document.getElementById("feedback_stu").value="";
                         check()
                     },
                     error: function (){

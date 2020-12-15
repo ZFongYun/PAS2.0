@@ -357,6 +357,8 @@
                         success: function(data) {
                             alert(data)
                             $('#ScoringTeamModal').modal('hide')
+                            document.getElementById("feedback_team").value="";
+                            document.getElementById("score_team").selectedIndex = 0;
                             check()
                         },
                         error: function (){
@@ -423,6 +425,8 @@
                         success: function(data) {
                             alert(data)
                             $('#ScoringStudentModal').modal('hide')
+                            document.getElementById("feedback_stu").value = "";
+                            document.getElementById("score_stu").selectedIndex = 0;
                             check()
                         },
                         error: function (){
