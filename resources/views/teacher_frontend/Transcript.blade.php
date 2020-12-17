@@ -21,9 +21,7 @@
                                     <div class="form-group m-r-10 col-sm-3">
                                         <label for="team" class="m-r-10">組別</label>
                                         <select class="form-control col-sm-8" id="team" name="team">
-                                            @foreach($team as $row_team)
-                                                <option value="{{$row_team['name']}}">{{$row_team['name']}}</option>
-                                            @endforeach
+                                           
                                         </select>
                                     </div>
                                     <button type="button" class="search btn btn-primary waves-effect waves-light btn-md">搜尋</button>
@@ -78,6 +76,28 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        $( document ).ready(function() {
+            var meeting = $('#meeting').val();
+            $(document).ready(function() {
+                $.ajax({
+                    type:'POST',
+                    url:'/Transcript/searchTeam',
+                    data:{meeting:meeting,
+                        _token: '{{csrf_token()}}'},
+                    success: function(data) {
+                        var Sinner="";
+                        for (var i = 0; i < data.length; i++){
+                            Sinner=Sinner+'<option value='+data[i][0]['id']+'>'+data[i][0]['name']+'</option>';
+                        }
+                        $("#team").html(Sinner);
+                    },
+                    error: function (){
+                        alert('error')
+                    }
+                });
+            });
         });
 
         $("#meeting").change(function(){

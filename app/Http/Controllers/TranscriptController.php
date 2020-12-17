@@ -19,8 +19,7 @@ class TranscriptController extends Controller
 {
     public function index(){
         $meeting = Meeting::all()->toArray();
-        $team = Team::all()->toArray();
-        return view('teacher_frontend.Transcript',compact('meeting','team'));
+        return view('teacher_frontend.Transcript',compact('meeting'));
     }
 
     public function search(Request $request){
