@@ -41,6 +41,8 @@
                                                 <td>程式</td>
                                             @elseif($team_member[$i]['position']==2)
                                                 <td>美術</td>
+                                            @elseif($team_member[$i]['position']==3)
+                                                <td>技美</td>
                                             @endif
                                             <td><button type="submit" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="return(confirm('是否刪除此筆資料？'))"> <i class="fa fa-remove"></i> </button></td>
                                         </tr>

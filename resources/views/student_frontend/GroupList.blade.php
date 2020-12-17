@@ -46,6 +46,8 @@
                                                 <td>程式</td>
                                             @elseif($team_member[$i]['position']==2)
                                                 <td>美術</td>
+                                            @elseif($team_member[$i]['position']==3)
+                                                <td>技美</td>
                                             @endif
                                         </tr>
                                     </form>
