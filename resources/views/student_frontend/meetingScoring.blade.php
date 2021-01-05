@@ -120,6 +120,13 @@
                                     <div class="col-md-12">
                                         <div class="form-group no-margin">
                                             <label for="feedback_team" class="control-label">回饋</label>
+                                            <select class="form-control select2" style="margin-bottom: 10px" onchange="feedback_team(this.value)">
+                                                <option value="default">---請選擇回饋範例---</option>
+                                                <option value="你們的遊戲故事背景相當吸引人">你們的遊戲故事背景相當吸引人</option>
+                                                <option value="你們的遊戲玩法趣味性十足">你們的遊戲玩法趣味性十足</option>
+                                                <option value="你們的遊戲美術風格吸引人">你們的遊戲美術風格吸引人</option>
+                                                <option value="你們的遊戲本身相當具有創意">你們的遊戲本身相當具有創意</option>
+                                            </select>
                                             <textarea class="form-control autogrow" id="feedback_team" name="feedback_team" style="overflow: scroll; word-wrap: break-word; resize: horizontal; height: 150px;"></textarea>
                                         </div>
                                     </div>
@@ -166,6 +173,13 @@
                                     <div class="col-md-12">
                                         <div class="form-group no-margin">
                                             <label for="edit_feedback_team" class="control-label">回饋</label>
+                                            <select class="form-control select2" style="margin-bottom: 10px" onchange="edit_feedback_team(this.value)">
+                                                <option value="default">---請選擇回饋範例---</option>
+                                                <option value="你們的遊戲故事背景相當吸引人">你們的遊戲故事背景相當吸引人</option>
+                                                <option value="你們的遊戲玩法趣味性十足">你們的遊戲玩法趣味性十足</option>
+                                                <option value="你們的遊戲美術風格吸引人">你們的遊戲美術風格吸引人</option>
+                                                <option value="你們的遊戲本身相當具有創意">你們的遊戲本身相當具有創意</option>
+                                            </select>
                                             <textarea class="form-control autogrow" id="edit_feedback_team" name="edit_feedback_team" style="overflow: scroll; word-wrap: break-word; resize: horizontal; height: 150px;"></textarea>
                                         </div>
                                     </div>
@@ -212,6 +226,19 @@
                                     <div class="col-md-12">
                                         <div class="form-group no-margin">
                                             <label for="feedback_stu" class="control-label">回饋</label>
+                                            <select class="form-control select2" style="margin-bottom: 10px" onchange="feedback_stu(this.value)">
+                                                <option value="default">---請選擇回饋範例---</option>
+                                                <optgroup label="企劃">
+                                                    <option value="報告時臺風穩健">報告時臺風穩健</option>
+                                                    <option value="報告內容有條理且清楚展示進度">報告內容有條理且清楚展示進度</option>
+                                                    <option value="工作進度規劃明確且適宜">工作進度規劃明確且適宜</option>
+                                                </optgroup>
+                                                <optgroup label="美術">
+                                                    <option value="遊戲角色很可愛">遊戲角色很可愛</option>
+                                                    <option value="遊戲背景很漂亮">遊戲背景很漂亮</option>
+                                                    <option value="遊戲UI很好看">遊戲UI很好看</option>
+                                                </optgroup>
+                                            </select>
                                             <textarea class="form-control autogrow" id="feedback_stu" name="feedback_stu" style="overflow: scroll; word-wrap: break-word; resize: horizontal; height: 150px;"></textarea>
                                             <input type="hidden" name="score_stu_id" id="score_stu_id">
                                         </div>
@@ -259,6 +286,19 @@
                                     <div class="col-md-12">
                                         <div class="form-group no-margin">
                                             <label for="edit_feedback_stu" class="control-label">回饋</label>
+                                            <select class="form-control select2" style="margin-bottom: 10px" onchange="edit_feedback_stu(this.value)">
+                                                <option value="default">---請選擇回饋範例---</option>
+                                                <optgroup label="企劃">
+                                                    <option value="報告時臺風穩健">報告時臺風穩健</option>
+                                                    <option value="報告內容有條理且清楚展示進度">報告內容有條理且清楚展示進度</option>
+                                                    <option value="工作進度規劃明確且適宜">工作進度規劃明確且適宜</option>
+                                                </optgroup>
+                                                <optgroup label="美術">
+                                                    <option value="遊戲角色很可愛">遊戲角色很可愛</option>
+                                                    <option value="遊戲背景很漂亮">遊戲背景很漂亮</option>
+                                                    <option value="遊戲UI很好看">遊戲UI很好看</option>
+                                                </optgroup>
+                                            </select>
                                             <textarea class="form-control autogrow" id="edit_feedback_stu" name="edit_feedback_stu" style="overflow: scroll; word-wrap: break-word; resize: horizontal; height: 150px;"></textarea>
                                             <input type="hidden" name="edit_stu_id" id="edit_stu_id">
                                         </div>
@@ -281,6 +321,34 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        //組別回饋範本
+        function feedback_team(value) {
+            if(value != "default"){
+                document.getElementById("feedback_team").value += value + "\n" ;
+            }
+        }
+
+        //編輯組別回饋範本
+        function edit_feedback_team(value) {
+            if(value != "default"){
+                document.getElementById("edit_feedback_team").value += "\n" + value ;
+            }
+        }
+
+        //組員回饋範本
+        function feedback_stu(value) {
+            if(value != "default"){
+                document.getElementById("feedback_stu").value += value + "\n" ;
+            }
+        }
+
+        //編輯組員回饋範本
+        function edit_feedback_stu(value) {
+            if(value != "default"){
+                document.getElementById("edit_feedback_stu").value += "\n" + value ;
+            }
+        }
 
         var meeting = "{{$meeting ['meeting_date']}}" + " " + "{{$meeting ['meeting_end']}}";
         var interval = setInterval(function(){
