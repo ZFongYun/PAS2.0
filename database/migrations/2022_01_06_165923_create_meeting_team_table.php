@@ -14,11 +14,11 @@ class CreateMeetingTeamTable extends Migration
     public function up()
     {
         Schema::create('meeting_team', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->unsignedBigInteger('meeting_id');
             $table->foreign('meeting_id')->references('id')->on('meeting');
-            $table->unsignedBigInteger('meeting_id');
-            $table->foreign('meeting_id')->references('id')->on('meeting');
+            $table->unsignedBigInteger('team_id');
+            $table->foreign('team_id')->references('id')->on('team');
             $table->char('calc_status','1');
             $table->timestamps();
             $table->softDeletes();

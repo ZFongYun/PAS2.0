@@ -14,11 +14,11 @@ class CreateTeamTable extends Migration
     public function up()
     {
         Schema::create('team', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name','50');
             $table->char('year','3');
             $table->char('semester','1');
-            $table->string('content','512');
+            $table->string('content','512')->nullable();
             $table->char('status','1');
             $table->timestamps();
             $table->softDeletes();
