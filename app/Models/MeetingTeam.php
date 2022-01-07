@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class StudentScore extends Model
+class MeetingTeam extends Model
 {
     use SoftDeletes;
-    protected $table = 'student_score';  //指定資料表
+    protected $table = 'meeting_team';  //指定資料表
 
     protected $fillable = [
-        'student_id','meeting_id','CV','EV','total' //欄位
+        'meeting_id','team_id','calc_status'  //欄位
     ];
 }

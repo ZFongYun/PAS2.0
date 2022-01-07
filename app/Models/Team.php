@@ -11,30 +11,6 @@ class Team extends Model
     protected $table = 'team';  //指定資料表
 
     protected $fillable = [
-        'name'  //欄位
+        'name','year','semester','content','status'  //欄位
     ];
-
-    public function report(){
-        return $this->hasMany('App\Models\Report');
-    }
-
-    public function student(){
-        return $this->hasMany('App\Models\Student');
-    }
-
-    public function team_score(){
-        return $this->hasMany('App\Models\TeamScore');
-    }
-
-    public function student_scoring_team(){
-        return $this->hasMany('App\Models\StudentScoringTeam');
-    }
-
-    public function teacher_scoring_team(){
-        return $this->hasMany('App\Models\TeacherScoringTeam');
-    }
-
-    public function team_member(){
-        return $this->hasMany('App\Models\TeamMember');
-    }
 }
