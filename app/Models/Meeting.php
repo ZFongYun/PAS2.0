@@ -14,4 +14,19 @@ class Meeting extends Model
         'name','year','semester','content','meeting_date','meeting_start','meeting_end','upload_date','upload_time'  //欄位
     ];
 
+    public function report()
+    {
+        return $this->hasMany('App\Models\MeetingReport','meeting_id');
+    }
+
+    public function team()
+    {
+        return $this->hasMany('App\Models\MeetingTeam','meeting_id');
+    }
+
+    public function score()
+    {
+        return $this->hasMany('App\Models\student_score','meeting_id');
+    }
+
 }

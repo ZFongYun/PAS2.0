@@ -17,4 +17,13 @@ class Student extends Authenticatable
         'student_ID','name','class','password' //欄位
     ];
 
+    public function score()
+    {
+        return $this->hasMany('App\Models\StudentScore','student_id');
+    }
+
+    public function team()
+    {
+        return $this->hasMany('App\Models\TeamMember','member_id');
+    }
 }

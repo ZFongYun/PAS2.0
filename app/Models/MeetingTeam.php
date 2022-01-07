@@ -13,4 +13,14 @@ class MeetingTeam extends Model
     protected $fillable = [
         'meeting_id','team_id','calc_status'  //欄位
     ];
+
+    public function meeting()
+    {
+        return $this->belongsTo('App\Models\Meeting');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo('App\Models\Team');
+    }
 }
