@@ -77,12 +77,11 @@
                                                     <label for="title" class="form-title">匯入檔案</label>
                                                     <input type="file" name="import_file" class="form-control">
                                                     <h4>匯入成員說明</h4>
-                                                    <p>
-                                                        1. 請先點選我下載檔案規格，編輯完成後請儲存成 .xlcx 或 .csv。<br>
-                                                        2. 上傳該份文件後，點擊下方「送出」按鈕。<br>
-                                                        3. 若匯入學號已為此課程中的成員，則不做處理；反之則加入為成員。
-                                                    </p>
-                                                    <br>
+                                                    <ol>
+                                                        <li>請先<a href="{{route('Overall.download')}}">點選我</a>下載檔案規格，編輯時請依照欄位標題輸入學生資料，完成後請將<mark>第一列移除</mark>，並儲存成 .xlcx 或 .csv。</li>
+                                                        <li>上傳該份文件後，點擊右下方「送出」按鈕。</li>
+                                                        <li>若匯入學號已為此課程中的成員，則不做處理；反之則加入為成員。</li>
+                                                    </ol>
                                                     <p>預設密碼說明：在加入名單的同時，將會幫學生建立好帳號與密碼</p>
                                                 </div>
                                             </div>

@@ -94,4 +94,9 @@ class ImportStudentController extends Controller
         $student -> delete();
         return redirect('APS_teacher/ImportStudent');
     }
+
+    public function download(){
+        $file = public_path().'/storage/PHMS_import_sample.xlsx';
+        return response()->download($file);
+    }
 }

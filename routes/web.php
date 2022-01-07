@@ -34,6 +34,8 @@ Route::prefix('APS_teacher')->group(function (){
         Route::resource('ImportStudent','ImportStudentController',['except'=>[
             'edit','show','update','create'
         ]]);
+        Route::get('ImportStudent/download', 'ImportStudentController@download')->name('Overall.download');
+
     });
 });
 
