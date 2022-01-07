@@ -27,7 +27,7 @@ Route::prefix('APS_teacher')->group(function (){
         Route::post('/store', 'ProfIndexController@store')->name('Overall.store');
         Route::DELETE('/{id}/destroy', 'ProfIndexController@destroy')->name('Overall.destroy');
         Route::put('/{id}/update', 'ProfIndexController@update')->name('Overall.update');
-        //成員名單
+        //====成員名單====
         Route::resource('ImportStudent','ImportStudentController',['only'=>[
             'index','store','destroy'
         ]]);
@@ -35,6 +35,10 @@ Route::prefix('APS_teacher')->group(function (){
             'edit','show','update','create'
         ]]);
         Route::get('ImportStudent/download', 'ImportStudentController@download')->name('Overall.download');
+
+        //====小組專區====
+        Route::resource('GroupList','GroupListController');
+
 
     });
 });
