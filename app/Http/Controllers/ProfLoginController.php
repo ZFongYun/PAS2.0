@@ -12,7 +12,7 @@ class ProfLoginController extends Controller
 
     public function index(){
         if (Auth::guard('teacher')->check()){
-            return redirect('/prof');
+            return redirect('/APS_teacher');
         }
         return view('teacher_frontend.login');
     }
@@ -31,7 +31,7 @@ class ProfLoginController extends Controller
 
             if (Auth::guard('teacher')->attempt(['account' => $account, 'password' => $password])) { //欄位password > 暗碼；文字框$password > 明碼
                 //登入成功...
-                return redirect('/prof');
+                return redirect('/APS_teacher');
             }else{
                 //登入失敗
                 return back()->with('error','帳號或密碼錯誤，請再次確認');
@@ -43,6 +43,6 @@ class ProfLoginController extends Controller
 
     public  function  logout(){
         Auth::guard('teacher')->logout();
-        return redirect('/ProLogin');
+        return redirect('APS_teacher/login');
     }
 }

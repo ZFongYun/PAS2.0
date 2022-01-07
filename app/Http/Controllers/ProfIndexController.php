@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MeetingBulletin;
+use App\Models\Bulletin;
 use Illuminate\Http\Request;
 
 class ProfIndexController extends Controller
@@ -15,7 +15,7 @@ class ProfIndexController extends Controller
 
     public function index()
     {
-        $bulletin = MeetingBulletin::all()->toArray();
+        $bulletin = Bulletin::all()->toArray();
         return view('teacher_frontend.index',compact('bulletin'));
     }
 
@@ -39,11 +39,11 @@ class ProfIndexController extends Controller
     {
         $title = $request->input("title");
         $content = $request->input("content");
-        $meeting_bulletin = new MeetingBulletin;
+        $meeting_bulletin = new Bulletin;
         $meeting_bulletin->title = $title;
         $meeting_bulletin->content = $content;
         $meeting_bulletin->save();
-        return redirect('prof');
+        return redirect('/APS_teacher');
     }
 
     /**
@@ -79,11 +79,11 @@ class ProfIndexController extends Controller
     {
         $title = $request->input("title");
         $content = $request->input("content");
-        $bulletin = MeetingBulletin::where('id','=',$id)->first();
+        $bulletin = Bulletin::where('id','=',$id)->first();
         $bulletin->title = $title;
         $bulletin->content = $content;
         $bulletin->save();
-        return redirect('prof');
+        return redirect('/APS_teacher');
     }
 
     /**
@@ -94,8 +94,8 @@ class ProfIndexController extends Controller
      */
     public function destroy($id)
     {
-        $bulletin = MeetingBulletin::find($id);
+        $bulletin = Bulletin::find($id);
         $bulletin -> delete();
-        return redirect('prof');
+        return redirect('/APS_teacher');
     }
 }

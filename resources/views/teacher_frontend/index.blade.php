@@ -22,7 +22,7 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form action="{{route('prof.store')}}" method="post">
+                                    <form action="{{action('ProfIndexController@store')}}" method="post">
                                         {{ csrf_field() }}
                                     <div class="modal-body">
                                         <div class="row">
@@ -63,7 +63,7 @@
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-right">
                                                 <li><a href="#myModal{{$row['id']}}" data-toggle="modal" class="dropdown-item">編輯</a></li>
-                                                <form action="{{route('prof.destroy',$row['id'])}}" method="post">
+                                                <form action="{{route('Overall.destroy',$row['id'])}}" method="post">
                                                     <li><button type="submit" class="dropdown-item button-dropdown" style="padding-left: 20px;" onclick="return(confirm('是否刪除此筆資料？'))">刪除</button></li>
                                                     <input type="hidden" name="_method" value="DELETE">
                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -90,7 +90,7 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form action="{{route('prof.update',$row['id'])}}" method="post">
+                                            <form action="{{route('Overall.update',$row['id'])}}" method="post">
                                                 {{ csrf_field() }}
                                                 <div class="modal-body">
                                                     <div class="row">

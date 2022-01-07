@@ -48,8 +48,6 @@ class ImportStudentController extends Controller
         return back()->with('success', '加入成功！');
     }
 
-
-
     /**
      * Display the specified resource.
      *
@@ -94,6 +92,6 @@ class ImportStudentController extends Controller
     {
         $student = Student::find($id);
         $student -> delete();
-        return redirect('ImportStudent');
+        return redirect('APS_teacher/ImportStudent');
     }
 }
