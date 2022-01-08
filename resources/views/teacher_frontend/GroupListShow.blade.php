@@ -9,9 +9,12 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="btn-group m-b-20">
-                            <h4 class="page-title">組員列表</h4>
+                            <h4 class="page-title">{{$team[0]['year']}} - {{$team[0]['semester']== 0 ? '上學期' : '下學期'}}  {{$team[0]['name']}}</h4>
                         </div>
-                        <h4>{{$team_name}}</h4>
+                        <h4>組別簡介</h4>
+                        <p>{{$team[0]['content']}}</p>
+
+                        <h4>組員</h4>
                         <div class="table-responsive">
                             <table class="table table-hover m-0">
                                 <thead>

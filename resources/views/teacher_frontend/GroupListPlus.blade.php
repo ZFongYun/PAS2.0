@@ -13,7 +13,7 @@
                         </div>
                         <h4>{{$team_name}}</h4>
 
-                        <form method="post" action="{{action('GroupListController@plus',$team_id)}}">
+                        <form method="post" action="{{action('GroupListController@plus',$id)}}">
                             {{ csrf_field() }}
                             <div class="col-lg-10">
                                 <p class="form-title">選擇組員</p>
@@ -53,19 +53,17 @@
                                         <tbody>
                                         @foreach($student as $row)
                                             <tr>
-                                                <td><input type='checkbox' name='student[]' value="{{$row['id']}}" id="{{$row['id']}}" data-id="{{$row['student_ID']}}" data-name="{{$row['name']}}" data-class="{{$row['class']}}" data-role="{{$row['role']}}" data-position="{{$row['position']}}" class="check_box"></td>
-                                                <td>{{$row['student_ID']}}</td>
-                                                <td>{{$row['name']}}</td>
-                                                <td>{{$row['class']}}</td>
+                                                <td><input type='checkbox' name='student[]' value="{{$row->id}}" id="{{$row->id}}" data-id="{{$row->student_ID}}" data-name="{{$row->name}}" data-class="{{$row->class}}" class="check_box"></td>
+                                                <td>{{$row->student_ID}}</td>
+                                                <td>{{$row->name}}</td>
+                                                <td>{{$row->class}}</td>
                                                 <td></td>
                                             </tr>
-
                                         @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-
                             <div class="col-lg-10 m-t-30" align="right">
                                 <button type="submit" class="btn btn-success waves-effect waves-light button-font">確認</button>
                             </div><!-- end col -->
@@ -97,7 +95,6 @@
                     html += '<td>'+$(this).data('id')+'</td>';
                     html += '<td>'+$(this).data('name')+'</td>';
                     html += '<td>'+$(this).data('class')+'</td>';
-                    // html += '<td><select id="role" name="role'+$(this).attr('id')+'"><option value="0">組長</option> <option value="1" selected>組員</option> </select></td>';
                     html += '<td><select id="position" name="position'+$(this).attr('id')+'"><option value="0">企劃</option><option value="1">程式</option><option value="2">美術</option><option value="3">技美</option> </select></td>';
                 }
                 else
@@ -106,17 +103,11 @@
                     html += '<td>'+$(this).data('id')+'</td>';
                     html += '<td>'+$(this).data('name')+'</td>';
                     html += '<td>'+$(this).data('class')+'</td>';
-                    // html += '<td>'+'</td>';
                     html += '<td>'+'</td>';
                 }
                 $(this).closest('tr').html(html);
-                // $('#gender_'+$(this).attr('id')+'').val($(this).data('gender'));
             });
-
-
         });
-
-
     </script>
 @endsection
 @section('title','加入組員')

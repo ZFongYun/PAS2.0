@@ -18,7 +18,7 @@ class GroupListController extends Controller
 
     public function index()
     {
-        $teamName = Team::all('name')->toArray();
+        $teamName = Team::all('name','year','semester')->toArray();
         $teamId = Team::all('id')->toArray();
 
         $team_length = count($teamId);
@@ -28,25 +28,6 @@ class GroupListController extends Controller
         $arr_team = array($teamName);
         $arr_id = array($teamId);
 
-//        foreach ($teamId as $id){
-//            $student = Student::whereHas('team',function ($q) use ($id) {
-//                $q->where('team_id',$id);
-//            })->get(['name','role'])->toArray();
-//            $student_length = count($student);
-//            $leader = "";
-//            $member = "";
-//
-//            for ($i = 0; $i < $student_length; $i++){
-//                if ($student[$i]['role'] == 0){
-//                    $leader = $leader." ".$student[$i]['name'];
-//                }else if($student[$i]['role'] == 1){
-//                    $member = $member." ".$student[$i]['name'];
-//                }
-//
-//            }
-//            array_push($arr_leader,$leader);
-//            array_push($arr_member,$member);
-//        }
         foreach ($teamId as $id){
             $team_member = TeamMember::with(array('student'=>function($query){
                 $query->select('id','name');
@@ -77,7 +58,7 @@ class GroupListController extends Controller
      */
     public function create()
     {
-        $student = Student::where('team_id',null)->get();
+        $student = Student::all()->toArray();
         return view('teacher_frontend.GroupListCreate',compact('student'));
     }
 
@@ -93,6 +74,7 @@ class GroupListController extends Controller
             $leader = 0;
             $member = 0;
 
+            //計算組長和組員的人數
             foreach($_POST['student'] as $studentId){
                 $role = $request->input('role'.$studentId);
                 if($role==0){
@@ -101,6 +83,7 @@ class GroupListController extends Controller
                     $member++;
                 }
             }
+
             if($leader != 0){
                 if($leader >=2){
                     // 組長重複
@@ -108,9 +91,19 @@ class GroupListController extends Controller
                 }else{
                     // 完成條件
                     $team_name = $request->input('name');
+                    $year = $request->input('year');
+                    $semester = $request->input('semester');
+                    $content = $request->input('content');
+                    $status = $request->input('status');
+
                     $team = new Team;
                     $team -> name = $team_name;
+                    $team -> year = $year;
+                    $team -> semester = $semester;
+                    $team -> content = $content;
+                    $team -> status = $status;
                     $team -> save();
+
                     $team_id = Team::where('name',$team_name)->value('id');
 
                     foreach($_POST['student'] as $studentId){
@@ -123,13 +116,8 @@ class GroupListController extends Controller
                         $team_member -> role = $role;
                         $team_member -> position = $position;
                         $team_member -> save();
-                        $student = Student::find($studentId);
-//                        $student -> role = $role;
-//                        $student -> position = $position;
-                        $student -> team_id = $team_id;
-                        $student -> save();
                     }
-                    return redirect('GroupList');
+                    return redirect('APS_teacher/GroupList');
                 }
             }else{
                 // 未選擇組長
@@ -148,11 +136,7 @@ class GroupListController extends Controller
      */
     public function show($id)
     {
-        $team_name = Team::where('id',$id)->value('name');
-//        $student = Student::whereHas('team',function ($q) use ($id) {
-//            $q->where('team_id',$id);
-//        })->get(['id','name','student_id','role','position'])->toArray();
-//        $student_length = count($student);
+        $team = Team::where('id',$id)->get()->toArray();
 
         $team_member = TeamMember::with(array('student'=>function($query){
             $query->select('id','name','student_id');
@@ -163,7 +147,7 @@ class GroupListController extends Controller
         })->get(['id','student_id','team_id','role','position'])->toArray();
         $team_member_length = count($team_member);
 
-        return view('teacher_frontend.GroupListShow',compact('team_name','team_member_length','team_member'));
+        return view('teacher_frontend.GroupListShow',compact('team','team_member_length','team_member'));
     }
 
     /**
@@ -174,12 +158,7 @@ class GroupListController extends Controller
      */
     public function edit($id)
     {
-        $team_name = Team::where('id',$id)->value('name');
-        $team_id = Team::where('id',$id)->value('id');
-//        $student = Student::whereHas('team',function ($q) use ($id) {
-//            $q->where('team_id',$id);
-//        })->get(['id','name','student_id','role','position'])->toArray();
-//        $student_length = count($student);
+        $team = Team::where('id',$id)->get()->toArray();
 
         $team_member = TeamMember::with(array('student'=>function($query){
             $query->select('id','name','student_id');
@@ -190,7 +169,7 @@ class GroupListController extends Controller
         })->get(['id','student_id','team_id','role','position'])->toArray();
         $team_member_length = count($team_member);
 
-        return view('teacher_frontend.GroupListEdit',compact('team_name','team_id','team_member_length','team_member'));
+        return view('teacher_frontend.GroupListEdit',compact('team','id','team_member_length','team_member'));
     }
 
     /**
@@ -204,6 +183,8 @@ class GroupListController extends Controller
     {
         $leader = 0;
         $member = 0;
+
+        //計算組長和組員的人數
         foreach($_POST['hidden_id'] as $hiddenId){
             $role = $request->input('role'.$hiddenId);
             if($role==0){
@@ -217,34 +198,37 @@ class GroupListController extends Controller
                 // 組長重複
                 return back()->with('error','組長已重複，請重新選擇');
             }else{
-                // 完成條件 更新資料
+                // 完成條件 更新組別和組員資料
+                $team_name = $request->input('name');
+                $year = $request->input('year');
+                $semester = $request->input('semester');
+                $content = $request->input('content');
+                $status = $request->input('status');
+
+                $team = Team::find($id);
+                $team -> name = $team_name;
+                $team -> year = $year;
+                $team -> semester = $semester;
+                $team -> content = $content;
+                $team -> status = $status;
+                $team -> save();
+
                 foreach($_POST['hidden_id'] as $hiddenId){
                     $role = $request->input('role'.$hiddenId);
                     $position = $request->input('position'.$hiddenId);
-                    $team_name = $request->input('name');
 
-                    $team = Team::find($id);
-                    $team -> name = $team_name;
-                    $team -> save();
-
-//                    $student = Student::find($hiddenId);
-//                    $student -> role = $role;
-//                    $student -> position = $position;
-//                    $student -> save();
                     $team_member = TeamMember::find($hiddenId);
                     $team_member -> role = $role;
                     $team_member -> position = $position;
                     $team_member -> save();
                 }
 
-                return redirect('GroupList');
+                return redirect('APS_teacher/GroupList');
             }
         }else{
             // 未選擇組長
             return back()->with('repeat','請選擇組長');
         }
-
-
     }
 
     /**
@@ -255,26 +239,32 @@ class GroupListController extends Controller
      */
     public function destroy($id)
     {
-//        $student = DB::table('student')->where('team_id', '=', $id)
-//            ->update(array('team_id' => null,'role' => null,'position' => null));
-        $student = DB::table('student')->where('team_id', '=', $id)
-            ->update(array('team_id' => null));
-
         $team_member = TeamMember::where('team_id',$id)->delete();
 
         $team = Team::find($id);
         $team -> delete();
 
-        return redirect('GroupList');
+        return redirect('APS_teacher/GroupList');
 
     }
 
     public function plus_page($id)
     {
         $team_name = Team::where('id',$id)->value('name');
-        $team_id = Team::where('id',$id)->value('id');
-        $student = Student::where('team_id',null)->get();
-        return view('teacher_frontend.GroupListPlus',compact('team_name','team_id','student'));
+        $team_member = TeamMember::where('team_id',$id)->get();
+
+        $student_id = array();
+        for ($i = 0; $i < count($team_member); $i++){
+            array_push($student_id,$team_member[$i]['student_id']);
+        }
+
+        //找出未加入該組別的學生
+        $student = DB::table('student')
+            ->whereNull('deleted_at')
+            ->whereNotIn('id', $student_id)
+            ->get();
+
+        return view('teacher_frontend.GroupListPlus',compact('id','team_name','student'));
     }
 
     public function plus(Request $request,$id)
@@ -282,11 +272,6 @@ class GroupListController extends Controller
         if(isset($_POST['student'])){
             foreach($_POST['student'] as $studentId){
                 $position = $request->input('position'.$studentId);
-                $student = Student::find($studentId);
-//                $student -> position = $position;
-//                $student -> role = '1';  //固定組員
-                $student -> team_id = $id;
-                $student -> save();
 
                 $team_member = new TeamMember;
                 $team_member -> student_id = $studentId;
@@ -295,7 +280,7 @@ class GroupListController extends Controller
                 $team_member -> position = $position;
                 $team_member -> save();
             }
-            return redirect('GroupList');
+            return redirect('APS_teacher/GroupList');
         }else{
             return back()->with('warning','請選擇組員');
         }
@@ -303,15 +288,8 @@ class GroupListController extends Controller
 
     public function destroy_member($id)
     {
-        $student = Student::find($id);
-        $student -> team_id = null;
-//        $student -> role = null;
-//        $student -> position = null;
-        $student -> save();
-
         $team_member = TeamMember::where('student_id',$id)->first();
         $team_member -> delete();
-
         return back();
     }
 }

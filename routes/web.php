@@ -38,6 +38,11 @@ Route::prefix('APS_teacher')->group(function (){
 
         //====小組專區====
         Route::resource('GroupList','GroupListController');
+        Route::prefix('GroupList')->group(function (){
+            Route::get('plus/{id}','GroupListController@plus_page');
+            Route::post('plus/{id}','GroupListController@plus');
+            Route::post('destroy_member/{id}','GroupListController@destroy_member');
+        });
 
 
     });

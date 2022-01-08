@@ -15,14 +15,40 @@
                         <form method="post" action="{{route('GroupList.store')}}">
                             {{ csrf_field() }}
                             <div class="col-lg-10">
-                                    <div class="form-group row">
-                                        <label for="name" class="col-sm-2 control-label form-title" >組別名稱</label>
-                                        <div class="col-md-5" >
-                                            <input type="text" class="form-control" id="name" name="name" required="">
+                                <div class="form-group row">
+                                    <label for="name" class="col-sm-2 control-label form-title" ><span class="text-danger">*</span>組別名稱</label>
+                                    <div class="col-md-5" >
+                                        <input type="text" class="form-control" id="name" name="name" required="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="year" class="col-sm-2 control-label form-title" ><span class="text-danger">*</span>新增學年度</label>
+                                    <div class="col-md-5">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control m-r-10" id="year" name="year" required="">
+                                            <select class="form-control" id="semester" name="semester">
+                                                <option value="0">上學期</option>
+                                                <option value="1">下學期</option>
+                                            </select>
                                         </div>
                                     </div>
-
-                                <p class="form-title">選擇組員</p>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="content" class="col-md-2 control-label form-title">組別簡介</label>
+                                    <div class="col-md-5">
+                                        <textarea id="content" name="content" class="form-control" maxlength="225" rows="2"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="status" class="col-md-2 control-label form-title"><span class="text-danger">*</span>組別狀態</label>
+                                    <div class="col-md-5">
+                                        <select class="form-control" id="status" name="status">
+                                            <option value="0">未結束</option>
+                                            <option value="1">已結束</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p class="form-title"><span class="text-danger">*</span>選擇組員</p>
 
                                 @if($messageWarning = Session::get('warning'))
                                     <div class="alert alert-warning alert-block" style="color: #f0b360">
@@ -60,15 +86,13 @@
                                         <tbody>
                                         @foreach($student as $row)
                                             <tr>
-                                                <td><input type='checkbox' name='student[]' value="{{$row['id']}}" id="{{$row['id']}}" data-id="{{$row['student_ID']}}" data-name="{{$row['name']}}" data-class="{{$row['class']}}" data-role="{{$row['role']}}" data-position="{{$row['position']}}" class="check_box"></td>
+                                                <td><input type='checkbox' name='student[]' value="{{$row['id']}}" id="{{$row['id']}}" data-id="{{$row['student_ID']}}" data-name="{{$row['name']}}" data-class="{{$row['class']}}" class="check_box"></td>
                                                 <td>{{$row['student_ID']}}</td>
                                                 <td>{{$row['name']}}</td>
                                                 <td>{{$row['class']}}</td>
                                                 <td></td>
                                                 <td></td>
-
                                             </tr>
-
                                         @endforeach
                                         </tbody>
                                     </table>

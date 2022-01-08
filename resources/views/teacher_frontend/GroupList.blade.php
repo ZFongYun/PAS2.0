@@ -17,6 +17,7 @@
                             <table class="table table-hover m-0">
                                 <thead>
                                 <tr>
+                                    <th>學年期</th>
                                     <th>組別名稱</th>
                                     <th>組長</th>
                                     <th>組員</th>
@@ -28,6 +29,7 @@
                                 <tbody>
                                 @for($i=0; $i<$team_length; $i++)
                                     <tr>
+                                        <td>{{$arr_team[0][$i]['year']}} - {{$arr_team[0][$i]['semester']== 0 ? '1' : '2'}}</td>
                                         <td><a href="{{route('GroupList.show',$arr_id[0][$i]['id'])}}">{{$arr_team[0][$i]['name']}}</a></td>
                                         <td>{{$arr_leader[$i]}}</td>
                                         <td>{{$arr_member[$i]}}</td>
