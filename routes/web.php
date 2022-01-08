@@ -44,6 +44,24 @@ Route::prefix('APS_teacher')->group(function (){
             Route::post('destroy_member/{id}','GroupListController@destroy_member');
         });
 
+        //====會議活動====
+        Route::resource('meeting','MeetingController');
+        Route::prefix('meeting')->group(function (){
+            Route::get('score/{id}','MeetingController@scoring_page');
+            Route::post('score','MeetingController@score');
+            Route::post('scoring_team','MeetingController@scoring_team');
+            Route::post('edit_team','MeetingController@edit_team');
+            Route::post('scoring_stu','MeetingController@scoring_stu');
+            Route::post('edit_stu','MeetingController@edit_stu');
+        });
+        Route::prefix('score')->group(function(){
+            Route::post('/','ScoreController@scoring');
+        });
+        Route::prefix('grades')->group(function(){
+            Route::get('/{id}','ScoreController@grades_page');
+            Route::post('/search','ScoreController@search');
+            Route::post('/score','ScoreController@score');
+        });
 
     });
 });

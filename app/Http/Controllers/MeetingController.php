@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meeting;
+use App\Models\MeetingTeam;
 use App\Models\Student;
 use App\Models\TeacherScoringStudent;
 use App\Models\TeacherScoringTeam;
@@ -43,44 +44,42 @@ class MeetingController extends Controller
     public function store(Request $request)
     {
         $name = $request->input('name');
-        $content = $request->input('content');
+        $year = $request->input('year');
+        $semester = $request->input('semester');
         $meeting_date = $request->input('meeting_date');
         $meeting_start = $request->input('meeting_start');
         $meeting_end = $request->input('meeting_end');
+        $content = $request->input('content');
         $upload_date = $request->input('upload_date');
         $upload_time = $request->input('upload_time');
-        $team = $request->input('team');
-        $TS = $request->input('TS');
-        $PA = $request->input('PA');
-        $team_limit = $request->input('team_limit');
-        $team_bonus = $request->input('team_bonus');
-        $member_limit = $request->input('member_limit');
-        $member_bonus = $request->input('member_bonus');
-
-        $team_length = count($team);
-        $team_chk = "";
-        for($i=0; $i<$team_length; $i++){
-            $team_chk = $team_chk . ' ' . $team[$i];
-        }
+        $team = $request->input('teamId');
 
         $meeting = new Meeting;
         $meeting -> name = $name;
+        $meeting -> year = $year;
+        $meeting -> semester = $semester;
         $meeting -> meeting_date = $meeting_date;
         $meeting -> meeting_start = $meeting_start;
         $meeting -> meeting_end = $meeting_end;
         $meeting -> content = $content;
         $meeting -> upload_date = $upload_date;
         $meeting -> upload_time = $upload_time;
-        $meeting -> report_team = $team_chk;
-        $meeting -> PA = $PA;
-        $meeting -> TS = $TS;
-        $meeting -> team_limit = $team_limit;
-        $meeting -> team_bonus = $team_bonus;
-        $meeting -> member_limit = $member_limit;
-        $meeting -> member_bonus = $member_bonus;
         $meeting -> save();
 
-        return redirect('/meeting');
+        $cut_id = explode(",",$team);
+        $meeting_id = Meeting::where('name',$name)->value('id');
+
+        if ($cut_id != null){
+            foreach ($cut_id as $row)
+            {
+                $meeting_team = new MeetingTeam;
+                $meeting_team -> meeting_id = $meeting_id;
+                $meeting_team -> team_id = $row;
+                $meeting_team -> calc_status = 0;
+                $meeting_team -> save();
+            }
+        }
+        return redirect('APS_teacher/meeting');
     }
 
     /**
@@ -92,14 +91,13 @@ class MeetingController extends Controller
     public function show($id)
     {
         $meeting = Meeting::find($id) -> toArray();
-        $meeting_reportTeam = $meeting['report_team'];
-        $team_chk_arr = explode(" ",$meeting_reportTeam);
-        $report_team_show = array();
-        for ($i = 1; $i < count($team_chk_arr); $i++){
-            $team_name = Team::withTrashed()->where('id',$team_chk_arr[$i])->value('name');
-            array_push($report_team_show, $team_name);
-        }
-        return view('teacher_frontend.meetingShow',compact('meeting','report_team_show'));
+        $meeting_team = DB::table('meeting_team')
+            ->where('meeting_id',$id)->whereNull('meeting_team.deleted_at')
+            ->join('meeting','meeting_team.meeting_id','=','meeting.id')
+            ->join('team','meeting_team.team_id','=','team.id')
+            ->select('team.name')
+            ->get()->toArray();
+        return view('teacher_frontend.meetingShow',compact('meeting','meeting_team'));
     }
 
     /**
@@ -111,12 +109,9 @@ class MeetingController extends Controller
     public function edit($id)
     {
         $meeting = Meeting::find($id) -> toArray();
-        $team_chk = $meeting['report_team'];
-        $team_chk_arr = explode(" ",$team_chk);
-        $team_chk_length = count($team_chk_arr);
         $team = Team::all()->toArray();
-
-        return view('teacher_frontend.meetingEdit',compact('meeting','team','team_chk_arr','team_chk_length'));
+        $meeting_team = MeetingTeam::where('meeting_id',$id)->get('team_id');
+        return view('teacher_frontend.meetingEdit',compact('meeting','team','meeting_team'));
     }
 
     /**
@@ -129,45 +124,42 @@ class MeetingController extends Controller
     public function update(Request $request, $id)
     {
         $name = $request->input('name');
-        $content = $request->input('content');
+        $year = $request->input('year');
+        $semester = $request->input('semester');
         $meeting_date = $request->input('meeting_date');
         $meeting_start = $request->input('meeting_start');
         $meeting_end = $request->input('meeting_end');
+        $content = $request->input('content');
         $upload_date = $request->input('upload_date');
         $upload_time = $request->input('upload_time');
-        $team = $request->input('team');
-        $TS = $request->input('TS');
-        $PA = $request->input('PA');
-        $team_limit = $request->input('team_limit');
-        $team_bonus = $request->input('team_bonus');
-        $member_limit = $request->input('member_limit');
-        $member_bonus = $request->input('member_bonus');
-
-        $team_length = count($team);
-        $team_chk = "";
-        for($i=0; $i<$team_length; $i++){
-            $team_chk = $team_chk . ' ' . $team[$i];
-        }
+        $team = $request->input('teamId');
 
         $meeting = Meeting::where('id','=',$id)->first();
         $meeting -> name = $name;
+        $meeting -> year = $year;
+        $meeting -> semester = $semester;
         $meeting -> meeting_date = $meeting_date;
         $meeting -> meeting_start = $meeting_start;
         $meeting -> meeting_end = $meeting_end;
         $meeting -> content = $content;
         $meeting -> upload_date = $upload_date;
         $meeting -> upload_time = $upload_time;
-        $meeting -> report_team = $team_chk;
-        $meeting -> PA = $PA;
-        $meeting -> TS = $TS;
-        $meeting -> team_limit = $team_limit;
-        $meeting -> team_bonus = $team_bonus;
-        $meeting -> member_limit = $member_limit;
-        $meeting -> member_bonus = $member_bonus;
         $meeting -> save();
 
-        return redirect('/meeting');
+        $teamToDelete = MeetingTeam::where('meeting_id',$id)->delete(); //把舊有的報告組別刪除
 
+        $cut_id = explode(",",$team);
+        if ($cut_id != null){
+            foreach ($cut_id as $row)
+            {
+                $meeting_team = new MeetingTeam;
+                $meeting_team -> meeting_id = $id;
+                $meeting_team -> team_id = $row;
+                $meeting_team -> calc_status = 0;
+                $meeting_team -> save();
+            }
+        }
+        return redirect('APS_teacher/meeting');
     }
 
     /**
@@ -178,9 +170,12 @@ class MeetingController extends Controller
      */
     public function destroy($id)
     {
+        $meeting_team = MeetingTeam::where('meeting_id',$id)->delete();
+
         $meeting = Meeting::find($id);
         $meeting -> delete();
-        return redirect('meeting');
+
+        return redirect('APS_teacher/meeting');
     }
 
     public function scoring_page($id)
