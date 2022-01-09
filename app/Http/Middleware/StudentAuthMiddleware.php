@@ -18,7 +18,7 @@ class StudentAuthMiddleware
     public function handle($request, Closure $next, $guard = 'student')
     {
         if (!Auth::guard($guard)->check()) {
-            return redirect('/StuLogin'); //改成『若登入後再回到登入頁面時你要跳轉』的頁面，這邊應該會在LoginController的屬性$redirectTo一樣。
+            return redirect('APS_student/login'); //改成『若登入後再回到登入頁面時你要跳轉』的頁面，這邊應該會在LoginController的屬性$redirectTo一樣。
         }
 
         return $next($request);

@@ -11,11 +11,11 @@
     <title>學生登入</title>
 
     <!-- App CSS -->
-    <link href="assets_stu/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets_stu/css/icons.css" rel="stylesheet" type="text/css" />
-    <link href="assets_stu/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('assets_stu/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('assets_stu/css/icons.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('assets_stu/css/style.css') }}" rel="stylesheet" type="text/css" />
 
-    <script src="assets_stu/js/modernizr.min.js"></script>
+    <script src="{{ URL::asset('assets_stu/js/modernizr.min.js') }}"></script>
 
 </head>
 <body>
@@ -76,20 +76,19 @@
 </script>
 
 <!-- jQuery  -->
-<script src="assets_stu/js/jquery.min.js"></script>
-<script src="assets_stu/js/bootstrap.bundle.min.js"></script>
-<script src="assets_stu/js/detect.js"></script>
-<script src="assets_stu/js/fastclick.js"></script>
-<script src="assets_stu/js/jquery.slimscroll.js"></script>
-<script src="assets_stu/js/jquery.blockUI.js"></script>
-<script src="assets_stu/js/waves.js"></script>
-<script src="assets_stu/js/wow.min.js"></script>
-<script src="assets_stu/js/jquery.nicescroll.js"></script>
-<script src="assets_stu/js/jquery.scrollTo.min.js"></script>
+<script src="{{ URL::asset('assets_stu/js/jquery.min.js') }}"></script>
+<script src="{{ URL::asset('assets_stu/js/detect.js') }}"></script>
+<script src="{{ URL::asset('assets_stu/js/fastclick.js') }}"></script>
+<script src="{{ URL::asset('assets_stu/js/jquery.slimscroll.js') }}"></script>
+<script src="{{ URL::asset('assets_stu/js/jquery.blockUI.js') }}"></script>
+<script src="{{ URL::asset('assets_stu/js/waves.js') }}"></script>
+<script src="{{ URL::asset('assets_stu/js/wow.min.js') }}"></script>
+<script src="{{ URL::asset('assets_stu/js/jquery.nicescroll.js') }}"></script>
+<script src="{{ URL::asset('assets_stu/js/jquery.scrollTo.min.js') }}"></script>
 
 <!-- App js -->
-<script src="assets_stu/js/jquery.core.js"></script>
-<script src="assets_stu/js/jquery.app.js"></script>
+<script src="{{ URL::asset('assets_stu/js/jquery.core.js') }}"></script>
+<script src="{{ URL::asset('assets_stu/js/jquery.app.js') }}"></script>
 
 </body>
 </html>

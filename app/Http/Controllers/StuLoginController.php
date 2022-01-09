@@ -12,7 +12,7 @@ class StuLoginController extends Controller
 
     public function index(){
         if (Auth::guard('student')->check()){
-            return redirect('/StuIndex');
+            return redirect('/APS_student');
         }
         return view('student_frontend.login');
     }
@@ -31,7 +31,7 @@ class StuLoginController extends Controller
 
             if (Auth::guard('student')->attempt(['student_ID' => $student_ID, 'password' => $password])) {
                 //登入成功...
-                return redirect('/StuIndex');
+                return redirect('/APS_student');
             }else{
                 //登入失敗
                 return back()->with('error','帳號或密碼錯誤，請再次確認');
@@ -43,6 +43,6 @@ class StuLoginController extends Controller
 
     public  function  logout(){
         Auth::guard('student')->logout();
-        return redirect('/StuLogin');
+        return redirect('APS_student/login');
     }
 }

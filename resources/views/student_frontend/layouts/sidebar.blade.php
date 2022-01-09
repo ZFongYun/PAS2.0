@@ -12,23 +12,23 @@
                 <li class="text-muted menu-title">功能列表</li>
 
                 <li class="has_sub">
-                    <a href="{{route('StuIndex.index')}}" class="waves-effect"><i class="fa fa-home"></i> <span> 首頁 </span> </a>
+                    <a href="{{action('StuIndexController@index')}}" class="waves-effect"><i class="fa fa-home"></i> <span> 首頁 </span> </a>
                 </li>
 
                 <li class="has_sub">
-                    <a href="{{route('StuMeeting.index')}}" class="waves-effect"><i class="fa fa-comments"></i> <span> 會議 </span> </a>
+                    <a href="#" class="waves-effect"><i class="fa fa-comments"></i> <span> 會議 </span> </a>
                 </li>
 
                 <li class="has_sub">
-                    <a href="{{route('StuGroupList.index')}}" class="waves-effect"><i class="fa fa-users"></i> <span> 小組專區 </span> </a>
+                    <a href="#" class="waves-effect"><i class="fa fa-users"></i> <span> 小組專區 </span> </a>
                 </li>
 
                 <li class="has_sub">
-                    <a href="{{route('StuTranscript.index')}}" class="waves-effect"><i class="fa fa-search"></i> <span> 成績查詢 </span> </a>
+                    <a href="#" class="waves-effect"><i class="fa fa-search"></i> <span> 成績查詢 </span> </a>
                 </li>
 
                 <li class="has_sub">
-                    <a href="{{route('ResetPassword.index')}}" class="waves-effect"><i class="fa fa-undo"></i> <span> 修改密碼 </span> </a>
+                    <a href="#" class="waves-effect"><i class="fa fa-undo"></i> <span> 修改密碼 </span> </a>
                 </li>
 
                 <li class="has_sub">

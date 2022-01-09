@@ -66,6 +66,27 @@ Route::prefix('APS_teacher')->group(function (){
     });
 });
 
+Route::prefix('APS_student')->group(function (){
+    // 學生登入
+    Route::prefix('login')->group(function (){
+        Route::get('/','StuLoginController@index');
+        Route::post('/authenticate','StuLoginController@login');
+        Route::get('/logout','StuLoginController@logout');
+    });
+
+    Route::group(['middleware' => 'auth.student'], function() {
+        //====首頁====
+        Route::resource('/','StuIndexController',['only'=>[
+            'index'
+        ]]);
+        Route::resource('/','StuIndexController',['except'=>[
+            'create','edit','show','store','update','destroy'
+        ]]);
+    });
+
+});
+
+
 //Route::prefix('ProLogin')->group(function (){
 //    Route::get('/','ProfLoginController@index');
 //    Route::post('/login','ProfLoginController@login');
