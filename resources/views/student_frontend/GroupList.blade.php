@@ -57,7 +57,7 @@
                                 </table>
                             </div>
                             @if($stu_team[0]->role == 0)
-                                <a href="{{route('StuGroupList.edit',$stu_team[0]->team_id)}}" class="btn waves-effect waves-light btn-warning btn-sm m-t-20" style="height: 30px">編輯</a>
+                                <a href="{{action('StuGroupListController@edit',$stu_team[0]->team_id)}}" class="btn waves-effect waves-light btn-warning btn-sm m-t-20" style="height: 30px">編輯</a>
                             @endif
                         </div>
 

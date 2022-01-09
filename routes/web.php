@@ -76,10 +76,10 @@ Route::prefix('APS_student')->group(function (){
             'create','edit','show','store','update','destroy'
         ]]);
         //====小組專區====
-        Route::resource('StuGroupList','StuGroupListController',['only'=>[
+        Route::resource('GroupList','StuGroupListController',['only'=>[
             'index','edit','update'
         ]]);
-        Route::resource('StuGroupList','StuGroupListController',['except'=>[
+        Route::resource('GroupList','StuGroupListController',['except'=>[
             'create','show','store','destroy'
         ]]);
         //====修改密碼====

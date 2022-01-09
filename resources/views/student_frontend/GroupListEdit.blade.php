@@ -12,7 +12,7 @@
                             <h4 class="page-title">編輯組別</h4>
                         </div>
 
-                        <form method="post" action="{{route('StuGroupList.update',$id)}}">
+                        <form method="post" action="{{action('StuGroupListController@update',$id)}}">
                             <div class="col-lg-10">
                                 <div class="form-group row">
                                     <label for="name" class="col-sm-2 control-label form-title" ><span class="text-danger">*</span>組別名稱</label>

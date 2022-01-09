@@ -146,7 +146,7 @@ class StuGroupListController extends Controller
                     $team_member -> position = $position;
                     $team_member -> save();
                 }
-                return redirect('APS_student/StuGroupList');
+                return redirect('APS_student/GroupList');
             }
         }else{
             // 未選擇組長
