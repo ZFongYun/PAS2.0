@@ -82,8 +82,13 @@ Route::prefix('APS_student')->group(function (){
         Route::resource('/','StuIndexController',['except'=>[
             'create','edit','show','store','update','destroy'
         ]]);
-
-
+        //====小組專區====
+        Route::resource('StuGroupList','StuGroupListController',['only'=>[
+            'index','edit','update'
+        ]]);
+        Route::resource('StuGroupList','StuGroupListController',['except'=>[
+            'create','show','store','destroy'
+        ]]);
         //====修改密碼====
         Route::resource('ResetPwd','ResetPasswordController',['only'=>[
             'index','update'

@@ -43,7 +43,7 @@
                                     <div class="col-md-5">
                                         <select class="form-control" id="status" name="status">
                                             <option value="0" {{$team[0]['status'] == 0 ? 'selected' : ''}}>未結束</option>
-                                            <option value="1" {{$team[0]['status'] == 0 ? 'selected' : ''}}>已結束</option>
+                                            <option value="1" {{$team[0]['status'] == 1 ? 'selected' : ''}}>已結束</option>
                                         </select>
                                     </div>
                                 </div>

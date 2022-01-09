@@ -20,7 +20,7 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="#" class="waves-effect"><i class="fa fa-users"></i> <span> 小組專區 </span> </a>
+                    <a href="{{action('StuGroupListController@index')}}" class="waves-effect"><i class="fa fa-users"></i> <span> 小組專區 </span> </a>
                 </li>
 
                 <li class="has_sub">

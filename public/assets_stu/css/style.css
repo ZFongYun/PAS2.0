@@ -4681,3 +4681,10 @@ File: Responsive
   margin-top: 15px;
   text-align: center;
 }
+
+.form-title{
+  font-size: 16px;
+  font-weight: 200;
+  font-family: "Noto Sans TC", sans-serif;
+  border-color: #797979;
+}

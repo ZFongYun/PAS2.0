@@ -12,16 +12,22 @@
                             <h4 class="page-title">編輯組別</h4>
                         </div>
 
-                        <form method="post" action="{{route('StuGroupList.update',$team_id)}}">
+                        <form method="post" action="{{route('StuGroupList.update',$id)}}">
                             <div class="col-lg-10">
                                 <div class="form-group row">
-                                    <label for="name" class="col-sm-2 control-label form-title" >組別名稱</label>
+                                    <label for="name" class="col-sm-2 control-label form-title" ><span class="text-danger">*</span>組別名稱</label>
                                     <div class="col-md-5" >
-                                        <input type="text" class="form-control" id="name" name="name" value="{{$team_name}}" required="">
+                                        <input type="text" class="form-control" id="name" name="name" value="{{$team[0]['name']}}" required="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="content" class="col-md-2 control-label form-title">組別簡介</label>
+                                    <div class="col-md-5">
+                                        <textarea id="content" name="content" class="form-control" maxlength="225" rows="2">{{$team[0]['content']}}</textarea>
                                     </div>
                                 </div>
 
-                                <p class="form-title">編輯組員</p>
+                                <p class="form-title"><span class="text-danger">*</span>編輯組員</p>
 
                                 @if($messageWarning = Session::get('warning'))
                                     <div class="alert alert-warning alert-block" style="color: #f0b360">
@@ -90,8 +96,6 @@
                         </form>
                     </div>
                 </div>
-
-
 
             </div> <!-- container-fluid -->
 
