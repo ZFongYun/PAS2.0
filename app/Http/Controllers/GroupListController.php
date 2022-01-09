@@ -286,9 +286,10 @@ class GroupListController extends Controller
         }
     }
 
-    public function destroy_member($id)
+    public function destroy_member(Request $request, $id)
     {
-        $team_member = TeamMember::where('student_id',$id)->first();
+        $team_id = $request->input('team_id');
+        $team_member = TeamMember::where('student_id',$id)->where('team_id',$team_id)->first();
         $team_member -> delete();
         return back();
     }
