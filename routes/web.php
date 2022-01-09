@@ -27,6 +27,7 @@ Route::prefix('APS_teacher')->group(function (){
         Route::post('/store', 'ProfIndexController@store')->name('Overall.store');
         Route::DELETE('/{id}/destroy', 'ProfIndexController@destroy')->name('Overall.destroy');
         Route::put('/{id}/update', 'ProfIndexController@update')->name('Overall.update');
+
         //====成員名單====
         Route::resource('ImportStudent','ImportStudentController',['only'=>[
             'index','store','destroy'
@@ -75,6 +76,7 @@ Route::prefix('APS_student')->group(function (){
         Route::resource('/','StuIndexController',['except'=>[
             'create','edit','show','store','update','destroy'
         ]]);
+
         //====小組專區====
         Route::resource('GroupList','StuGroupListController',['only'=>[
             'index','edit','update'
@@ -82,6 +84,23 @@ Route::prefix('APS_student')->group(function (){
         Route::resource('GroupList','StuGroupListController',['except'=>[
             'create','show','store','destroy'
         ]]);
+
+        //====會議活動====
+        Route::prefix('meeting')->group(function (){
+            Route::get('/','StuMeetingController@index')->name('StuMeeting.index');
+            Route::get('/{id}','StuMeetingController@show')->name('StuMeeting.show');
+            Route::get('/report/{id}','StuMeetingController@report')->name('StuMeeting.report');
+            Route::post('/report/{id}/upload','StuMeetingController@upload')->name('StuMeeting.upload');
+            Route::post('/report/{id}/edit','StuMeetingController@report_edit')->name('StuMeeting.report_edit');
+            Route::get('/report/{id}/download','StuMeetingController@download')->name('StuMeeting.download');
+            Route::get('score/{id}','StuMeetingController@scoring_page')->name('StuMeeting.scoring_page');
+            Route::post('score','StuMeetingController@score');
+            Route::post('scoring_team','StuMeetingController@scoring_team');
+            Route::post('edit_team','StuMeetingController@edit_team');
+            Route::post('scoring_stu','StuMeetingController@scoring_stu');
+            Route::post('edit_stu','StuMeetingController@edit_stu');
+        });
+
         //====修改密碼====
         Route::resource('ResetPwd','ResetPasswordController',['only'=>[
             'index','update'

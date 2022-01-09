@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meeting;
-use App\Models\Report;
+use App\Models\MeetingReport;
+use App\Models\MeetingTeam;
 use App\Models\Student;
 use App\Models\StudentScoringPeer;
-use App\Models\StudentScoringTeam;
+use App\Models\StudentScoringMember;
 use App\Models\Team;
+use App\Models\TeamMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -18,30 +20,55 @@ class StuMeetingController extends Controller
     public function index()
     {
         $meeting = Meeting::all()->toArray();
-        $meeting_length = count($meeting);
-        $upload_team = auth('student')->user()->team_id;
-        for ($i = 0; $i < $meeting_length; $i++){
-            $report = Report::where('meeting_id',$meeting[$i]['id'])->where('team_id',$upload_team)->get()->toArray();
-            if ($report == null){
-                array_push($meeting[$i], 'null');
-            }else{
-                array_push($meeting[$i], 'has');
+        $user_id = auth('student')->user()->id;
+
+        $team = TeamMember::where('student_id',$user_id)->get()->toArray();
+
+//        for($i = 0; $i < count($team); $i++){
+//            for ($j = 0; $j < count($meeting); $j++){
+//                $report = MeetingReport::where('meeting_id',$meeting[$j]['id'])->where('team_id', $team[$i]['team_id'])->get()->toArray();
+////                dd($report);
+//                if ($report == null){
+//                    array_push($meeting[$j], 'null');
+//                }else{
+//                    array_push($meeting[$j], 'has');
+//                }
+//            }
+//        }
+
+        for ($j = 0; $j < count($meeting); $j++){
+            for($i = 0; $i < count($team); $i++){
+                $meeting_team = MeetingTeam::where('meeting_id',$meeting[$j]['id'])
+                    ->where('team_id',$team[$i]['team_id'])->get()->toArray();
+                if ($meeting_team == null){
+                    array_push($meeting[$j], 'needless');
+                }else{
+                    $report = MeetingReport::where('meeting_id',$meeting[$j]['id'])
+                        ->where('team_id', $team[$i]['team_id'])->get()->toArray();
+                    if ($report == null){
+                        array_push($meeting[$j], 'not upload');
+                    }else{
+                        array_push($meeting[$j], 'uploaded');
+                    }
+                }
             }
         }
+
+
+        dd($meeting);
         return view('student_frontend.meeting',compact('meeting'));
     }
 
     public function show($id)
     {
         $meeting = Meeting::find($id) -> toArray();
-        $report_team = $meeting['report_team'];
-        $report_team_arr = explode(' ',$report_team);
-        $report_team_show = array();
-        for ($i = 1; $i < count($report_team_arr); $i++){
-            $team_name = Team::withTrashed()->where('id',$report_team_arr[$i])->value('name');
-            array_push($report_team_show, $team_name);
-        }
-        return view('student_frontend.meetingShow',compact('meeting','report_team_show'));
+        $meeting_team = DB::table('meeting_team')
+            ->where('meeting_id',$id)->whereNull('meeting_team.deleted_at')
+            ->join('meeting','meeting_team.meeting_id','=','meeting.id')
+            ->join('team','meeting_team.team_id','=','team.id')
+            ->select('team.name')
+            ->get()->toArray();
+        return view('student_frontend.meetingShow',compact('meeting','meeting_team'));
     }
 
     public function report($id)

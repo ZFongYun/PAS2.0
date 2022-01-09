@@ -16,7 +16,7 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="#" class="waves-effect"><i class="fa fa-comments"></i> <span> 會議 </span> </a>
+                    <a href="{{action('StuMeetingController@index')}}" class="waves-effect"><i class="fa fa-comments"></i> <span> 會議 </span> </a>
                 </li>
 
                 <li class="has_sub">
