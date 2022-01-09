@@ -80,7 +80,7 @@ class ResetPasswordController extends Controller
             $student = Student::where('id',$id)->first();
             $student->password = Hash::make($new_password);
             $student->save();
-            return redirect('StuIndex');
+            return redirect('/APS_student');
         }
     }
 

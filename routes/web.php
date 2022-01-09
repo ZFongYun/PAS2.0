@@ -82,6 +82,15 @@ Route::prefix('APS_student')->group(function (){
         Route::resource('/','StuIndexController',['except'=>[
             'create','edit','show','store','update','destroy'
         ]]);
+
+
+        //====修改密碼====
+        Route::resource('ResetPwd','ResetPasswordController',['only'=>[
+            'index','update'
+        ]]);
+        Route::resource('ResetPwd','ResetPasswordController',['except'=>[
+            'create','show','store','destroy','edit'
+        ]]);
     });
 
 });

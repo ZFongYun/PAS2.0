@@ -4,7 +4,6 @@
         <!-- Start content -->
         <div class="content">
             <div class="container-fluid">
-
                 <!-- Page-Title -->
                 <div class="row">
                     <div class="col-sm-12">
@@ -15,7 +14,7 @@
                                 {{ $messageWaining }}
                             </div>
                         @endif
-                        <form action="{{route('ResetPassword.update',$id)}}" method="post">
+                        <form action="{{action('ResetPasswordController@update',$id)}}" method="post">
                             <div class="form-group">
                                 <label for="new_password">新密碼</label>
                                 <input type="password" class="form-control" id="new_password" name="new_password" required="">
@@ -33,11 +32,8 @@
                         </form>
                     </div>
                 </div>
-
             </div> <!-- container-fluid -->
-
         </div> <!-- content -->
-
     </div>
 
     <script>

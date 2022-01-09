@@ -28,7 +28,7 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="#" class="waves-effect"><i class="fa fa-undo"></i> <span> 修改密碼 </span> </a>
+                    <a href="{{action('ResetPasswordController@index')}}" class="waves-effect"><i class="fa fa-undo"></i> <span> 修改密碼 </span> </a>
                 </li>
 
                 <li class="has_sub">
