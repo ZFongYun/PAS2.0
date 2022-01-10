@@ -28,6 +28,8 @@
                                     </div>
                                     <p class="m-t-15">*上傳格式：ppt、pptx、zip、rar<br>
                                         *檔案大小限制：1GB</p>
+
+                                    <input type="hidden" name="team_id" value="{{$team_id}}" />
                                     <button type="submit" class="btn waves-effect btn-rounded waves-light btn-success">上傳</button>
                                 </form>
                             @else
@@ -40,6 +42,7 @@
                                     </div>
                                     <p class="m-t-15">*上傳格式：ppt、pptx、zip、rar<br>
                                         *檔案大小限制；1GB</p>
+                                    <input type="hidden" name="team_id" value="{{$team_id}}" />
                                     <button type="submit" class="btn waves-effect btn-rounded waves-light btn-success">重新上傳</button>
                                     <div class="p-t-10">
                                         <p style="color: #3ec845;font-size: 20px">已繳交！</p>

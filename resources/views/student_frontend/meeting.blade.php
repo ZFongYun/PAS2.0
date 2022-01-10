@@ -19,11 +19,13 @@
 
                                     <a href="{{action('StuMeetingController@show',$row['id'])}}" class="btn waves-effect btn-rounded waves-light btn-info">詳情</a>
 
-                                    @if(strtotime(date("Y-m-d H:i:s")) < strtotime($row['upload_date'].' '.$row['upload_time']))
-                                        @if($row[0]=='null')
-                                            <a href="{{route('StuMeeting.report',$row['id'])}}" class="btn waves-effect btn-rounded waves-light btn-primary">繳交報告</a>
-                                        @else
-                                            <a href="{{route('StuMeeting.report',$row['id'])}}" class="btn waves-effect btn-rounded waves-light btn-custom">檢視報告</a>
+                                    @if($row[0]=='needless')
+                                        <button class="btn btn-rounded btn-secondary disabled">不須繳交</button>
+                                    @elseif(strtotime(date("Y-m-d H:i:s")) < strtotime($row['upload_date'].' '.$row['upload_time']))
+                                        @if($row[0]=='not upload')
+                                            <a href="{{route('StuMeeting.report',$row['id'])}}" class="btn waves-effect btn-rounded waves-light btn-danger">繳交報告</a>
+                                        @elseif($row[0]=='uploaded')
+                                            <a href="{{route('StuMeeting.report',$row['id'])}}" class="btn waves-effect btn-rounded waves-light btn-success">檢視報告</a>
                                         @endif
                                     @else
                                         <button class="btn btn-rounded btn-secondary disabled">停止繳交</button>

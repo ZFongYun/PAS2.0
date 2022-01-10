@@ -24,18 +24,6 @@ class StuMeetingController extends Controller
 
         $team = TeamMember::where('student_id',$user_id)->get()->toArray();
 
-//        for($i = 0; $i < count($team); $i++){
-//            for ($j = 0; $j < count($meeting); $j++){
-//                $report = MeetingReport::where('meeting_id',$meeting[$j]['id'])->where('team_id', $team[$i]['team_id'])->get()->toArray();
-////                dd($report);
-//                if ($report == null){
-//                    array_push($meeting[$j], 'null');
-//                }else{
-//                    array_push($meeting[$j], 'has');
-//                }
-//            }
-//        }
-
         for ($j = 0; $j < count($meeting); $j++){
             for($i = 0; $i < count($team); $i++){
                 $meeting_team = MeetingTeam::where('meeting_id',$meeting[$j]['id'])
@@ -54,8 +42,6 @@ class StuMeetingController extends Controller
             }
         }
 
-
-        dd($meeting);
         return view('student_frontend.meeting',compact('meeting'));
     }
 
@@ -74,13 +60,27 @@ class StuMeetingController extends Controller
     public function report($id)
     {
         $meeting = Meeting::find($id)->toArray();
+
         if (strtotime(date("Y-m-d H:i:s")) < strtotime($meeting['upload_date'].' '.$meeting['upload_time'])){
-            $upload_team = auth('student')->user()->team_id;
-            $report = Report::where('meeting_id',$id)->where('team_id',$upload_team)->get()->toArray();
-            return view('student_frontend.meetingReport',compact('meeting','report'));
+            $user_id = auth('student')->user()->id;
+
+            // 尋找使用者的目前組別
+            $team = DB::Table('team_member')
+                ->join('team','team_member.team_id','team.id')
+                ->where('team_member.student_id',$user_id)
+                ->where('team.status',0)
+                ->where('team_member.deleted_at',null)
+                ->select('team_member.*','team.*')
+                ->get()->toArray();
+
+            $team_id = $team[0]->team_id;
+
+            $report = MeetingReport::where('meeting_id',$id)->where('team_id',$team_id)->get()->toArray();
+
+            return view('student_frontend.meetingReport',compact('meeting','team_id','report'));
         }else{
             echo "<script>alert('已截止繳交報告。')</script>";
-            echo '<meta http-equiv=REFRESH CONTENT=0.5;url=/StuMeeting>';
+            echo '<meta http-equiv=REFRESH CONTENT=0.5;url=/APS_student/meeting>';
         }
     }
 
@@ -98,15 +98,15 @@ class StuMeetingController extends Controller
             return back()->withErrors($validator->errors());
         }
 
-        $upload_team = auth('student')->user()->team_id;
+        $team_id = $request->input('team_id');
         $file = $request->file('file');
-        if($request->file('file')){
 
+        if($request->file('file')){
             $name = $file->getClientOriginalName();
-            $file_path = $file->storeAs('public',$name);
-            $report = new Report;
+            $file_path = $file->storeAs('public/',$name);
+            $report = new MeetingReport();
             $report->meeting_id = $id;
-            $report->team_id = $upload_team;
+            $report->team_id = $team_id;
             $report->file_name = $name;
             $report->save();
             return back()->with('success','上傳成功！');
@@ -125,10 +125,12 @@ class StuMeetingController extends Controller
         if($validator->fails()) {
             return back()->withErrors($validator->errors());
         }
+
+        $team_id = $request->input('team_id');
         $file = $request->file('file');
+
         if($request->file('file')){
-            $upload_team = auth('student')->user()->team_id;
-            $report = Report::where('meeting_id',$id)->where('team_id',$upload_team)->first();
+            $report = MeetingReport::where('meeting_id',$id)->where('team_id',$team_id)->first();
             File::delete(public_path('storage/'.$report['file_name']));
             $name = $file->getClientOriginalName();
             $file_path = $file->storeAs('public',$name);
@@ -139,7 +141,7 @@ class StuMeetingController extends Controller
     }
 
     public function download($id){
-        $report = Report::where('id',$id)->value('file_name');
+        $report = MeetingReport::where('id',$id)->value('file_name');
         $file = public_path('storage/'.$report);
         return  response()->download($file);
     }
