@@ -57,6 +57,13 @@ Route::prefix('APS_teacher')->group(function (){
             Route::post('/score','ScoreController@score');
         });
 
+        //====報告下載====
+        Route::prefix('ReportList')->group(function (){
+            Route::get('/','ReportListController@index')->name('ReportList.index');
+            Route::get('/{id}','ReportListController@show')->name('ReportList.show');
+            Route::get('/{id}/download','ReportListController@download')->name('ReportList.download');
+            Route::get('/{id}/downloadALL','ReportListController@downloadALL')->name('ReportList.downloadALL');
+        });
     });
 });
 

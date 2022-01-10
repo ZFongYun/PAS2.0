@@ -30,7 +30,7 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="#" class="waves-effect"><i class="fa fa-download"></i> <span> 報告下載 </span> </a>
+                    <a href="{{action('ReportListController@index')}}" class="waves-effect"><i class="fa fa-download"></i> <span> 報告下載 </span> </a>
                 </li>
 
                 <li class="has_sub">

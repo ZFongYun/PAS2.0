@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meeting;
+use App\Models\MeetingReport;
 use App\Models\Report;
 use App\Models\Team;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class ReportListController extends Controller
         $meeting_length = count($meeting);
         $report_list = array();
         foreach ($meeting_id as $id){
-            $report = Report::where('meeting_id',$id)->count();
+            $report = MeetingReport::where('meeting_id',$id)->count();
             array_push($report_list,$report);
         }
         return view('teacher_frontend.ReportList',compact('meeting_length','meeting','report_list'));
@@ -25,23 +26,24 @@ class ReportListController extends Controller
 
     public function show($id){
         $meeting_id = $id;
-        $report = DB::table('report')
+        $report = DB::table('meeting_report')
             ->where('meeting_id',$id)
-            ->join('team','report.team_id','=','team.id')
-            ->select('report.*','team.name')
+            ->where('meeting_report.deleted_at',null)
+            ->join('team','meeting_report.team_id','=','team.id')
+            ->select('meeting_report.*','team.name')
             ->get()->toArray();
         return view('teacher_frontend.ReportListShow',compact('meeting_id','report'));
 
     }
 
     public function download($id){
-        $report = Report::where('id',$id)->value('file_name');
+        $report = MeetingReport::where('id',$id)->value('file_name');
         $file = public_path().'/storage/'.$report;
         return  response()->download($file);
     }
 
     public function downloadALL($id){
-        $report = Report::where('meeting_id',$id)->get('file_name')->toArray();
+        $report = MeetingReport::where('meeting_id',$id)->get('file_name')->toArray();
         $report_length = count($report);
         $zip_file = 'ALLReport.zip';
         $zip = new ZipArchive();
@@ -55,9 +57,5 @@ class ReportListController extends Controller
             $zip->close();
             return response()->download($zip_file);
         }
-
-
-
-
     }
 }
