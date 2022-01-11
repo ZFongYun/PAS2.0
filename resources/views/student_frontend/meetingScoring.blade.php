@@ -333,7 +333,6 @@
                         _token: '{{csrf_token()}}'},
                     dataType: 'json',
                     success: function(data) {
-                        console.log(data)
                         if (data == 'null'){
                             $('#member_table').hide();
                             $('#member_title').hide();
