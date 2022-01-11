@@ -148,117 +148,123 @@ class StuMeetingController extends Controller
 
     public function scoring_page($id){
         $meeting = Meeting::find($id)->toArray();
+
+        // 判斷當前時間有沒有在會議時間內
         if (strtotime(date("Y-m-d H:i:s")) > strtotime($meeting['meeting_date'].' '.$meeting['meeting_start']) && strtotime(date("Y-m-d H:i:s")) < strtotime($meeting['meeting_date'].' '.$meeting['meeting_end'])){
-            $report_team = $meeting['report_team'];
-            $report_team_arr = explode(' ',$report_team);
-            $report_team_show = array();
-            for ($i = 1; $i < count($report_team_arr); $i++){
-                $team_name = Team::where('id',$report_team_arr[$i])->get()->toArray();
-                array_push($report_team_show, $team_name);
-            }
-            return view('student_frontend.meetingScoring',compact('meeting','report_team_show'));
+//            $report_team = $meeting['report_team'];
+//            $report_team_arr = explode(' ',$report_team);
+//            $report_team_show = array();
+//            for ($i = 1; $i < count($report_team_arr); $i++){
+//                $team_name = Team::where('id',$report_team_arr[$i])->get()->toArray();
+//                array_push($report_team_show, $team_name);
+//            }
+            $meeting_team = DB::table('meeting_team')
+                ->where('meeting_id',$id)->whereNull('meeting_team.deleted_at')
+                ->join('meeting','meeting_team.meeting_id','=','meeting.id')
+                ->join('team','meeting_team.team_id','=','team.id')
+                ->select('team.id','team.name')
+                ->get()->toArray();
+
+            return view('student_frontend.meetingScoring',compact('meeting','meeting_team'));
         }else{
             echo "<script>alert('會議尚未開始。')</script>";
-            echo '<meta http-equiv=REFRESH CONTENT=0.5;url=/StuMeeting>';
+            echo '<meta http-equiv=REFRESH CONTENT=0.5;url=/APS_student/meeting>';
         }
 
     }
 
     public function score(Request $request){
         if($_SERVER['REQUEST_METHOD'] == "POST"){
-            $team = $request->input('team');
-            if ($team == '請選擇'){
+
+            //被選擇的組別id
+            $team_id = $request->input('team');
+
+            if ($team_id == '請選擇'){
                 $arr = ['null'];
                 echo json_encode($arr);
             }else{
-                $raters_student_id = auth('student')->user()->id;
+                $student_id = auth('student')->user()->id;
                 $meeting_id = $request->input('meeting_id');
-                $team_id = $team;
                 $team_name = Team::where('id',$team_id)->value('name');
-                $stu_id = DB::Table('team_member')
+                $arr = [];
+                array_push($arr, $team_name);
+
+                $team_member = DB::Table('team_member')
                     ->join('student','team_member.student_id','student.id')
                     ->where('team_member.team_id',$team_id)
                     ->where('team_member.deleted_at',null)
-                    ->select('team_member.*','student.id','student.student_id','student.name')
-                    ->get();
-                $stu_id_length = count($stu_id);
-                $arr = [];
+                    ->select('team_member.*','student.name')
+                    ->get()->toArray();
 
-                $scoring_team = StudentScoringTeam::whereHas('meeting',function ($q) use ($meeting_id,$raters_student_id,$team_id){
-                    $q->where('meeting_id',$meeting_id)->where('raters_student_id',$raters_student_id)->where('object_team_id',$team_id);
-                })->get(['point','feedback'])->toArray();
+                // 尋找使用者的目前組別
+                $student_team = DB::Table('team_member')
+                    ->join('team','team_member.team_id','team.id')
+                    ->where('team_member.student_id',$student_id)
+                    ->where('team.status',0)
+                    ->where('team_member.deleted_at',null)
+                    ->select('team_member.team_id')
+                    ->get()->toArray();
 
-                if ($scoring_team == null){
-                    array_push($arr,$team_name,'0');
+                if ($student_team[0]->team_id == $team_id){
+                    //使用者跟評分組別"同組"
+                    array_push($arr, '0');
+
+                    for ($i=0; $i<count($team_member); $i++){
+                        $scoring_member = DB::Table('studnet_scoring_member')
+                            ->where('meeting_id','=',$meeting_id)
+                            ->where('student_id','=',$student_id)
+                            ->where('member_id','=',$team_member[$i]->student_id)
+                            ->where('deleted_at','=',null)
+                            ->select('CV','feedback')
+                            ->get()->toArray();
+
+                        if ($scoring_member == null){
+                            array_push($arr,$team_member[$i],'0');
+                        }
+                        else{
+                            array_push($arr,$team_member[$i],$scoring_member);
+                        }
+                    }
+                    echo json_encode($arr);
 
                 }else{
-                    array_push($arr,$team_name,$scoring_team);
-                }
+                    //使用者跟評分組別"不同組"
+                    array_push($arr, '1');
 
-                for ($i=0; $i<$stu_id_length; $i++){
-                    $scoring_student = StudentScoringPeer::wherehas('meeting',function ($q)use($meeting_id,$stu_id,$i,$raters_student_id){
-                        $q->where('meeting_id',$meeting_id)->where('raters_student_id',$raters_student_id)->where('object_student_id',$stu_id[$i]->id);
+                    for ($i=0; $i<count($team_member); $i++){
+                        $scoring_peer = DB::Table('studnet_scoring_peer')
+                            ->where('meeting_id','=',$meeting_id)
+                            ->where('student_id','=',$student_id)
+                            ->where('peer_id','=',$team_member[$i]->student_id)
+                            ->where('deleted_at','=',null)
+                            ->select('EV','feedback')
+                            ->get()->toArray();
 
-                    })->get(['point','feedback'])->toArray();
-                    if ($scoring_student == null){
-                        array_push($arr,$stu_id[$i],'0');
+                        if ($scoring_peer == null){
+                            array_push($arr,$team_member[$i],'0');
+                        }
+                        else{
+                            array_push($arr,$team_member[$i],$scoring_peer);
+                        }
                     }
-                    else{
-                        array_push($arr,$stu_id[$i],$scoring_student);
-                    }
+                    echo json_encode($arr);
                 }
-                echo json_encode($arr);
             }
         }
     }
 
-    public function scoring_team(Request $request){
-        $meeting_id = $request->input('meeting_id');
-        $team_id = $request->input('team');
-        $raters_student_id = auth('student')->user()->id;
-        $score = $request->input('score');
-        $feedback = $request->input('feedback');
-
-        $student_scoring_team = new StudentScoringTeam;
-        $student_scoring_team->meeting_id = $meeting_id;
-        $student_scoring_team->raters_student_id = $raters_student_id;
-        $student_scoring_team->object_team_id = $team_id;
-        $student_scoring_team->point = $score;
-        $student_scoring_team->feedback = $feedback;
-        $student_scoring_team->save();
-
-        $arr = ['完成評分'];
-        echo json_encode($arr);
-    }
-
-    public function edit_team(Request $request){
-        $meeting_id = $request->input('meeting_id');
-        $team_id = $request->input('team');
-        $raters_student_id = auth('student')->user()->id;
-        $score = $request->input('score');
-        $feedback = $request->input('feedback');
-
-        $student_scoring_team = StudentScoringTeam::where('meeting_id',$meeting_id)->where('object_team_id',$team_id)->where('raters_student_id',$raters_student_id)->first();
-        $student_scoring_team->point = $score;
-        $student_scoring_team->feedback = $feedback;
-        $student_scoring_team->save();
-
-        $arr = ['完成編輯'];
-        echo json_encode($arr);
-    }
-
     public function scoring_stu(Request $request){
         $meeting_id = $request->input('meeting_id');
-        $raters_student_id = auth('student')->user()->id;
+        $student_id = auth('student')->user()->id;
         $id = $request->input('id');
         $score = $request->input('score');
         $feedback = $request->input('feedback');
 
         $student_scoring_peer = new StudentScoringPeer;
         $student_scoring_peer->meeting_id = $meeting_id;
-        $student_scoring_peer->raters_student_id  = $raters_student_id;
-        $student_scoring_peer->object_student_id = $id;
-        $student_scoring_peer->point = $score;
+        $student_scoring_peer->student_id  = $student_id;
+        $student_scoring_peer->peer_id = $id;
+        $student_scoring_peer->EV = $score;
         $student_scoring_peer->feedback = $feedback;
         $student_scoring_peer->save();
 
@@ -268,15 +274,51 @@ class StuMeetingController extends Controller
 
     public function edit_stu(Request $request){
         $meeting_id = $request->input('meeting_id');
-        $raters_student_id = auth('student')->user()->id;
+        $student_id = auth('student')->user()->id;
         $id = $request->input('id');
         $score = $request->input('score');
         $feedback = $request->input('feedback');
 
-        $student_scoring_peer = StudentScoringPeer::where('meeting_id',$meeting_id)->where('object_student_id',$id)->where('raters_student_id',$raters_student_id)->first();
-        $student_scoring_peer->point = $score;
+        $student_scoring_peer = StudentScoringPeer::where('meeting_id',$meeting_id)->where('peer_id',$id)->where('student_id',$student_id)->first();
+        $student_scoring_peer->EV = $score;
         $student_scoring_peer->feedback = $feedback;
         $student_scoring_peer->save();
+
+        $arr = ['完成編輯'];
+
+        echo json_encode($arr);
+    }
+
+    public function scoring_member(Request $request){
+        $meeting_id = $request->input('meeting_id');
+        $student_id = auth('student')->user()->id;
+        $id = $request->input('id');
+        $score = $request->input('score');
+        $feedback = $request->input('feedback');
+
+        $student_scoring_member = new StudentScoringMember;
+        $student_scoring_member->meeting_id = $meeting_id;
+        $student_scoring_member->student_id  = $student_id;
+        $student_scoring_member->member_id = $id;
+        $student_scoring_member->CV = $score;
+        $student_scoring_member->feedback = $feedback;
+        $student_scoring_member->save();
+
+        $arr = ['完成評分'];
+        echo json_encode($arr);
+    }
+
+    public function edit_member(Request $request){
+        $meeting_id = $request->input('meeting_id');
+        $student_id = auth('student')->user()->id;
+        $id = $request->input('id');
+        $score = $request->input('score');
+        $feedback = $request->input('feedback');
+
+        $student_scoring_member = StudentScoringMember::where('meeting_id',$meeting_id)->where('member_id',$id)->where('student_id',$student_id)->first();
+        $student_scoring_member->CV = $score;
+        $student_scoring_member->feedback = $feedback;
+        $student_scoring_member->save();
 
         $arr = ['完成編輯'];
 

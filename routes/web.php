@@ -102,8 +102,8 @@ Route::prefix('APS_student')->group(function (){
             Route::get('/report/{id}/download','StuMeetingController@download')->name('StuMeeting.download');
             Route::get('score/{id}','StuMeetingController@scoring_page')->name('StuMeeting.scoring_page');
             Route::post('score','StuMeetingController@score');
-            Route::post('scoring_team','StuMeetingController@scoring_team');
-            Route::post('edit_team','StuMeetingController@edit_team');
+            Route::post('scoring_member','StuMeetingController@scoring_member');
+            Route::post('edit_member','StuMeetingController@edit_member');
             Route::post('scoring_stu','StuMeetingController@scoring_stu');
             Route::post('edit_stu','StuMeetingController@edit_stu');
         });

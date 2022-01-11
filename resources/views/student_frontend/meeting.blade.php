@@ -31,11 +31,11 @@
                                         <button class="btn btn-rounded btn-secondary disabled">停止繳交</button>
                                     @endif
 
-{{--                                    @if(strtotime(date("Y-m-d H:i:s")) > strtotime($row['meeting_date'].' '.$row['meeting_start']) && strtotime(date("Y-m-d H:i:s")) < strtotime($row['meeting_date'].' '.$row['meeting_end']))--}}
-{{--                                        <a href="{{route('StuMeeting.scoring_page',$row['id'])}}" class="btn waves-effect btn-rounded waves-light btn-primary" onclick="return(confirm('！評分時間為會議開始至結束，請隨時注意評分時間！'))">評分</a>--}}
-{{--                                    @else--}}
-{{--                                        <a href="{{route('StuMeeting.scoring_page',$row['id'])}}" class="btn waves-effect btn-rounded waves-light btn-primary disabled" onclick="return(confirm('！評分時間為會議開始至結束，請隨時注意評分時間！'))">評分</a>--}}
-{{--                                    @endif--}}
+                                    @if(strtotime(date("Y-m-d H:i:s")) > strtotime($row['meeting_date'].' '.$row['meeting_start']) && strtotime(date("Y-m-d H:i:s")) < strtotime($row['meeting_date'].' '.$row['meeting_end']))
+                                        <a href="{{route('StuMeeting.scoring_page',$row['id'])}}" class="btn waves-effect btn-rounded waves-light btn-primary" onclick="return(confirm('！評分時間為會議開始至結束，請隨時注意評分時間！'))">評分</a>
+                                    @else
+                                        <a href="{{route('StuMeeting.scoring_page',$row['id'])}}" class="btn waves-effect btn-rounded waves-light btn-primary disabled">停止評分</a>
+                                    @endif
                                 </div>
                             </div>
                         </div><!-- end col -->
