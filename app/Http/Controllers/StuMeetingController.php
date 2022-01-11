@@ -182,19 +182,13 @@ class StuMeetingController extends Controller
             if ($team_id == '請選擇'){
                 $arr = ['null'];
                 echo json_encode($arr);
+
             }else{
                 $student_id = auth('student')->user()->id;
                 $meeting_id = $request->input('meeting_id');
                 $team_name = Team::where('id',$team_id)->value('name');
                 $arr = [];
                 array_push($arr, $team_name);
-
-                $team_member = DB::Table('team_member')
-                    ->join('student','team_member.student_id','student.id')
-                    ->where('team_member.team_id',$team_id)
-                    ->where('team_member.deleted_at',null)
-                    ->select('team_member.*','student.name')
-                    ->get()->toArray();
 
                 // 尋找使用者的目前組別
                 $student_team = DB::Table('team_member')
@@ -208,6 +202,14 @@ class StuMeetingController extends Controller
                 if ($student_team[0]->team_id == $team_id){
                     //使用者跟評分組別"同組"
                     array_push($arr, '0');
+
+                    $team_member = DB::Table('team_member')
+                        ->join('student','team_member.student_id','student.id')
+                        ->where('team_member.team_id',$team_id)
+                        ->where('team_member.deleted_at',null)
+                        ->whereNotIn('team_member.student_id', [$student_id])
+                        ->select('team_member.*','student.name')
+                        ->get()->toArray();
 
                     for ($i=0; $i<count($team_member); $i++){
                         $scoring_member = DB::Table('studnet_scoring_member')
@@ -230,6 +232,13 @@ class StuMeetingController extends Controller
                 }else{
                     //使用者跟評分組別"不同組"
                     array_push($arr, '1');
+
+                    $team_member = DB::Table('team_member')
+                        ->join('student','team_member.student_id','student.id')
+                        ->where('team_member.team_id',$team_id)
+                        ->where('team_member.deleted_at',null)
+                        ->select('team_member.*','student.name')
+                        ->get()->toArray();
 
                     for ($i=0; $i<count($team_member); $i++){
                         $scoring_peer = DB::Table('studnet_scoring_peer')
