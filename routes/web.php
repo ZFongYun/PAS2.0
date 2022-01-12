@@ -48,11 +48,9 @@ Route::prefix('APS_teacher')->group(function (){
         //====會議活動====
         Route::resource('meeting','MeetingController');
 
-        Route::prefix('score')->group(function(){
-            Route::post('/','ScoreController@scoring');
-        });
-        Route::prefix('grades')->group(function(){
-            Route::get('/{id}','ScoreController@grades_page');
+        //====結算成績====
+        Route::prefix('meeting')->group(function(){
+            Route::get('/{id}/calc','ScoreController@grades_page');
             Route::post('/search','ScoreController@search');
             Route::post('/score','ScoreController@score');
         });

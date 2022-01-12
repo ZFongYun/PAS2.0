@@ -25,7 +25,6 @@
                                     <th width="5%">編輯</th>
                                     <th width="5%">詳情</th>
                                     <th width="5%">刪除</th>
-{{--                                    <th width="10%">進入評分</th>--}}
                                     <th width="5%">結算成績</th>
                                 </tr>
                                 </thead>
@@ -43,8 +42,7 @@
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         </form>
-{{--                                        <td><a href="{{action('MeetingController@scoring_page',$row['id'])}}" class="btn btn-icon waves-effect waves-light btn-primary"><i class="fa fa-sign-in"></i></a></td>--}}
-                                        <td><a href="{{action('ScoreController@grades_page',$row['id'])}}" class="btn btn-icon waves-effect waves-light btn-success"><i class="fa fa-file-o"></i></a></td>
+                                        <td><a href="{{action('ScoreController@grades_page',$row['id'])}}" class="btn btn-icon waves-effect waves-light btn-success"><i class="fa fa-calculator"></i></a></td>
                                     </tr>
                                 @endforeach
                                 </tbody>
