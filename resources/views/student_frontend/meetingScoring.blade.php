@@ -25,7 +25,7 @@
                         </div>
 
                         <p class="form-title p-t-10" id="member_title" style="display: none"></p>
-                        <div class="table-responsive">
+                        <div class="table-responsive col-md-6">
                             <table class="table table-hover m-0" id="member_table" style="display: none">
                                 <thead>
                                 <tr>
@@ -41,6 +41,39 @@
                             </table>
                         </div>
 
+                        <p class="form-title p-t-10" id="CV_title" style="display: none">◎ 貢獻度說明</p>
+                        <div class="table-responsive col-md-6">
+                            <table class="table m-0" id="CV_table" style="display: none">
+                                <thead>
+                                    <tr>
+                                        <th width="15%">表現</th>
+                                        <th>說明</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>全程專注，並積極達成任務，對小組貢獻度達80%以上</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>大部分時間專注，能達成任務，對小組貢獻度達70%-80%以上</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>大部分時間專注，能達成任務，對小組貢獻度達60%-70%以上</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>達成部分任務、對小組貢獻度達40%-60%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>達成部分任務、對小組貢獻度達40%以下</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
@@ -344,6 +377,8 @@
 
                             if (data[1] === '0'){
                                 document.getElementById('member_title').innerHTML = "◎ 評分組員貢獻度";
+                                $('#CV_table').show();
+                                $('#CV_title').show();
 
                                 for (var i=3; i<data.length; i+=2){
                                     if (data[i] == '0'){
@@ -377,6 +412,8 @@
 
                             }else {
                                 document.getElementById('member_title').innerHTML = "◎ 評分同儕表現";
+                                $('#CV_table').hide();
+                                $('#CV_title').hide();
 
                                 for (var i=3; i<data.length; i+=2){
                                     if (data[i] == '0'){
