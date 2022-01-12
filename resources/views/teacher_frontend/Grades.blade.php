@@ -114,8 +114,9 @@
                                             for (var m = 0; m < data[1][i].length; m++) {
                                                 html_member += '<td>' + data[1][i][m]['name'] + '</td>';
                                                 html_member += '<td>' + data[1][i][m]['CV'] + '</td>';
-                                                html_member += '<td>' + data[1][i][m]['feedback'] + '</td></tr></tbody></table>';
+                                                html_member += '<td>' + data[1][i][m]['feedback'] + '</td></tr>';
                                             }
+                                            html_member += '</tbody></table>';
                                         }
 
                                         html_member += '<label>' + '同儕給予的評論' + '</label>';

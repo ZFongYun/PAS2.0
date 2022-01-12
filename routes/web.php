@@ -62,6 +62,15 @@ Route::prefix('APS_teacher')->group(function (){
             Route::get('/{id}/download','ReportListController@download')->name('ReportList.download');
             Route::get('/{id}/downloadALL','ReportListController@downloadALL')->name('ReportList.downloadALL');
         });
+
+        //====成績查詢====
+        Route::prefix('Transcript')->group(function (){
+            Route::get('/','TranscriptController@index')->name('Transcript.index');
+            Route::post('/search','TranscriptController@search');
+            Route::post('/searchYear','TranscriptController@searchYear');
+            Route::post('/searchTeam','TranscriptController@searchTeam');
+
+        });
     });
 });
 
