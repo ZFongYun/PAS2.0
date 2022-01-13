@@ -251,6 +251,11 @@
 
                             $('#date_title').html('成績紀錄日期：'+data[3]+' ~ '+data[2]);
 
+                            // 清空遺留的資料
+                            chart.data.labels = [];
+                            chart.data.datasets[0].data = [];
+
+                            // 更新資料
                             for (var i = 0; i < data[1].length; i++) {
                                 chart.data.labels.push(data[1][i].name);
                                 chart.data.datasets.forEach((dataset) => {
@@ -258,7 +263,6 @@
                                 });
                             }
                             chart.update();
-
 
                         }else {
                             if(data[0][0] == ''){
