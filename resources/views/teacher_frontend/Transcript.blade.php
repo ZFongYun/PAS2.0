@@ -237,102 +237,107 @@
             var meeting = $('#record').val();
             var team = $('#team').val();
             var html_member = '';
-            $(document).ready(function() {
-                $.ajax({
-                    type:'POST',
-                    url:'/APS_teacher/Transcript/search',
-                    data:{meeting:meeting,
-                        team:team,
-                        _token: '{{csrf_token()}}'},
-                    dataType: 'json',
-                    success: function(data) {
 
-                        // 選擇「組別績效排行榜」
-                        if(data[4] == '0'){
+            if (team == null){
+                alert('請選擇組別');
+            }else {
+                $(document).ready(function() {
+                    $.ajax({
+                        type:'POST',
+                        url:'/APS_teacher/Transcript/search',
+                        data:{meeting:meeting,
+                            team:team,
+                            _token: '{{csrf_token()}}'},
+                        dataType: 'json',
+                        success: function(data) {
 
-                            $('#member_title').hide();
-                            $('#member_table').hide();
-                            $('#chart').show();
+                            // 選擇「組別績效排行榜」
+                            if(data[4] == '0'){
 
-                            $('#date_title').html('成績紀錄日期：'+data[3]+' ~ '+data[2]);
-
-                            // 清空遺留的資料
-                            chart.data.labels = [];
-                            chart.data.datasets[0].data = [];
-
-                            // 更新資料
-                            for (var i = 0; i < data[1].length; i++) {
-                                chart.data.labels.push(data[1][i].name);
-                                chart.data.datasets.forEach((dataset) => {
-                                    dataset.data.push(data[0][i]);
-                                });
-                            }
-                            chart.update();
-
-                            // 選擇「會議記錄」
-                        }else {
-                            if(data[0][0] == ''){
-                                alert('無結果');
-                                $('#date_title').hide();
                                 $('#member_title').hide();
                                 $('#member_table').hide();
+                                $('#chart').show();
 
+                                $('#date_title').html('成績紀錄日期：'+data[3]+' ~ '+data[2]);
 
-                            }else {
-                                $('#date_title').html('成績紀錄日期：'+data[3]);
-                                $('#member_title').show();
-                                $('#member_table').show();
-                                $('#chart').hide();
+                                // 清空遺留的資料
+                                chart.data.labels = [];
+                                chart.data.datasets[0].data = [];
 
-                                html_member += '<tr>';
-                                for (var i = 0; i < data[0].length; i++) {
-                                    html_member += '<td>' + data[0][i][0].student_ID + '</td>';
-                                    html_member += '<td>' + data[0][i][0].name + '</td>';
-                                    html_member += '<td>' + data[0][i][0].CV + '</td>';
-                                    html_member += '<td>' + data[0][i][0].EV + '</td>';
-                                    html_member += '<td>' + data[0][i][0].total + '</td>';
-                                    html_member += '<td><button class="btn btn-custom type="button" data-toggle="collapse" data-target="#member_feedback' + data[0][i][0].student_ID + '">詳情</button></td></tr>';
-                                    html_member += '<tr>';
-                                    html_member += '<td colspan="7" class="hiddenRow"><div class="collapse" id="member_feedback' + data[0][i][0].student_ID + '"><label>' + '成員給予的評論' + '</label>'
-                                    html_member += '<table class="table"><thead><tr><th>姓名</th><th>貢獻度</th><th>回饋</th></tr></thead><tbody><tr>';
-                                    if (data[1][i] == '') {
-                                        html_member += '<td>-</td>';
-                                        html_member += '<td>-</td>';
-                                        html_member += '<td>-</td></tr>';
-                                    } else {
-                                        for (var m = 0; m < data[1][i].length; m++) {
-                                            html_member += '<td>' + data[1][i][m]['name'] + '</td>';
-                                            html_member += '<td>' + data[1][i][m]['CV'] + '</td>';
-                                            html_member += '<td>' + data[1][i][m]['feedback'] + '</td></tr>';
-                                        }
-                                        html_member += '</tbody></table>';
-                                    }
-
-                                    html_member += '<label>' + '同儕給予的評論' + '</label>';
-                                    html_member += '<table class="table"><thead><tr><th>姓名</th><th>成效分數</th><th>回饋</th></tr></thead><tbody><tr>';
-                                    if (data[2][i] == '') {
-                                        html_member += '<td>-</td>';
-                                        html_member += '<td>-</td>';
-                                        html_member += '<td>-</td></tr>';
-                                    } else {
-                                        for (var n = 0; n < data[2][i].length; n++) {
-                                            html_member += '<td>' + data[2][i][n]['name'] + '</td>';
-                                            html_member += '<td>' + data[2][i][n]['EV'] + '</td>';
-                                            html_member += '<td>' + data[2][i][n]['feedback'] + '</td></tr>';
-                                        }
-                                    }
-                                    html_member += '</tbody></table></div></td></tr>';
+                                // 更新資料
+                                for (var i = 0; i < data[1].length; i++) {
+                                    chart.data.labels.push(data[1][i].name);
+                                    chart.data.datasets.forEach((dataset) => {
+                                        dataset.data.push(data[0][i]);
+                                    });
                                 }
-                                $('#member_body').html(html_member);
-                            }
-                        }
-                    },
-                    error: function (){
-                        alert('error')
-                    }
+                                chart.update();
 
+                                // 選擇「會議記錄」
+                            }else {
+                                if(data[0][0] == ''){
+                                    alert('無結果');
+                                    $('#date_title').hide();
+                                    $('#member_title').hide();
+                                    $('#member_table').hide();
+
+
+                                }else {
+                                    $('#date_title').html('成績紀錄日期：'+data[3]);
+                                    $('#member_title').show();
+                                    $('#member_table').show();
+                                    $('#chart').hide();
+
+                                    html_member += '<tr>';
+                                    for (var i = 0; i < data[0].length; i++) {
+                                        html_member += '<td>' + data[0][i][0].student_ID + '</td>';
+                                        html_member += '<td>' + data[0][i][0].name + '</td>';
+                                        html_member += '<td>' + data[0][i][0].CV + '</td>';
+                                        html_member += '<td>' + data[0][i][0].EV + '</td>';
+                                        html_member += '<td>' + data[0][i][0].total + '</td>';
+                                        html_member += '<td><button class="btn btn-custom type="button" data-toggle="collapse" data-target="#member_feedback' + data[0][i][0].student_ID + '">詳情</button></td></tr>';
+                                        html_member += '<tr>';
+                                        html_member += '<td colspan="7" class="hiddenRow"><div class="collapse" id="member_feedback' + data[0][i][0].student_ID + '"><label>' + '成員給予的評論' + '</label>'
+                                        html_member += '<table class="table"><thead><tr><th>姓名</th><th>貢獻度</th><th>回饋</th></tr></thead><tbody><tr>';
+                                        if (data[1][i] == '') {
+                                            html_member += '<td>-</td>';
+                                            html_member += '<td>-</td>';
+                                            html_member += '<td>-</td></tr>';
+                                        } else {
+                                            for (var m = 0; m < data[1][i].length; m++) {
+                                                html_member += '<td>' + data[1][i][m]['name'] + '</td>';
+                                                html_member += '<td>' + data[1][i][m]['CV'] + '</td>';
+                                                html_member += '<td>' + data[1][i][m]['feedback'] + '</td></tr>';
+                                            }
+                                            html_member += '</tbody></table>';
+                                        }
+
+                                        html_member += '<label>' + '同儕給予的評論' + '</label>';
+                                        html_member += '<table class="table"><thead><tr><th>姓名</th><th>成效分數</th><th>回饋</th></tr></thead><tbody><tr>';
+                                        if (data[2][i] == '') {
+                                            html_member += '<td>-</td>';
+                                            html_member += '<td>-</td>';
+                                            html_member += '<td>-</td></tr>';
+                                        } else {
+                                            for (var n = 0; n < data[2][i].length; n++) {
+                                                html_member += '<td>' + data[2][i][n]['name'] + '</td>';
+                                                html_member += '<td>' + data[2][i][n]['EV'] + '</td>';
+                                                html_member += '<td>' + data[2][i][n]['feedback'] + '</td></tr>';
+                                            }
+                                        }
+                                        html_member += '</tbody></table></div></td></tr>';
+                                    }
+                                    $('#member_body').html(html_member);
+                                }
+                            }
+                        },
+                        error: function (){
+                            alert('error')
+                        }
+
+                    });
                 });
-            });
+            }
         });
 
     </script>
