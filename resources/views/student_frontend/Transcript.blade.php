@@ -278,7 +278,6 @@
                             team:team,
                             _token: '{{csrf_token()}}'},
                         success: function(data) {
-                            console.log(data)
 
                             // 選擇「組別績效排行榜」
                             if(data[4] == '0'){
@@ -311,49 +310,50 @@
                                     $('#score_table').hide();
 
                                 }else {
+                                    $('#date_title').html('成績紀錄日期：'+data[3]);
+                                    $('#score_title').show();
+                                    $('#score_table').show();
+                                    $('#chart').hide();
 
-                                }
-                                $('#date_title').html('成績紀錄日期：'+data[3]);
-                                $('#score_title').show();
-                                $('#score_table').show();
-                                $('#chart').hide();
+                                    html_score += '<tr>';
+                                    html_score += '<td>'+data[0][0].student_ID+'</td>';
+                                    html_score += '<td>'+data[0][0].name+'</td>';
+                                    html_score += '<td>'+data[0][0].CV+'</td>';
+                                    html_score += '<td>' + data[0][0].EV + '</td>';
+                                    html_score += '<td>' + data[0][0].total + '</td></tr>';
+                                    $('#score_body').html(html_score);
 
-                                html_score += '<tr>';
-                                html_score += '<td>'+data[0][0].student_ID+'</td>';
-                                html_score += '<td>'+data[0][0].name+'</td>';
-                                html_score += '<td>'+data[0][0].CV+'</td>';
-                                html_score += '<td>' + data[0][0].EV + '</td>';
-                                html_score += '<td>' + data[0][0].total + '</td></tr>';
-                                $('#score_body').html(html_score);
-
-                                $('#member_feedback_title').show();
-                                $('#member_feedback_table').show();
-                                if (data[2] == ''){
-                                    html_member_feedback += '<tr>';
-                                    html_member_feedback += '<td>-</td>';
-                                    html_member_feedback += '<td>-</td></tr>';
-                                    $('#member_feedback_body').html(html_member_feedback);
-                                }else {
-                                    html_member_feedback += '<tr>';
-                                    html_member_feedback += '<td>'+data[2][0].CV+'</td>';
-                                    html_member_feedback += '<td>'+data[2][0].feedback+'</td></tr>';
-                                    $('#member_feedback_body').html(html_member_feedback);
-                                }
-
-                                $('#stu_feedback_title').show();
-                                $('#stu_feedback_table').show();
-                                if (data[3] == ''){
-                                    html_stu_feedback += '<tr>';
-                                    html_stu_feedback += '<td>-</td>';
-                                    html_stu_feedback += '<td>-</td></tr>';
-                                    $('#stu_feedback_body').html(html_stu_feedback);
-                                }else {
-                                    html_stu_feedback += '<tr>';
-                                    for (var i = 0; i < data[1].length; i++){
-                                        html_stu_feedback += '<td>'+data[1][i].EV+'</td>';
-                                        html_stu_feedback += '<td>'+data[1][i].feedback+'</td></tr>';
+                                    $('#member_feedback_title').show();
+                                    $('#member_feedback_table').show();
+                                    if (data[2] == ''){
+                                        html_member_feedback += '<tr>';
+                                        html_member_feedback += '<td>-</td>';
+                                        html_member_feedback += '<td>-</td></tr>';
+                                        $('#member_feedback_body').html(html_member_feedback);
+                                    }else {
+                                        html_member_feedback += '<tr>';
+                                        for (var j = 0; j < data[2].length; j++){
+                                            html_member_feedback += '<td>'+data[2][j].CV+'</td>';
+                                            html_member_feedback += '<td>'+data[2][j].feedback+'</td></tr>';
+                                        }
+                                        $('#member_feedback_body').html(html_member_feedback);
                                     }
-                                    $('#stu_feedback_body').html(html_stu_feedback);
+
+                                    $('#stu_feedback_title').show();
+                                    $('#stu_feedback_table').show();
+                                    if (data[3] == ''){
+                                        html_stu_feedback += '<tr>';
+                                        html_stu_feedback += '<td>-</td>';
+                                        html_stu_feedback += '<td>-</td></tr>';
+                                        $('#stu_feedback_body').html(html_stu_feedback);
+                                    }else {
+                                        html_stu_feedback += '<tr>';
+                                        for (var i = 0; i < data[1].length; i++){
+                                            html_stu_feedback += '<td>'+data[1][i].EV+'</td>';
+                                            html_stu_feedback += '<td>'+data[1][i].feedback+'</td></tr>';
+                                        }
+                                        $('#stu_feedback_body').html(html_stu_feedback);
+                                    }
                                 }
                             }
                         },
