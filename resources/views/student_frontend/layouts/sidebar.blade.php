@@ -24,7 +24,7 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="#" class="waves-effect"><i class="fa fa-search"></i> <span> 成績查詢 </span> </a>
+                    <a href="{{action('TranscriptController@StuTranscript_index')}}" class="waves-effect"><i class="fa fa-search"></i> <span> 成績查詢 </span> </a>
                 </li>
 
                 <li class="has_sub">

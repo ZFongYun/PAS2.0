@@ -115,6 +115,15 @@ Route::prefix('APS_student')->group(function (){
             Route::post('edit_stu','StuMeetingController@edit_stu');
         });
 
+        //====成績查詢====
+        Route::prefix('Transcript')->group(function (){
+            Route::get('/','TranscriptController@StuTranscript_index')->name('StuTranscript.index');
+            Route::post('/stu_search','TranscriptController@StuTranscript_search');
+            Route::post('/searchYearStu','TranscriptController@searchYearStu');
+            Route::post('/searchTeam','TranscriptController@searchTeam');
+
+        });
+
         //====修改密碼====
         Route::resource('ResetPwd','ResetPasswordController',['only'=>[
             'index','update'
