@@ -77,6 +77,7 @@
             }
         });
 
+        // 選擇「學年期」要做的事情
         $("#year").change(function(){
             var year = $('#year').val();
             $(document).ready(function() {
@@ -100,6 +101,7 @@
             });
         });
 
+        // 選擇「組別」要做的事情
         $("#team").change(function(){
             var team = $('#team').val();
             $(document).ready(function() {
@@ -157,6 +159,8 @@
 
         // 畫布宣告
         var ctx = document.getElementById('chart');
+
+        // 畫布設定
         var chart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -243,6 +247,7 @@
                     dataType: 'json',
                     success: function(data) {
 
+                        // 選擇「組別績效排行榜」
                         if(data[4] == '0'){
 
                             $('#member_title').hide();
@@ -264,6 +269,7 @@
                             }
                             chart.update();
 
+                            // 選擇「會議記錄」
                         }else {
                             if(data[0][0] == ''){
                                 alert('無結果');
