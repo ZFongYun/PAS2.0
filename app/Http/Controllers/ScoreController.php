@@ -22,9 +22,11 @@ class ScoreController extends Controller
     public function grades_page($id){
         $meeting = Meeting::find($id) -> toArray();
         $meeting_team = DB::table('meeting_team')
-            ->where('meeting_id',$id)->whereNull('meeting_team.deleted_at')
             ->join('meeting','meeting_team.meeting_id','=','meeting.id')
             ->join('team','meeting_team.team_id','=','team.id')
+            ->whereNull('team.deleted_at')
+            ->whereNull('meeting_team.deleted_at')
+            ->where('meeting_id',$id)
             ->select('team.id','team.name')
             ->get()->toArray();
         return view('teacher_frontend.grades',compact('meeting','meeting_team'));

@@ -49,9 +49,11 @@ class StuMeetingController extends Controller
     {
         $meeting = Meeting::find($id) -> toArray();
         $meeting_team = DB::table('meeting_team')
-            ->where('meeting_id',$id)->whereNull('meeting_team.deleted_at')
             ->join('meeting','meeting_team.meeting_id','=','meeting.id')
             ->join('team','meeting_team.team_id','=','team.id')
+            ->whereNull('team.deleted_at')
+            ->whereNull('meeting_team.deleted_at')
+            ->where('meeting_id',$id)
             ->select('team.name')
             ->get()->toArray();
         return view('student_frontend.meetingShow',compact('meeting','meeting_team'));
@@ -69,6 +71,7 @@ class StuMeetingController extends Controller
                 ->join('team','team_member.team_id','team.id')
                 ->where('team_member.student_id',$user_id)
                 ->where('team.status',0)
+                ->where('team.deleted_at',null)
                 ->where('team_member.deleted_at',null)
                 ->select('team_member.*','team.*')
                 ->get()->toArray();
@@ -152,9 +155,11 @@ class StuMeetingController extends Controller
         // 判斷當前時間有沒有在會議時間內
         if (strtotime(date("Y-m-d H:i:s")) > strtotime($meeting['meeting_date'].' '.$meeting['meeting_start']) && strtotime(date("Y-m-d H:i:s")) < strtotime($meeting['meeting_date'].' '.$meeting['meeting_end'])){
             $meeting_team = DB::table('meeting_team')
-                ->where('meeting_id',$id)->whereNull('meeting_team.deleted_at')
                 ->join('meeting','meeting_team.meeting_id','=','meeting.id')
                 ->join('team','meeting_team.team_id','=','team.id')
+                ->where('team.deleted_at',null)
+                ->whereNull('meeting_team.deleted_at')
+                ->where('meeting_id',$id)
                 ->select('team.id','team.name')
                 ->get()->toArray();
 

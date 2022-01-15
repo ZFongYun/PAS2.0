@@ -25,6 +25,7 @@ class StuGroupListController extends Controller
             ->join('team','team_member.team_id','team.id')
             ->where('team_member.student_id',$studentId)
             ->where('team.status',0)
+            ->where('team.deleted_at',null)
             ->where('team_member.deleted_at',null)
             ->select('team_member.*','team.name','team.status','team.content')
             ->get()->toArray();

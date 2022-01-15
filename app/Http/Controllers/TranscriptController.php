@@ -28,9 +28,10 @@ class TranscriptController extends Controller
     public function searchTeam(Request $request){
         $team = $request->input('team');
         $meeting_team = DB::table('meeting_team')
-            ->where('team_id',$team)
-            ->whereNull('meeting_team.deleted_at')
             ->join('meeting','meeting_team.meeting_id','=','meeting.id')
+            ->whereNull('meeting.deleted_at')
+            ->whereNull('meeting_team.deleted_at')
+            ->where('team_id',$team)
             ->select('meeting_team.*','meeting.name')
             ->get()->toArray();
         return $meeting_team;
@@ -127,10 +128,11 @@ class TranscriptController extends Controller
         // 尋找使用者加入的組別
         $user_team = DB::Table('team_member')
             ->join('team','team_member.team_id','team.id')
+            ->where('team.deleted_at',null)
+            ->where('team_member.deleted_at',null)
             ->where('team_member.student_id',$user_id)
             ->where('team.year',$year_arr[0])
             ->where('team.semester',$year_arr[1])
-            ->where('team_member.deleted_at',null)
             ->select('team_member.*','team.name')
             ->get()->toArray();
 
