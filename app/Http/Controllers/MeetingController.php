@@ -92,9 +92,11 @@ class MeetingController extends Controller
     {
         $meeting = Meeting::find($id) -> toArray();
         $meeting_team = DB::table('meeting_team')
-            ->where('meeting_id',$id)->whereNull('meeting_team.deleted_at')
             ->join('meeting','meeting_team.meeting_id','=','meeting.id')
             ->join('team','meeting_team.team_id','=','team.id')
+            ->whereNull('team.deleted_at')
+            ->whereNull('meeting_team.deleted_at')
+            ->where('meeting_id',$id)
             ->select('team.name')
             ->get()->toArray();
         return view('teacher_frontend.meetingShow',compact('meeting','meeting_team'));

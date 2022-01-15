@@ -27,9 +27,10 @@ class ReportListController extends Controller
     public function show($id){
         $meeting_id = $id;
         $report = DB::table('meeting_report')
-            ->where('meeting_id',$id)
-            ->where('meeting_report.deleted_at',null)
             ->join('team','meeting_report.team_id','=','team.id')
+            ->where('meeting_id',$id)
+            ->where('team.deleted_at',null)
+            ->where('meeting_report.deleted_at',null)
             ->select('meeting_report.*','team.name')
             ->get()->toArray();
         return view('teacher_frontend.ReportListShow',compact('meeting_id','report'));
