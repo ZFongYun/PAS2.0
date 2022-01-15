@@ -1,6 +1,5 @@
 @extends('teacher_frontend.layouts.master')
 @section('content')
-
     <div class="content-page">
         <!-- Start content -->
         <div class="content">
@@ -76,7 +75,6 @@
                     error: function (){
                         alert('結算失敗')
                     }
-
                 });
             });
         });

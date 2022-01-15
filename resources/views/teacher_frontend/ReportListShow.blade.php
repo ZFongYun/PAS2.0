@@ -4,7 +4,6 @@
         <!-- Start content -->
         <div class="content">
             <div class="container-fluid">
-
                 <!-- Page-Title -->
                 <div class="row">
                     <div class="col-sm-12">
@@ -44,13 +43,8 @@
                         </div>
                     </div>
                 </div>
-
-
-
             </div> <!-- container-fluid -->
-
         </div> <!-- content -->
-
     </div>
 @endsection
 @section('title','已交名單')

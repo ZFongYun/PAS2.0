@@ -25,8 +25,6 @@
                                         </tbody>
                                     </table>
                                 </div>
-
-
                                 <p class="info-title">報告組別</p>
                                 <div class="p-l-20 p-b-10">
                                     <table class='table table-bordered'>
@@ -37,21 +35,12 @@
                                         </tr></tbody>
                                     </table>
                                 </div>
-
                             </div>
-
-{{--                            <div class="col-md-10 m-t-30" align="right">--}}
-{{--                                <a href="{{route('meeting.edit',$meeting['id'])}}" class="btn btn-info waves-effect waves-light button-font">編輯</a>--}}
-{{--                            </div><!-- end col -->--}}
                         </div>
-
                     </div>
                 </div>
-
             </div> <!-- container-fluid -->
-
         </div> <!-- content -->
-
     </div>
 @endsection
 @section('title','會議詳情')

@@ -151,13 +151,6 @@ class StuMeetingController extends Controller
 
         // 判斷當前時間有沒有在會議時間內
         if (strtotime(date("Y-m-d H:i:s")) > strtotime($meeting['meeting_date'].' '.$meeting['meeting_start']) && strtotime(date("Y-m-d H:i:s")) < strtotime($meeting['meeting_date'].' '.$meeting['meeting_end'])){
-//            $report_team = $meeting['report_team'];
-//            $report_team_arr = explode(' ',$report_team);
-//            $report_team_show = array();
-//            for ($i = 1; $i < count($report_team_arr); $i++){
-//                $team_name = Team::where('id',$report_team_arr[$i])->get()->toArray();
-//                array_push($report_team_show, $team_name);
-//            }
             $meeting_team = DB::table('meeting_team')
                 ->where('meeting_id',$id)->whereNull('meeting_team.deleted_at')
                 ->join('meeting','meeting_team.meeting_id','=','meeting.id')

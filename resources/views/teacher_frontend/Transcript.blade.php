@@ -4,7 +4,6 @@
         <!-- Start content -->
         <div class="content">
             <div class="container-fluid">
-
                 <!-- Page-Title -->
                 <div class="row">
                     <h4 class="page-title">學生成績</h4>

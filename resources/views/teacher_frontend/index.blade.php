@@ -125,20 +125,10 @@
 
                             @endforeach
                         </div>
-
-
-
-
-
                     </div>
                 </div>
-
-
-
             </div> <!-- container-fluid -->
-
         </div> <!-- content -->
-
     </div>
 @endsection
 @section('title','首頁')

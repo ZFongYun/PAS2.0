@@ -107,8 +107,6 @@
                     </div>
                 </div>
 
-
-
             </div> <!-- container-fluid -->
 
         </div> <!-- content -->
@@ -147,11 +145,7 @@
                 $(this).closest('tr').html(html);
                 // $('#gender_'+$(this).attr('id')+'').val($(this).data('gender'));
             });
-
-
         });
-
-
     </script>
 
 @endsection

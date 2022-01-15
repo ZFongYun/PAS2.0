@@ -543,7 +543,6 @@
                         _token: '{{csrf_token()}}'},
                     dataType: 'json',
                     success: function(data) {
-                        // console.log(data)
                         alert(data)
                         $('#ScoringMemberModal').modal('hide')
                         document.getElementById("feedback_member").value="";
