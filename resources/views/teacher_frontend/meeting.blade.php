@@ -14,11 +14,11 @@
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table table-hover m-0">
+                            <table class="table table-hover m-0" style="text-align: center">
                                 <thead>
                                 <tr>
                                     <th width="5%">#</th>
-                                    <th width="10%">學年期</th>
+                                    <th width="5%">學年期</th>
                                     <th width="20%">會議名稱</th>
                                     <th width="20%">會議日期與起止時間</th>
                                     <th width="5%">編輯</th>

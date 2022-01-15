@@ -9,7 +9,7 @@
                     <div class="col-sm-12">
                         <h4 class="page-title">報告下載</h4>
                         <div class="table-responsive">
-                            <table class="table table-hover m-0">
+                            <table class="table table-hover m-0" style="text-align: center">
                                 <thead>
                                 <tr>
                                     <th width="5%">#</th>

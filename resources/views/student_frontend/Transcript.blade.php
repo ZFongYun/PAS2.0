@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table m-0" id="score_table" style="display: none">
+                    <table class="table m-0" id="score_table" style="display: none; text-align: center">
                         <thead>
                         <tr>
                             <th>學號</th>

@@ -40,7 +40,7 @@
                                 @endif
 
                                 <div class="table-responsive">
-                                    <table class="table table-hover m-0">
+                                    <table class="table table-hover m-0" style="text-align: center">
                                         <thead>
                                         <tr>
                                             <th></th>
