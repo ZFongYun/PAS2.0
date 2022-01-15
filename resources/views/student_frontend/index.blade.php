@@ -28,19 +28,19 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @for($i=0; $i<count($stu_score_arr); $i++)
+                                            @for($i=0; $i<count($stu_score); $i++)
                                                 <tr>
                                                     <td>第{{$i+1}}名</td>
-                                                    @if(auth('student')->user()->name == $stu_score_arr[$i][0]->name)
-                                                        <td style="color: crimson; background: yellow">{{$stu_score_arr[$i][0]->name}}</td>
+                                                    @if(auth('student')->user()->name == $stu_score[$i]->name)
+                                                        <td style="color: crimson; background: yellow">{{$stu_score[$i]->name}}</td>
                                                     @else
-                                                        <td>{{$stu_score_arr[$i][0]->name}}</td>
+                                                        <td>{{$stu_score[$i]->name}}</td>
                                                     @endif
-                                                        <td>{{$stu_score_arr[$i][0]->total}}</td>
+                                                        <td>{{$stu_score[$i]->total}}</td>
                                                     <td></td>
-                                                    <td>{{$stu_score_arr[$i][0]->CV}}</td>
+                                                    <td>{{$stu_score[$i]->CV}}</td>
                                                     <td></td>
-                                                    <td>{{$stu_score_arr[$i][0]->EV}}</td>
+                                                    <td>{{$stu_score[$i]->EV}}</td>
                                                 </tr>
                                             @endfor
                                             </tbody>
