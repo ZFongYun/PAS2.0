@@ -28,44 +28,55 @@ class StuIndexController extends Controller
             ->select('team_member.team_id','team.name')
             ->get()->toArray();
 
-        // 符合最晚完成結算+使用者目前組別的會議
-        $meeting = DB::table('meeting_team')
-            ->join('meeting','meeting_team.meeting_id','=','meeting.id')
-            ->join('team','meeting_team.team_id','=','team.id')
-            ->whereNull('meeting_team.deleted_at')
-            ->whereNull('meeting.deleted_at')
-            ->whereNull('team.deleted_at')
-            ->where('team.id',$user_team[0]->team_id)
-            ->where('meeting_team.calc_status','1')
-            ->orderBy('meeting_team.updated_at', 'desc')
-            ->select('meeting_team.team_id','meeting_team.meeting_id','meeting_team.updated_at')
-            ->get()->toArray();
+        if ($user_team == null){
+            $message = '未加入組別';
+            return view('student_frontend.index',compact('bulletin','message'));
 
-        //小組成員
-        $team_member = DB::Table('team_member')
-            ->join('student','team_member.student_id','student.id')
-            ->whereNull('team_member.deleted_at')
-            ->whereNull('student.deleted_at')
-            ->where('team_member.team_id',$user_team[0]->team_id)
-            ->select('team_member.student_id','student.name')
-            ->get()->toArray();
+        }else{
+            // 符合最晚完成結算+使用者目前組別的會議
+            $meeting = DB::table('meeting_team')
+                ->join('meeting','meeting_team.meeting_id','=','meeting.id')
+                ->join('team','meeting_team.team_id','=','team.id')
+                ->whereNull('meeting_team.deleted_at')
+                ->whereNull('meeting.deleted_at')
+                ->whereNull('team.deleted_at')
+                ->where('team.id',$user_team[0]->team_id)
+                ->where('meeting_team.calc_status','1')
+                ->orderBy('meeting_team.updated_at', 'desc')
+                ->select('meeting_team.team_id','meeting_team.meeting_id','meeting_team.updated_at')
+                ->get()->toArray();
 
-        $team_member_id = array();
-        for ($i = 0; $i < count($team_member); $i++) {
-            array_push($team_member_id, $team_member[$i]->student_id);
+            if ($meeting == null){
+                $message = '未有分數紀錄';
+                return view('student_frontend.index',compact('bulletin','message'));
+
+            }else{
+                //小組成員
+                $team_member = DB::Table('team_member')
+                    ->join('student','team_member.student_id','student.id')
+                    ->whereNull('team_member.deleted_at')
+                    ->whereNull('student.deleted_at')
+                    ->where('team_member.team_id',$user_team[0]->team_id)
+                    ->select('team_member.student_id','student.name')
+                    ->get()->toArray();
+
+                $team_member_id = array();
+                for ($i = 0; $i < count($team_member); $i++) {
+                    array_push($team_member_id, $team_member[$i]->student_id);
+                }
+                $stu_score = DB::Table('student_score')
+                    ->join('student', 'student_score.student_id', '=', 'student.id')
+                    ->whereIn('student_score.student_id', $team_member_id)
+                    ->where('student_score.meeting_id', $meeting[0]->meeting_id)
+                    ->orderBy('student_score.total', 'desc')
+                    ->select('student_score.*', 'student.name')
+                    ->get()->toArray();  //組員成績
+
+                $user_team_name = $user_team[0]->name;
+                $score_record_date = date('Y/m/d', strtotime($meeting[0]->updated_at));
+                return view('student_frontend.index',compact('bulletin','user_team_name','score_record_date','stu_score'));
+            }
         }
-        $stu_score = DB::Table('student_score')
-            ->join('student', 'student_score.student_id', '=', 'student.id')
-            ->whereIn('student_score.student_id', $team_member_id)
-            ->where('student_score.meeting_id', $meeting[0]->meeting_id)
-            ->orderBy('student_score.total', 'desc')
-            ->select('student_score.*', 'student.name')
-            ->get()->toArray();  //組員成績
-
-        $user_team_name = $user_team[0]->name;
-        $score_record_date = date('Y/m/d', strtotime($meeting[0]->updated_at));
-
-        return view('student_frontend.index',compact('bulletin','user_team_name','score_record_date','stu_score'));
     }
 
     /**

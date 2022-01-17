@@ -9,46 +9,60 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <h4 class="page-title p-b-10">排行榜</h4>
-                        <p>目前已加入組別：{{$user_team_name}}</p>
-                        <p>成績紀錄日期：{{$score_record_date}}</p>
-                        <div class="col-lg-10">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table m-0" style="text-align: center">
-                                            <thead>
-                                            <tr>
-                                                <th>排名</th>
-                                                <th>姓名</th>
-                                                <th>總得分</th>
-                                                <th>=</th>
-                                                <th>貢獻度</th>
-                                                <th>x</th>
-                                                <th>成效分數</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @for($i=0; $i<count($stu_score); $i++)
+                        @if($message ?? '')
+                            <div class="alert alert-danger alert-block" style="color: #EE5959">
+                                {{$message}}
+                            </div>
+                        @else
+                            <p>目前已加入組別：{{$user_team_name}}</p>
+                            <p>成績紀錄日期：{{$score_record_date}}</p>
+                            <div class="col-lg-10">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table m-0" style="text-align: center">
+                                                <thead>
                                                 <tr>
-                                                    <td>第{{$i+1}}名</td>
-                                                    @if(auth('student')->user()->name == $stu_score[$i]->name)
-                                                        <td style="color: crimson; background: yellow">{{$stu_score[$i]->name}}</td>
-                                                    @else
-                                                        <td>{{$stu_score[$i]->name}}</td>
-                                                    @endif
-                                                        <td>{{$stu_score[$i]->total}}</td>
-                                                    <td></td>
-                                                    <td>{{$stu_score[$i]->CV}}</td>
-                                                    <td></td>
-                                                    <td>{{$stu_score[$i]->EV}}</td>
+                                                    <th>排名</th>
+                                                    <th>姓名</th>
+                                                    <th>總得分</th>
+                                                    <th>=</th>
+                                                    <th>貢獻度</th>
+                                                    <th>x</th>
+                                                    <th>成效分數</th>
                                                 </tr>
-                                            @endfor
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                @for($i=0; $i<count($stu_score); $i++)
+                                                    @if(auth('student')->user()->name == $stu_score[$i]->name)
+                                                        <tr style="color: crimson; background: yellow">
+                                                            <td>第{{$i+1}}名</td>
+                                                            <td>{{$stu_score[$i]->name}}</td>
+                                                            <td>{{$stu_score[$i]->total}}</td>
+                                                            <td></td>
+                                                            <td>{{$stu_score[$i]->CV}}</td>
+                                                            <td></td>
+                                                            <td>{{$stu_score[$i]->EV}}</td>
+                                                        </tr>
+                                                    @else
+                                                        <tr>
+                                                            <td>第{{$i+1}}名</td>
+                                                            <td>{{$stu_score[$i]->name}}</td>
+                                                            <td>{{$stu_score[$i]->total}}</td>
+                                                            <td></td>
+                                                            <td>{{$stu_score[$i]->CV}}</td>
+                                                            <td></td>
+                                                            <td>{{$stu_score[$i]->EV}}</td>
+                                                        </tr>
+                                                    @endif
+                                                @endfor
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
 
                     </div>
                     <div class="col-sm-12">
