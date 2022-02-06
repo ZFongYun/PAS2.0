@@ -97,7 +97,6 @@
                                                         <option value="0" {{$team_member[$i]['position'] == 0 ? 'selected' : ''}}>企劃</option>
                                                         <option value="1" {{$team_member[$i]['position'] == 1 ? 'selected' : ''}}>程式</option>
                                                         <option value="2" {{$team_member[$i]['position'] == 2 ? 'selected' : ''}}>美術</option>
-                                                        <option value="3" {{$team_member[$i]['position'] == 3 ? 'selected' : ''}}>技美</option>
                                                     </select>
                                                     <input type="hidden" name="hidden_id[]" value="{{$team_member[$i]['id']}}" />
                                                 </td>

@@ -95,7 +95,7 @@
                     html += '<td>'+$(this).data('id')+'</td>';
                     html += '<td>'+$(this).data('name')+'</td>';
                     html += '<td>'+$(this).data('class')+'</td>';
-                    html += '<td><select id="position" name="position'+$(this).attr('id')+'"><option value="0">企劃</option><option value="1">程式</option><option value="2">美術</option><option value="3">技美</option> </select></td>';
+                    html += '<td><select id="position" name="position'+$(this).attr('id')+'"><option value="0">企劃</option><option value="1">程式</option><option value="2">美術</option> </select></td>';
                 }
                 else
                 {
