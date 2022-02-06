@@ -201,59 +201,81 @@ class StuMeetingController extends Controller
                     //使用者跟評分組別"同組"
                     array_push($arr, '0');
 
-                    $team_member = DB::Table('team_member')
-                        ->join('student','team_member.student_id','student.id')
-                        ->where('team_member.team_id',$team_id)
-                        ->where('team_member.deleted_at',null)
-                        ->whereNotIn('team_member.student_id', [$student_id])
-                        ->select('team_member.*','student.name')
-                        ->get()->toArray();
+                    $is_recode = StudentScoringPeer::where('meeting_id',$meeting_id)->where('student_id',$student_id);
 
-                    for ($i=0; $i<count($team_member); $i++){
-                        $scoring_member = DB::Table('studnet_scoring_member')
-                            ->where('meeting_id','=',$meeting_id)
-                            ->where('student_id','=',$student_id)
-                            ->where('member_id','=',$team_member[$i]->student_id)
-                            ->where('deleted_at','=',null)
-                            ->select('CV','feedback')
+                    if (isset($is_recode)){
+                        //未有紀錄
+                        array_push($arr, '0');
+
+                        $team_member = DB::Table('team_member')
+                            ->join('student','team_member.student_id','student.id')
+                            ->where('team_member.team_id',$team_id)
+                            ->where('team_member.deleted_at',null)
+                            ->whereNotIn('team_member.student_id', [$student_id])
+                            ->select('team_member.*','student.name')
+                            ->get()->toArray();
+                        for ($i=0; $i<count($team_member); $i++) {
+                            array_push($arr, $team_member[$i],'no record');
+                        }
+
+                    }else{
+                        //有紀錄
+                        array_push($arr, '1');
+
+                        $team_member = DB::Table('team_member')
+                            ->join('student','team_member.student_id','student.id')
+                            ->where('team_member.team_id',$team_id)
+                            ->where('team_member.deleted_at',null)
+                            ->whereNotIn('team_member.student_id', [$student_id])
+                            ->select('team_member.*','student.name')
                             ->get()->toArray();
 
-                        if ($scoring_member == null){
-                            array_push($arr,$team_member[$i],'0');
-                        }
-                        else{
-                            array_push($arr,$team_member[$i],$scoring_member);
+                        for ($i=0; $i<count($team_member); $i++) {
+                            $scoring_member = DB::Table('studnet_scoring_member')
+                                ->where('meeting_id', '=', $meeting_id)
+                                ->where('student_id', '=', $student_id)
+                                ->where('member_id', '=', $team_member[$i]->student_id)
+                                ->where('deleted_at', '=', null)
+                                ->select('CV', 'feedback')
+                                ->get()->toArray();
+                            array_push($arr, $team_member[$i], $scoring_member);
                         }
                     }
+
+
                     echo json_encode($arr);
 
                 }else{
                     //使用者跟評分組別"不同組"
                     array_push($arr, '1');
 
-                    $team_member = DB::Table('team_member')
-                        ->join('student','team_member.student_id','student.id')
-                        ->where('team_member.team_id',$team_id)
-                        ->where('team_member.deleted_at',null)
-                        ->select('team_member.*','student.name')
-                        ->get()->toArray();
+                    $is_recode = StudentScoringMember::where('meeting_id',$meeting_id)->where('student_id',$student_id)->first();
 
-                    for ($i=0; $i<count($team_member); $i++){
-                        $scoring_peer = DB::Table('studnet_scoring_peer')
-                            ->where('meeting_id','=',$meeting_id)
-                            ->where('student_id','=',$student_id)
-                            ->where('peer_id','=',$team_member[$i]->student_id)
-                            ->where('deleted_at','=',null)
-                            ->select('EV','feedback')
-                            ->get()->toArray();
+                    array_push($arr, $is_recode);
 
-                        if ($scoring_peer == null){
-                            array_push($arr,$team_member[$i],'0');
-                        }
-                        else{
-                            array_push($arr,$team_member[$i],$scoring_peer);
-                        }
-                    }
+//                    $team_member = DB::Table('team_member')
+//                        ->join('student','team_member.student_id','student.id')
+//                        ->where('team_member.team_id',$team_id)
+//                        ->where('team_member.deleted_at',null)
+//                        ->select('team_member.*','student.name')
+//                        ->get()->toArray();
+//
+//                    for ($i=0; $i<count($team_member); $i++){
+//                        $scoring_peer = DB::Table('studnet_scoring_peer')
+//                            ->where('meeting_id','=',$meeting_id)
+//                            ->where('student_id','=',$student_id)
+//                            ->where('peer_id','=',$team_member[$i]->student_id)
+//                            ->where('deleted_at','=',null)
+//                            ->select('EV','feedback')
+//                            ->get()->toArray();
+//
+//                        if ($scoring_peer == null){
+//                            array_push($arr,$team_member[$i],'0');
+//                        }
+//                        else{
+//                            array_push($arr,$team_member[$i],$scoring_peer);
+//                        }
+//                    }
                     echo json_encode($arr);
                 }
             }
