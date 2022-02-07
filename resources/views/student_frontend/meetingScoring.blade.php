@@ -411,7 +411,7 @@
                                 $('#peer_part').hide();
                                 $('#member_part').show();
 
-                                cv_id = []; //紀錄被評分組員的id
+                                cv_id = []; //儲存被評分組員的id
 
                                 if (data[2] === '0'){
                                     // 未有評分紀錄

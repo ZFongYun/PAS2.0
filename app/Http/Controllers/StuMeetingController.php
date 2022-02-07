@@ -201,9 +201,9 @@ class StuMeetingController extends Controller
                     //使用者跟評分組別"同組"
                     array_push($arr, '0');
 
-                    $is_recode = StudentScoringPeer::where('meeting_id',$meeting_id)->where('student_id',$student_id);
+                    $is_recode = StudentScoringMember::where('meeting_id',$meeting_id)->where('student_id',$student_id)->first();
 
-                    if (isset($is_recode)){
+                    if (!isset($is_recode)){
                         //未有紀錄
                         array_push($arr, '0');
 
