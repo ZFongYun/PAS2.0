@@ -106,6 +106,7 @@
                                 <textarea class="form-control autogrow" id="feedback_member" name="feedback_member" style="overflow: scroll; word-wrap: break-word; resize: horizontal; height: 150px;"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary waves-effect waves-light m-2" id="member_send" style="display: none">送出</button>
+                            <button type="submit" class="btn btn-warning waves-effect waves-light m-2" id="member_edit" style="display: none">編輯</button>
                         </div>
                     </div>
                 </div>
@@ -428,6 +429,18 @@
 
                                 }else {
                                     // 有評分紀錄
+                                    console.log(data)
+                                    for(var i=3; i<data.length; i+=2){
+                                        html_member += '<tr>';
+                                        html_member += '<td>'+data[i]['name']+'</td>';
+                                        html_member += '<td><select id="CV'+data[i]['student_id']+'" name="CV"><option value="5">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option> </select></td>';
+                                        html_member += '</tr>';
+                                        $('#member').html(html_member);
+
+                                        cv_id.push(data[i]['student_id']);
+                                    }
+                                    $('#member_send').hide();
+                                    $('#member_edit').show();
 
                                 }
 
