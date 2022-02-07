@@ -321,18 +321,19 @@ class StuMeetingController extends Controller
     public function scoring_member(Request $request){
         $meeting_id = $request->input('meeting_id');
         $student_id = auth('student')->user()->id;
-        $id = $request->input('id');
+        $cv_id = $request->input('cv_id');
         $score = $request->input('score');
         $feedback = $request->input('feedback');
 
-        $student_scoring_member = new StudentScoringMember;
-        $student_scoring_member->meeting_id = $meeting_id;
-        $student_scoring_member->student_id  = $student_id;
-        $student_scoring_member->member_id = $id;
-        $student_scoring_member->CV = $score;
-        $student_scoring_member->feedback = $feedback;
-        $student_scoring_member->save();
-
+        for ($i = 0; $i < count($cv_id); $i++){
+            $student_scoring_member = new StudentScoringMember;
+            $student_scoring_member->meeting_id = $meeting_id;
+            $student_scoring_member->student_id  = $student_id;
+            $student_scoring_member->member_id = $cv_id[$i];
+            $student_scoring_member->CV = $score[$i];
+            $student_scoring_member->feedback = $feedback;
+            $student_scoring_member->save();
+        }
         $arr = ['完成評分'];
         echo json_encode($arr);
     }

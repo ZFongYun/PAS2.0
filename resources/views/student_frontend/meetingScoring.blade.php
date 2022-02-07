@@ -406,22 +406,28 @@
                             html_member = '';
                         }else {
                             if (data[1] === '0'){
-                                console.log(data)
+                                // 使用者跟評分組別"同組"
 
                                 $('#peer_part').hide();
-                                $('#member_part').show()
+                                $('#member_part').show();
+
+                                cv_id = []; //紀錄被評分組員的id
 
                                 if (data[2] === '0'){
+                                    // 未有評分紀錄
                                     for(var i=3; i<data.length; i+=2){
                                         html_member += '<tr>';
                                         html_member += '<td>'+data[i]['name']+'</td>';
-                                        html_member += '<td><select id="CV" name="CV'+data[i]['student_id']+'"><option value="5">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option> </select></td>';
+                                        html_member += '<td><select id="CV'+data[i]['student_id']+'" name="CV"><option value="5">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option> </select></td>';
                                         html_member += '</tr>';
                                         $('#member').html(html_member);
+
+                                        cv_id.push(data[i]['student_id']);
                                     }
                                     $('#member_send').show();
 
                                 }else {
+                                    // 有評分紀錄
 
                                 }
 
@@ -456,6 +462,8 @@
                                 // }
 
                             }else {
+                                // 使用者跟評分組別"不同組"
+
                                 $('#member_part').hide();
                                 $('#peer_part').show();
 
@@ -571,31 +579,29 @@
         $('#member_send').click(function () {
             //評分組員
             var score = [];
-            var num = document.getElementById("member_table").rows.length;
-
-            console.log(score)
-
-        {{--var feedback = $("#feedback_peer").val();--}}
-            {{--var id = $('#score_member_id').val();--}}
-            {{--$(document).ready(function() {--}}
-            {{--    $.ajax({--}}
-            {{--        type:'POST',--}}
-            {{--        url:'/APS_student/meeting/scoring_member',--}}
-            {{--        data:{id:id,--}}
-            {{--            score:score,--}}
-            {{--            feedback:feedback,--}}
-            {{--            meeting_id: {{$meeting['id']}},--}}
-            {{--            _token: '{{csrf_token()}}'},--}}
-            {{--        dataType: 'json',--}}
-            {{--        success: function(data) {--}}
-            {{--            alert(data)--}}
-            {{--            check()--}}
-            {{--        },--}}
-            {{--        error: function (){--}}
-            {{--            alert('評分失敗')--}}
-            {{--        }--}}
-            {{--    });--}}
-            {{--});--}}
+            for(var i=0; i<cv_id.length; i+=1){
+                score.push($('#CV'+cv_id[i]).val())
+            }
+            var feedback = $("#feedback_member").val();
+            $(document).ready(function() {
+                $.ajax({
+                    type:'POST',
+                    url:'/APS_student/meeting/scoring_member',
+                    data:{cv_id:cv_id,
+                        score:score,
+                        feedback:feedback,
+                        meeting_id: {{$meeting['id']}},
+                        _token: '{{csrf_token()}}'},
+                    dataType: 'json',
+                    success: function(data) {
+                        alert(data)
+                        check()
+                    },
+                    error: function (){
+                        alert('評分失敗')
+                    }
+                });
+            });
         });
 
         // $(document).on('click', '.edit_member_modal', function() {
