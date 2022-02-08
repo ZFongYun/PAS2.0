@@ -20,6 +20,9 @@ class CreateStudnetScoringPeerTable extends Migration
             //評分人員
             $table->unsignedBigInteger('student_id');
             $table->foreign('student_id')->references('id')->on('student');
+            //評分組別
+            $table->unsignedBigInteger('team_id');
+            $table->foreign('team_id')->references('id')->on('team');
             //評分職務
             $table->char('position', '1');
             $table->char('EV','3');
