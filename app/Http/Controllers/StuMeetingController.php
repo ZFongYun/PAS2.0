@@ -242,16 +242,23 @@ class StuMeetingController extends Controller
                         }
                     }
 
-
                     echo json_encode($arr);
 
                 }else{
                     //使用者跟評分組別"不同組"
                     array_push($arr, '1');
 
-                    $is_recode = StudentScoringMember::where('meeting_id',$meeting_id)->where('student_id',$student_id)->first();
+                    $is_recode = StudentScoringPeer::where('meeting_id',$meeting_id)->where('student_id',$student_id)->first();
 
-                    array_push($arr, $is_recode);
+                    if (!isset($is_recode)){
+                        //未有紀錄
+                        array_push($arr, '0');
+
+                    }else{
+                        //有紀錄
+                        array_push($arr, '1');
+
+                    }
 
 //                    $team_member = DB::Table('team_member')
 //                        ->join('student','team_member.student_id','student.id')

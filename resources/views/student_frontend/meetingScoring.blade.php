@@ -44,6 +44,8 @@
                             <div class="col-md-6">
                                 <textarea class="form-control autogrow" id="feedback_peer" name="feedback_peer" style="overflow: scroll; word-wrap: break-word; resize: horizontal; height: 150px;"></textarea>
                             </div>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light m-2" id="peer_send" style="display: none">送出</button>
+                            <button type="submit" class="btn btn-warning waves-effect waves-light m-2" id="peer_edit" style="display: none">編輯</button>
                         </div>
 
                         {{--組內的貢獻度--}}
@@ -426,10 +428,10 @@
                                         cv_id.push(data[i]['student_id']);
                                     }
                                     $('#member_send').show();
+                                    $('#member_edit').hide();
 
                                 }else {
                                     // 有評分紀錄
-                                    console.log(data)
                                     for(var i=3; i<data.length; i+=2){
                                         html_member += '<tr>';
                                         html_member += '<td>'+data[i]['name']+'</td>';
@@ -507,7 +509,27 @@
                                 $('#member_part').hide();
                                 $('#peer_part').show();
 
-                                console.log(data)
+                                if (data[2] === '0'){
+                                    // 未有評分紀錄
+                                    html_peer += '<tr>';
+                                    html_peer += '<td>企劃</td>';
+                                    html_peer += '<td><select id="EV0" name="EV0"><option value="100">100</option><option value="90">90</option><option value="80">80</option><option value="70">70</option><option value="60">60</option><option value="50">50</option><option value="40">40</option><option value="30">30</option><option value="20">20</option><option value="10">10</option></select></td>';
+                                    html_peer += '</tr>';
+                                    html_peer += '<tr>';
+                                    html_peer += '<td>程式</td>';
+                                    html_peer += '<td><select id="EV1" name="EV1"><option value="100">100</option><option value="90">90</option><option value="80">80</option><option value="70">70</option><option value="60">60</option><option value="50">50</option><option value="40">40</option><option value="30">30</option><option value="20">20</option><option value="10">10</option></select></td>';
+                                    html_peer += '</tr>';
+                                    html_peer += '<tr>';
+                                    html_peer += '<td>美術</td>';
+                                    html_peer += '<td><select id="EV2" name="EV2"><option value="100">100</option><option value="90">90</option><option value="80">80</option><option value="70">70</option><option value="60">60</option><option value="50">50</option><option value="40">40</option><option value="30">30</option><option value="20">20</option><option value="10">10</option></select></td>';
+                                    html_peer += '</tr>';
+                                    $('#peer').html(html_peer);
+
+                                    $('#peer_send').show();
+                                    $('#peer_edit').hide();
+                                }else {
+
+                                }
 
                                 // for (var i=3; i<data.length; i+=2){
                                 //     if (data[i] == '0'){
