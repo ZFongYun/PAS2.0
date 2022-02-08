@@ -341,17 +341,17 @@ class StuMeetingController extends Controller
     public function edit_member(Request $request){
         $meeting_id = $request->input('meeting_id');
         $student_id = auth('student')->user()->id;
-        $id = $request->input('id');
+        $cv_id = $request->input('cv_id');
         $score = $request->input('score');
         $feedback = $request->input('feedback');
 
-        $student_scoring_member = StudentScoringMember::where('meeting_id',$meeting_id)->where('member_id',$id)->where('student_id',$student_id)->first();
-        $student_scoring_member->CV = $score;
-        $student_scoring_member->feedback = $feedback;
-        $student_scoring_member->save();
-
+        for ($i = 0; $i < count($cv_id); $i++){
+            $student_scoring_member = StudentScoringMember::where('meeting_id',$meeting_id)->where('member_id',$cv_id[$i])->where('student_id',$student_id)->first();
+            $student_scoring_member->CV = $score[$i];
+            $student_scoring_member->feedback = $feedback;
+            $student_scoring_member->save();
+        }
         $arr = ['完成編輯'];
-
         echo json_encode($arr);
     }
 }

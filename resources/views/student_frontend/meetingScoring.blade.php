@@ -433,12 +433,39 @@
                                     for(var i=3; i<data.length; i+=2){
                                         html_member += '<tr>';
                                         html_member += '<td>'+data[i]['name']+'</td>';
-                                        html_member += '<td><select id="CV'+data[i]['student_id']+'" name="CV"><option value="5">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option> </select></td>';
+                                        html_member += '<td><select id="CV'+data[i]['student_id']+'" name="CV">';
+                                        if(data[i+1][0]['CV']==='5'){
+                                            html_member += '<option value="5" selected>5</option>'
+                                        }else {
+                                            html_member += '<option value="5">5</option>'
+                                        }
+                                        if (data[i+1][0]['CV']==='4'){
+                                            html_member += '<option value="4" selected>4</option>'
+                                        }else {
+                                            html_member += '<option value="4">4</option>'
+                                        }
+                                        if (data[i+1][0]['CV']==='3'){
+                                            html_member += '<option value="3" selected>3</option>'
+                                        }else {
+                                            html_member += '<option value="3">3</option>'
+                                        }
+                                        if (data[i+1][0]['CV']==='2'){
+                                            html_member += '<option value="2" selected>2</option>'
+                                        }else {
+                                            html_member += '<option value="2">2</option>'
+                                        }
+                                        if (data[i+1][0]['CV']==='1'){
+                                            html_member += '<option value="1" selected>1</option></select></td>'
+                                        }else {
+                                            html_member += '<option value="1">1</option></select></td>'
+                                        }
                                         html_member += '</tr>';
                                         $('#member').html(html_member);
+                                        $('#feedback_member').val(data[i+1][0]['feedback']);
 
                                         cv_id.push(data[i]['student_id']);
                                     }
+
                                     $('#member_send').hide();
                                     $('#member_edit').show();
 
@@ -624,33 +651,33 @@
         //     $('#edit_member_id').val($(this).data('mid'));
         // });
 
-        {{--$('#member_edit').click(function () {--}}
-        {{--    //編輯組員--}}
-        {{--    var score = $("#edit_score_member").val();--}}
-        {{--    var feedback = $("#edit_feedback_member").val();--}}
-        {{--    var id = $('#edit_member_id').val();--}}
-        {{--    $(document).ready(function() {--}}
-        {{--        $.ajax({--}}
-        {{--            type:'POST',--}}
-        {{--            url:'/APS_student/meeting/edit_member',--}}
-        {{--            data:{id:id,--}}
-        {{--                score:score,--}}
-        {{--                feedback:feedback,--}}
-        {{--                meeting_id: {{$meeting['id']}},--}}
-        {{--                _token: '{{csrf_token()}}'},--}}
-        {{--            dataType: 'json',--}}
-        {{--            success: function(data) {--}}
-        {{--                alert(data)--}}
-        {{--                $('#EditMemberModal').modal('hide')--}}
-        {{--                check()--}}
-        {{--            },--}}
-        {{--            error: function (){--}}
-        {{--                alert('編輯失敗')--}}
-        {{--            }--}}
-        {{--        });--}}
-        {{--    });--}}
-        {{--});--}}
-
+        $('#member_edit').click(function () {
+            //編輯組員
+            var score = [];
+            for(var i=0; i<cv_id.length; i+=1){
+                score.push($('#CV'+cv_id[i]).val())
+            }
+            var feedback = $("#feedback_member").val();
+            $(document).ready(function() {
+                $.ajax({
+                    type:'POST',
+                    url:'/APS_student/meeting/edit_member',
+                    data:{cv_id:cv_id,
+                        score:score,
+                        feedback:feedback,
+                        meeting_id: {{$meeting['id']}},
+                        _token: '{{csrf_token()}}'},
+                    dataType: 'json',
+                    success: function(data) {
+                        alert(data)
+                        check()
+                    },
+                    error: function (){
+                        alert('編輯失敗')
+                    }
+                });
+            });
+        });
     </script>
 @endsection
 @section('title','互評')
