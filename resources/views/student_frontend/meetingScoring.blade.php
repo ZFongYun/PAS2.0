@@ -524,11 +524,55 @@
                                     html_peer += '<td><select id="EV2" name="EV"><option value="100">100</option><option value="90">90</option><option value="80">80</option><option value="70">70</option><option value="60">60</option><option value="50">50</option><option value="40">40</option><option value="30">30</option><option value="20">20</option><option value="10">10</option></select></td>';
                                     html_peer += '</tr>';
                                     $('#peer').html(html_peer);
+                                    $('#feedback_peer').val('');
 
                                     $('#peer_send').show();
                                     $('#peer_edit').hide();
                                 }else {
+                                    // 有評分紀錄
+                                    console.log(data)
+                                    html_peer += '<tr>';
+                                    html_peer += '<td>企劃</td>';
+                                    html_peer += '<td><select id="EV0" name="EV"><option value="100">100</option><option value="90">90</option><option value="80">80</option><option value="70">70</option><option value="60">60</option><option value="50">50</option><option value="40">40</option><option value="30">30</option><option value="20">20</option><option value="10">10</option></select></td>';
+                                    html_peer += '</tr>';
+                                    html_peer += '<tr>';
+                                    html_peer += '<td>程式</td>';
+                                    html_peer += '<td><select id="EV1" name="EV"><option value="100">100</option><option value="90">90</option><option value="80">80</option><option value="70">70</option><option value="60">60</option><option value="50">50</option><option value="40">40</option><option value="30">30</option><option value="20">20</option><option value="10">10</option></select></td>';
+                                    html_peer += '</tr>';
+                                    html_peer += '<tr>';
+                                    html_peer += '<td>美術</td>';
+                                    html_peer += '<td><select id="EV2" name="EV"><option value="100">100</option><option value="90">90</option><option value="80">80</option><option value="70">70</option><option value="60">60</option><option value="50">50</option><option value="40">40</option><option value="30">30</option><option value="20">20</option><option value="10">10</option></select></td>';
+                                    html_peer += '</tr>';
+                                    $('#peer').html(html_peer);
+                                    $('#feedback_peer').val(data[3][0]['feedback']);
 
+                                    for(var i=0; i < 3; i++)
+                                    {
+                                        if(data[i+3][0]['EV'] === 100) {
+                                            document.getElementById("EV"+i).selectedIndex = 0;
+                                        }else if(data[i+3][0]['EV'] === '90'){
+                                            document.getElementById("EV"+i).selectedIndex = 1;
+                                        }else if(data[i+3][0]['EV'] === '80'){
+                                            document.getElementById("EV"+i).selectedIndex = 2;
+                                        }else if(data[i+3][0]['EV'] === '70'){
+                                            document.getElementById("EV"+i).selectedIndex = 3;
+                                        }else if(data[i+3][0]['EV'] === '60'){
+                                            document.getElementById("EV"+i).selectedIndex = 4;
+                                        }else if(data[i+3][0]['EV'] === '50'){
+                                            document.getElementById("EV"+i).selectedIndex = 5;
+                                        }else if(data[i+3][0]['EV'] === '40'){
+                                            document.getElementById("EV"+i).selectedIndex = 6;
+                                        }else if(data[i+3][0]['EV'] === '30'){
+                                            document.getElementById("EV"+i).selectedIndex = 7;
+                                        }else if(data[i+3][0]['EV'] === '20'){
+                                            document.getElementById("EV"+i).selectedIndex = 8;
+                                        }else if(data[i+3][0]['EV'] === '10'){
+                                            document.getElementById("EV"+i).selectedIndex = 9;
+                                        }
+                                    }
+
+                                    $('#peer_send').hide();
+                                    $('#peer_edit').show();
                                 }
 
                                 // for (var i=3; i<data.length; i+=2){
@@ -606,32 +650,35 @@
         //     $('#edit_stu_id').val($(this).data('sid'));
         // });
 
-        {{--$('#stu_edit').click(function () {--}}
-        {{--    //編輯同儕--}}
-        {{--    var score = $("#edit_score_stu").val();--}}
-        {{--    var feedback = $("#edit_feedback_stu").val();--}}
-        {{--    var id = $('#edit_stu_id').val();--}}
-        {{--    $(document).ready(function() {--}}
-        {{--        $.ajax({--}}
-        {{--            type:'POST',--}}
-        {{--            url:'/APS_student/meeting/edit_stu',--}}
-        {{--            data:{id:id,--}}
-        {{--                score:score,--}}
-        {{--                feedback:feedback,--}}
-        {{--                meeting_id: {{$meeting['id']}},--}}
-        {{--                _token: '{{csrf_token()}}'},--}}
-        {{--            dataType: 'json',--}}
-        {{--            success: function(data) {--}}
-        {{--                alert(data)--}}
-        {{--                $('#EditStuModal').modal('hide')--}}
-        {{--                check()--}}
-        {{--            },--}}
-        {{--            error: function (){--}}
-        {{--                alert('編輯失敗')--}}
-        {{--            }--}}
-        {{--        });--}}
-        {{--    });--}}
-        {{--});--}}
+        $('#peer_edit').click(function () {
+            //編輯同儕
+            var team = $("#team").val();
+            var score = [];
+            for(var i=0; i<3; i+=1){
+                score.push($('#EV'+i).val())
+            }
+            var feedback = $("#feedback_peer").val();
+            $(document).ready(function() {
+                $.ajax({
+                    type:'POST',
+                    url:'/APS_student/meeting/edit_stu',
+                    data:{team:team,
+                        score:score,
+                        feedback:feedback,
+                        meeting_id: {{$meeting['id']}},
+                        _token: '{{csrf_token()}}'},
+                    dataType: 'json',
+                    success: function(data) {
+                        // alert(data)
+                        console.log(data)
+                        check()
+                    },
+                    error: function (){
+                        alert('編輯失敗')
+                    }
+                });
+            });
+        });
 
 
         // $(document).on('click', '.score_member_modal', function() {

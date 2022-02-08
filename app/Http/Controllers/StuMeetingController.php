@@ -258,6 +258,17 @@ class StuMeetingController extends Controller
                         //有紀錄
                         array_push($arr, '1');
 
+                        for ($i=0; $i<3; $i++){
+                        $scoring_peer = DB::Table('studnet_scoring_peer')
+                            ->where('meeting_id','=',$meeting_id)
+                            ->where('student_id','=',$student_id)
+                            ->where('team_id','=',$team_id)
+                            ->where('position','=',$i)
+                            ->where('deleted_at','=',null)
+                            ->select('EV','feedback')
+                            ->get()->toArray();
+                            array_push($arr,$scoring_peer);
+                        }
                     }
 
 //                    $team_member = DB::Table('team_member')
@@ -313,17 +324,20 @@ class StuMeetingController extends Controller
     public function edit_stu(Request $request){
         $meeting_id = $request->input('meeting_id');
         $student_id = auth('student')->user()->id;
-        $id = $request->input('id');
+        $team_id = $request->input('team');
         $score = $request->input('score');
         $feedback = $request->input('feedback');
 
-        $student_scoring_peer = StudentScoringPeer::where('meeting_id',$meeting_id)->where('peer_id',$id)->where('student_id',$student_id)->first();
-        $student_scoring_peer->EV = $score;
-        $student_scoring_peer->feedback = $feedback;
-        $student_scoring_peer->save();
-
+        for ($i = 0; $i < 3; $i++){
+            $student_scoring_peer = StudentScoringPeer::where('meeting_id',$meeting_id)
+                ->where('student_id',$student_id)
+                ->where('team_id',$team_id)
+                ->where('position',$i)->first();
+            $student_scoring_peer->EV = $score[$i];
+            $student_scoring_peer->feedback = $feedback;
+            $student_scoring_peer->save();
+        }
         $arr = ['完成編輯'];
-
         echo json_encode($arr);
     }
 
