@@ -248,7 +248,7 @@ class StuMeetingController extends Controller
                     //使用者跟評分組別"不同組"
                     array_push($arr, '1');
 
-                    $is_recode = StudentScoringPeer::where('meeting_id',$meeting_id)->where('student_id',$student_id)->first();
+                    $is_recode = StudentScoringPeer::where('meeting_id',$meeting_id)->where('student_id',$student_id)->where('team_id',$team_id)->first();
 
                     if (!isset($is_recode)){
                         //未有紀錄
@@ -292,18 +292,20 @@ class StuMeetingController extends Controller
     public function scoring_stu(Request $request){
         $meeting_id = $request->input('meeting_id');
         $student_id = auth('student')->user()->id;
-        $id = $request->input('id');
+        $team_id = $request->input('team');
         $score = $request->input('score');
         $feedback = $request->input('feedback');
 
-        $student_scoring_peer = new StudentScoringPeer;
-        $student_scoring_peer->meeting_id = $meeting_id;
-        $student_scoring_peer->student_id  = $student_id;
-        $student_scoring_peer->peer_id = $id;
-        $student_scoring_peer->EV = $score;
-        $student_scoring_peer->feedback = $feedback;
-        $student_scoring_peer->save();
-
+        for ($i = 0; $i < 3; $i++){
+            $student_scoring_peer = new StudentScoringPeer;
+            $student_scoring_peer->meeting_id = $meeting_id;
+            $student_scoring_peer->student_id  = $student_id;
+            $student_scoring_peer->team_id  = $team_id;
+            $student_scoring_peer->position = $i;
+            $student_scoring_peer->EV = $score[$i];
+            $student_scoring_peer->feedback = $feedback;
+            $student_scoring_peer->save();
+        }
         $arr = ['完成評分'];
         echo json_encode($arr);
     }
