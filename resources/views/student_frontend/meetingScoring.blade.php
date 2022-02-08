@@ -112,236 +112,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- 評分同儕表現Modal -->
-{{--                <div id="ScoringStudentModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">--}}
-{{--                    <div class="modal-dialog">--}}
-{{--                        <div class="modal-content">--}}
-{{--                            <div class="modal-header">--}}
-{{--                                <h4 class="modal-title mt-0" id="myModalLabel">評分同儕表現</h4>--}}
-{{--                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-{{--                                    <span aria-hidden="true">&times;</span>--}}
-{{--                                </button>--}}
-{{--                            </div>--}}
-{{--                            <div class="modal-body">--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label for="title" class="control-label">得分</label>--}}
-{{--                                            <select name="score_stu" id="score_stu" class="form-control">--}}
-{{--                                                <option value="100">100</option>--}}
-{{--                                                <option value="90">90</option>--}}
-{{--                                                <option value="80">80</option>--}}
-{{--                                                <option value="70">70</option>--}}
-{{--                                                <option value="60">60</option>--}}
-{{--                                                <option value="50">50</option>--}}
-{{--                                                <option value="40">40</option>--}}
-{{--                                                <option value="30">30</option>--}}
-{{--                                                <option value="20">20</option>--}}
-{{--                                                <option value="10">10</option>--}}
-{{--                                            </select>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group no-margin">--}}
-{{--                                            <label for="feedback_stu" class="control-label">回饋</label>--}}
-{{--                                            <select class="form-control select2" style="margin-bottom: 10px" onchange="feedback_stu(this.value)">--}}
-{{--                                                <option value="default">---請選擇回饋範例---</option>--}}
-{{--                                                <optgroup label="企劃">--}}
-{{--                                                    <option value="報告時臺風穩健">報告時臺風穩健</option>--}}
-{{--                                                    <option value="報告內容有條理且清楚展示進度">報告內容有條理且清楚展示進度</option>--}}
-{{--                                                    <option value="工作進度規劃明確且適宜">工作進度規劃明確且適宜</option>--}}
-{{--                                                </optgroup>--}}
-{{--                                                <optgroup label="美術">--}}
-{{--                                                    <option value="遊戲角色很可愛">遊戲角色很可愛</option>--}}
-{{--                                                    <option value="遊戲背景很漂亮">遊戲背景很漂亮</option>--}}
-{{--                                                    <option value="遊戲UI很好看">遊戲UI很好看</option>--}}
-{{--                                                </optgroup>--}}
-{{--                                            </select>--}}
-{{--                                            <textarea class="form-control autogrow" id="feedback_stu" name="feedback_stu" style="overflow: scroll; word-wrap: break-word; resize: horizontal; height: 150px;"></textarea>--}}
-{{--                                            <input type="hidden" name="score_stu_id" id="score_stu_id">--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="modal-footer">--}}
-{{--                                <button type="submit" class="btn btn-success waves-effect waves-light"  id="stu_send">送出</button>--}}
-{{--                            </div>--}}
-{{--                        </div><!-- /.modal-content -->--}}
-{{--                    </div><!-- /.modal-dialog -->--}}
-{{--                </div><!-- /.modal -->--}}
-
-                <!-- 編輯同儕表現Modal -->
-{{--                <div id="EditStuModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">--}}
-{{--                    <div class="modal-dialog">--}}
-{{--                        <div class="modal-content">--}}
-{{--                            <div class="modal-header">--}}
-{{--                                <h4 class="modal-title mt-0" id="myModalLabel">編輯同儕表現</h4>--}}
-{{--                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-{{--                                    <span aria-hidden="true">&times;</span>--}}
-{{--                                </button>--}}
-{{--                            </div>--}}
-{{--                            <div class="modal-body">--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label for="title" class="control-label">得分</label>--}}
-{{--                                            <select name="edit_score_stu" id="edit_score_stu" class="form-control">--}}
-{{--                                                <option value="100">100</option>--}}
-{{--                                                <option value="90">90</option>--}}
-{{--                                                <option value="80">80</option>--}}
-{{--                                                <option value="70">70</option>--}}
-{{--                                                <option value="60">60</option>--}}
-{{--                                                <option value="50">50</option>--}}
-{{--                                                <option value="40">40</option>--}}
-{{--                                                <option value="30">30</option>--}}
-{{--                                                <option value="20">20</option>--}}
-{{--                                                <option value="10">10</option>--}}
-{{--                                            </select>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group no-margin">--}}
-{{--                                            <label for="edit_feedback_stu" class="control-label">回饋</label>--}}
-{{--                                            <select class="form-control select2" style="margin-bottom: 10px" onchange="edit_feedback_stu(this.value)">--}}
-{{--                                                <option value="default">---請選擇回饋範例---</option>--}}
-{{--                                                <optgroup label="企劃">--}}
-{{--                                                    <option value="報告時臺風穩健">報告時臺風穩健</option>--}}
-{{--                                                    <option value="報告內容有條理且清楚展示進度">報告內容有條理且清楚展示進度</option>--}}
-{{--                                                    <option value="工作進度規劃明確且適宜">工作進度規劃明確且適宜</option>--}}
-{{--                                                </optgroup>--}}
-{{--                                                <optgroup label="美術">--}}
-{{--                                                    <option value="遊戲角色很可愛">遊戲角色很可愛</option>--}}
-{{--                                                    <option value="遊戲背景很漂亮">遊戲背景很漂亮</option>--}}
-{{--                                                    <option value="遊戲UI很好看">遊戲UI很好看</option>--}}
-{{--                                                </optgroup>--}}
-{{--                                            </select>--}}
-{{--                                            <textarea class="form-control autogrow" id="edit_feedback_stu" name="edit_feedback_stu" style="overflow: scroll; word-wrap: break-word; resize: horizontal; height: 150px;"></textarea>--}}
-{{--                                            <input type="hidden" name="edit_stu_id" id="edit_stu_id">--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="modal-footer">--}}
-{{--                                <button type="submit" class="btn btn-success waves-effect waves-light"  id="stu_edit">送出</button>--}}
-{{--                            </div>--}}
-{{--                        </div><!-- /.modal-content -->--}}
-{{--                    </div><!-- /.modal-dialog -->--}}
-{{--                </div><!-- /.modal -->--}}
-
-                <!-- 評分組員表現Modal -->
-{{--                <div id="ScoringMemberModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">--}}
-{{--                    <div class="modal-dialog">--}}
-{{--                        <div class="modal-content">--}}
-{{--                            <div class="modal-header">--}}
-{{--                                <h4 class="modal-title mt-0" id="myModalLabel">評分組員貢獻度</h4>--}}
-{{--                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-{{--                                    <span aria-hidden="true">&times;</span>--}}
-{{--                                </button>--}}
-{{--                            </div>--}}
-{{--                            <div class="modal-body">--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label for="title" class="control-label">組員表現</label>--}}
-{{--                                            <select name="score_member" id="score_member" class="form-control">--}}
-{{--                                                <option value="5">5</option>--}}
-{{--                                                <option value="4">4</option>--}}
-{{--                                                <option value="3">3</option>--}}
-{{--                                                <option value="2">2</option>--}}
-{{--                                                <option value="1">1</option>--}}
-{{--                                            </select>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group no-margin">--}}
-{{--                                            <label for="feedback_stu" class="control-label">回饋</label>--}}
-{{--                                            <select class="form-control select2" style="margin-bottom: 10px" onchange="feedback_member(this.value)">--}}
-{{--                                                <option value="default">---請選擇回饋範例---</option>--}}
-{{--                                                <optgroup label="企劃">--}}
-{{--                                                    <option value="報告時臺風穩健">報告時臺風穩健</option>--}}
-{{--                                                    <option value="報告內容有條理且清楚展示進度">報告內容有條理且清楚展示進度</option>--}}
-{{--                                                    <option value="工作進度規劃明確且適宜">工作進度規劃明確且適宜</option>--}}
-{{--                                                </optgroup>--}}
-{{--                                                <optgroup label="美術">--}}
-{{--                                                    <option value="遊戲角色很可愛">遊戲角色很可愛</option>--}}
-{{--                                                    <option value="遊戲背景很漂亮">遊戲背景很漂亮</option>--}}
-{{--                                                    <option value="遊戲UI很好看">遊戲UI很好看</option>--}}
-{{--                                                </optgroup>--}}
-{{--                                            </select>--}}
-{{--                                            <textarea class="form-control autogrow" id="feedback_member" name="feedback_stu" style="overflow: scroll; word-wrap: break-word; resize: horizontal; height: 150px;"></textarea>--}}
-{{--                                            <input type="hidden" name="score_member_id" id="score_member_id">--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="modal-footer">--}}
-{{--                                <button type="submit" class="btn btn-success waves-effect waves-light"  id="member_send">送出</button>--}}
-{{--                            </div>--}}
-{{--                        </div><!-- /.modal-content -->--}}
-{{--                    </div><!-- /.modal-dialog -->--}}
-{{--                </div><!-- /.modal -->--}}
-
-                <!-- 編輯組員表現Modal -->
-{{--                <div id="EditMemberModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">--}}
-{{--                    <div class="modal-dialog">--}}
-{{--                        <div class="modal-content">--}}
-{{--                            <div class="modal-header">--}}
-{{--                                <h4 class="modal-title mt-0" id="myModalLabel">編輯組別貢獻度</h4>--}}
-{{--                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-{{--                                    <span aria-hidden="true">&times;</span>--}}
-{{--                                </button>--}}
-{{--                            </div>--}}
-{{--                            <div class="modal-body">--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label for="title" class="control-label">組員表現</label>--}}
-{{--                                            <select name="edit_score_member" id="edit_score_member" class="form-control">--}}
-{{--                                                <option value="5">5</option>--}}
-{{--                                                <option value="4">4</option>--}}
-{{--                                                <option value="3">3</option>--}}
-{{--                                                <option value="2">2</option>--}}
-{{--                                                <option value="1">1</option>--}}
-{{--                                            </select>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group no-margin">--}}
-{{--                                            <label for="edit_feedback_stu" class="control-label">回饋</label>--}}
-{{--                                            <select class="form-control select2" style="margin-bottom: 10px" onchange="edit_feedback_member(this.value)">--}}
-{{--                                                <option value="default">---請選擇回饋範例---</option>--}}
-{{--                                                <optgroup label="企劃">--}}
-{{--                                                    <option value="報告時臺風穩健">報告時臺風穩健</option>--}}
-{{--                                                    <option value="報告內容有條理且清楚展示進度">報告內容有條理且清楚展示進度</option>--}}
-{{--                                                    <option value="工作進度規劃明確且適宜">工作進度規劃明確且適宜</option>--}}
-{{--                                                </optgroup>--}}
-{{--                                                <optgroup label="美術">--}}
-{{--                                                    <option value="遊戲角色很可愛">遊戲角色很可愛</option>--}}
-{{--                                                    <option value="遊戲背景很漂亮">遊戲背景很漂亮</option>--}}
-{{--                                                    <option value="遊戲UI很好看">遊戲UI很好看</option>--}}
-{{--                                                </optgroup>--}}
-{{--                                            </select>--}}
-{{--                                            <textarea class="form-control autogrow" id="edit_feedback_member" name="edit_feedback_member" style="overflow: scroll; word-wrap: break-word; resize: horizontal; height: 150px;"></textarea>--}}
-{{--                                            <input type="hidden" name="edit_member_id" id="edit_member_id">--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="modal-footer">--}}
-{{--                                <button type="submit" class="btn btn-success waves-effect waves-light"  id="member_edit">送出</button>--}}
-{{--                            </div>--}}
-{{--                        </div><!-- /.modal-content -->--}}
-{{--                    </div><!-- /.modal-dialog -->--}}
-{{--                </div><!-- /.modal -->--}}
             </div> <!-- container-fluid -->
         </div> <!-- content -->
     </div>
@@ -352,31 +122,6 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
-        //同儕回饋範本
-        // function feedback_stu(value) {
-        //     if(value != "default"){
-        //         document.getElementById("feedback_stu").value += value + "\n" ;
-        //     }
-        // }
-        //編輯同儕回饋範本
-        // function edit_feedback_stu(value) {
-        //     if(value != "default"){
-        //         document.getElementById("edit_feedback_stu").value += "\n" + value ;
-        //     }
-        // }
-        //組員回饋範本
-        // function feedback_member(value) {
-        //     if(value != "default"){
-        //         document.getElementById("feedback_member").value += value + "\n" ;
-        //     }
-        // }
-        //編輯組員回饋範本
-        // function edit_feedback_member(value) {
-        //     if(value != "default"){
-        //         document.getElementById("edit_feedback_member").value += "\n" + value ;
-        //     }
-        // }
 
         var meeting = "{{$meeting ['meeting_date']}}" + " " + "{{$meeting ['meeting_end']}}";
         var interval = setInterval(function(){
@@ -470,39 +215,7 @@
 
                                     $('#member_send').hide();
                                     $('#member_edit').show();
-
                                 }
-
-                                // for (var i=3; i<data.length; i+=2){
-                                //     if (data[i] == '0'){
-                                //         html_stu += '<tr>';
-                                //         html_stu += '<td>'+data[i-1]['name']+'</td>';
-                                //         if (data[i-1]['position'] == 0){
-                                //             html_stu += '<td>'+'企劃'+'</td>'
-                                //         }else if(data[i-1]['position'] == 1){
-                                //             html_stu += '<td>'+'程式'+'</td>'
-                                //         }else{
-                                //             html_stu += '<td>'+'美術'+'</td>'
-                                //         }
-                                //         html_stu += '<td>'+data[i]+'</td>';
-                                //         html_stu += '<td>'+'<button class="score_member_modal btn btn-primary waves-effect waves-light m-l-10 button-font w-xs" data-toggle="modal" data-target="#ScoringMemberModal" data-mid="'+data[i-1]['student_id']+'">評分</button>'+'</td></tr>';
-                                //         $('#stu').html(html_stu);
-                                //     }else {
-                                //         html_stu += '<tr>';
-                                //         html_stu += '<td>'+data[i-1]['name']+'</td>';
-                                //         if (data[i-1]['position'] == 0){
-                                //             html_stu += '<td>'+'企劃'+'</td>'
-                                //         }else if(data[i-1]['position'] == 1){
-                                //             html_stu += '<td>'+'程式'+'</td>'
-                                //         }else{
-                                //             html_stu += '<td>'+'美術'+'</td>'
-                                //         }
-                                //         html_stu += '<td>'+data[i][0]['CV']+'</td>';
-                                //         html_stu += '<td><button class="edit_member_modal btn btn-warning waves-effect waves-light m-l-10 button-font w-xs" data-toggle="modal" data-target="#EditMemberModal" data-mid="'+data[i-1]['student_id']+'" data-point="'+data[i][0]['CV']+'" data-feedback="'+data[i][0]['feedback']+'">編輯</button>'+'</td></tr>';
-                                //         $('#stu').html(html_stu);
-                                //     }
-                                // }
-
                             }else {
                                 // 使用者跟評分組別"不同組"
 
@@ -530,7 +243,6 @@
                                     $('#peer_edit').hide();
                                 }else {
                                     // 有評分紀錄
-                                    console.log(data)
                                     html_peer += '<tr>';
                                     html_peer += '<td>企劃</td>';
                                     html_peer += '<td><select id="EV0" name="EV"><option value="100">100</option><option value="90">90</option><option value="80">80</option><option value="70">70</option><option value="60">60</option><option value="50">50</option><option value="40">40</option><option value="30">30</option><option value="20">20</option><option value="10">10</option></select></td>';
@@ -574,36 +286,6 @@
                                     $('#peer_send').hide();
                                     $('#peer_edit').show();
                                 }
-
-                                // for (var i=3; i<data.length; i+=2){
-                                //     if (data[i] == '0'){
-                                //         html_stu += '<tr>';
-                                //         html_stu += '<td>'+data[i-1]['name']+'</td>';
-                                //         if (data[i-1]['position'] == 0){
-                                //             html_stu += '<td>'+'企劃'+'</td>'
-                                //         }else if(data[i-1]['position'] == 1){
-                                //             html_stu += '<td>'+'程式'+'</td>'
-                                //         }else{
-                                //             html_stu += '<td>'+'美術'+'</td>'
-                                //         }
-                                //         html_stu += '<td>'+data[i]+'</td>';
-                                //         html_stu += '<td>'+'<button class="score_stu_modal btn btn-primary waves-effect waves-light m-l-10 button-font w-xs" data-toggle="modal" data-target="#ScoringStudentModal" data-sid="'+data[i-1]['student_id']+'">評分</button>'+'</td></tr>';
-                                //         $('#stu').html(html_stu);
-                                //     }else {
-                                //         html_stu += '<tr>';
-                                //         html_stu += '<td>'+data[i-1]['name']+'</td>';
-                                //         if (data[i-1]['position'] == 0){
-                                //             html_stu += '<td>'+'企劃'+'</td>'
-                                //         }else if(data[i-1]['position'] == 1){
-                                //             html_stu += '<td>'+'程式'+'</td>'
-                                //         }else{
-                                //             html_stu += '<td>'+'美術'+'</td>'
-                                //         }
-                                //         html_stu += '<td>'+data[i][0]['EV']+'</td>';
-                                //         html_stu += '<td><button class="edit_stu_modal btn btn-warning waves-effect waves-light m-l-10 button-font w-xs" data-toggle="modal" data-target="#EditStuModal" data-sid="'+data[i-1]['student_id']+'" data-point="'+data[i][0]['EV']+'" data-feedback="'+data[i][0]['feedback']+'">編輯</button>'+'</td></tr>';
-                                //         $('#stu').html(html_stu);
-                                //     }
-                                // }
                             }
                         }
                     },
@@ -643,13 +325,6 @@
             });
         });
 
-        // $(document).on('click', '.edit_stu_modal', function() {
-        //     //開啟編輯同儕modal, 輸入編輯前的值
-        //     $('#edit_score_stu').val($(this).data('point'));
-        //     $('#edit_feedback_stu').val($(this).data('feedback'));
-        //     $('#edit_stu_id').val($(this).data('sid'));
-        // });
-
         $('#peer_edit').click(function () {
             //編輯同儕
             var team = $("#team").val();
@@ -669,8 +344,7 @@
                         _token: '{{csrf_token()}}'},
                     dataType: 'json',
                     success: function(data) {
-                        // alert(data)
-                        console.log(data)
+                        alert(data)
                         check()
                     },
                     error: function (){
@@ -679,12 +353,6 @@
                 });
             });
         });
-
-
-        // $(document).on('click', '.score_member_modal', function() {
-        //     //開啟評分組員modal
-        //     $('#score_member_id').val($(this).data('mid'));
-        // });
 
         $('#member_send').click(function () {
             //評分組員
@@ -713,13 +381,6 @@
                 });
             });
         });
-
-        // $(document).on('click', '.edit_member_modal', function() {
-        //     //開啟編輯組員modal, 輸入編輯前的值
-        //     $('#edit_score_member').val($(this).data('point'));
-        //     $('#edit_feedback_member').val($(this).data('feedback'));
-        //     $('#edit_member_id').val($(this).data('mid'));
-        // });
 
         $('#member_edit').click(function () {
             //編輯組員
