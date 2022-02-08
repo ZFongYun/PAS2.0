@@ -270,30 +270,6 @@ class StuMeetingController extends Controller
                             array_push($arr,$scoring_peer);
                         }
                     }
-
-//                    $team_member = DB::Table('team_member')
-//                        ->join('student','team_member.student_id','student.id')
-//                        ->where('team_member.team_id',$team_id)
-//                        ->where('team_member.deleted_at',null)
-//                        ->select('team_member.*','student.name')
-//                        ->get()->toArray();
-//
-//                    for ($i=0; $i<count($team_member); $i++){
-//                        $scoring_peer = DB::Table('studnet_scoring_peer')
-//                            ->where('meeting_id','=',$meeting_id)
-//                            ->where('student_id','=',$student_id)
-//                            ->where('peer_id','=',$team_member[$i]->student_id)
-//                            ->where('deleted_at','=',null)
-//                            ->select('EV','feedback')
-//                            ->get()->toArray();
-//
-//                        if ($scoring_peer == null){
-//                            array_push($arr,$team_member[$i],'0');
-//                        }
-//                        else{
-//                            array_push($arr,$team_member[$i],$scoring_peer);
-//                        }
-//                    }
                     echo json_encode($arr);
                 }
             }
