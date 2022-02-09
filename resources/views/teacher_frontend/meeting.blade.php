@@ -53,32 +53,5 @@
         </div> <!-- content -->
     </div>
 
-    <script type="text/javascript">
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $(document).on('click', '.send', function() {
-            $('#score_send').val($(this).data('mid'));
-            var id = $("#score_send").val();
-            $(document).ready(function() {
-                $.ajax({
-                    type:'POST',
-                    url:'/score',
-                    data:{id:id,
-                        _token: '{{csrf_token()}}'},
-                    success: function(data) {
-                        alert(data)
-                    },
-                    error: function (){
-                        alert('結算失敗')
-                    }
-                });
-            });
-        });
-
-    </script>
 @endsection
 @section('title','會議管理')
