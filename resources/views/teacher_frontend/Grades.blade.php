@@ -41,7 +41,7 @@
                                 <th>貢獻度</th>
                                 <th>成效分數</th>
                                 <th>總得分</th>
-                                <th width="10%"></th>
+                                <th width="15%"></th>
                             </tr>
                             </thead>
                             <tbody id="member_body">
@@ -102,10 +102,10 @@
                                         html_member += '<td>' + data[0][i][0].CV + '</td>';
                                         html_member += '<td>' + data[0][i][0].EV + '</td>';
                                         html_member += '<td>' + data[0][i][0].total + '</td>';
-                                        html_member += '<td><button class="btn btn-custom type="button" data-toggle="collapse" data-target="#member_feedback' + data[0][i][0].student_ID + '">詳情</button></td></tr>';
+                                        html_member += '<td><button class="btn btn-custom btn-rounded" type="button" data-toggle="collapse" data-target="#member_feedback' + data[0][i][0].student_ID + '">詳情</button></td></tr>';
                                         html_member += '<tr>';
-                                        html_member += '<td colspan="7" class="hiddenRow"><div class="collapse" id="member_feedback' + data[0][i][0].student_ID + '"><label>' + '成員給予的評論' + '</label>'
-                                        html_member += '<table class="table"><thead><tr><th>姓名</th><th>貢獻度</th><th>回饋</th></tr></thead><tbody><tr>';
+                                        html_member += '<td colspan="7" class="hiddenRow"><div class="collapse" id="member_feedback' + data[0][i][0].student_ID + '"><label>' + '組內成員給予的評論' + '</label>'
+                                        html_member += '<table class="table"><thead><tr><th width="20%">姓名</th><th width="15%">貢獻度</th><th>回饋</th></tr></thead><tbody><tr>';
                                         if (data[1][i] == '') {
                                             html_member += '<td>-</td>';
                                             html_member += '<td>-</td>';
@@ -119,8 +119,8 @@
                                             html_member += '</tbody></table>';
                                         }
 
-                                        html_member += '<label>' + '同儕給予的評論' + '</label>';
-                                        html_member += '<table class="table"><thead><tr><th>姓名</th><th>成效分數</th><th>回饋</th></tr></thead><tbody><tr>';
+                                        html_member += '<label>' + '組外成員給予的評論' + '</label>';
+                                        html_member += '<table class="table"><thead><tr><th width="20%">姓名</th><th width="15%">成效分數</th><th>回饋</th></tr></thead><tbody><tr>';
                                         if (data[2][i] == '') {
                                             html_member += '<td>-</td>';
                                             html_member += '<td>-</td>';
@@ -137,7 +137,6 @@
 
                                     $('#member_body').html(html_member);
                             }
-
                         }
                     },
                     error: function (){
