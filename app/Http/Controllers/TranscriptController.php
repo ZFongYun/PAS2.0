@@ -94,7 +94,8 @@ class TranscriptController extends Controller
 
                 $stu_peer_feedback = DB::Table('studnet_scoring_peer')
                     ->join('student','studnet_scoring_peer.student_id','=','student.id')
-                    ->where('studnet_scoring_peer.peer_id',$team_member[$i]->student_id)
+                    ->where('studnet_scoring_peer.team_id',$team_member[$i]->team_id)
+                    ->where('studnet_scoring_peer.position',$team_member[$i]->position)
                     ->where('studnet_scoring_peer.meeting_id',$meeting_id)
                     ->select('studnet_scoring_peer.*','student.name')
                     ->get();  //學生評分同儕回饋
