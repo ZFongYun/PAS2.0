@@ -39,7 +39,6 @@
                 <label class="form-title p-t-10 " id="date_title"></label><br>
 
                 <div class="row col-12" id="member_title" style="display: none; font-size: 15pt;">
-{{--                    <p class="form-title p-t-10 p-r-10"><b>組員個別成績</b></p>--}}
                     <h3 class="p-t-10 p-r-10">組員個別成績</h3>
                     <button tabindex="0" class="btn btn-info btn-xs h-25 m-t-10" data-toggle="popover" data-trigger="focus" title="分數計算" data-content="總得分 = 貢獻度 x 成效分數">
                         <i class="fa fa-question-circle"></i>
