@@ -62,13 +62,10 @@
                     </table>
                 </div>
 
-                <canvas id="chart" width="600" height="300" style="display: none;"></canvas>
-
             </div> <!-- container-fluid -->
         </div> <!-- content -->
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript">
         $.ajaxSetup({
             headers: {
@@ -76,7 +73,7 @@
             }
         });
 
-        // 選擇「學年期」要做的事情
+        // 選擇「學年期」後要做的事情
         $("#year").change(function(){
             var year = $('#year').val();
             $(document).ready(function() {
@@ -100,7 +97,7 @@
             });
         });
 
-        // 選擇「組別」要做的事情
+        // 選擇「組別」後要做的事情
         $("#team").change(function(){
             var team = $('#team').val();
             $(document).ready(function() {
@@ -129,6 +126,7 @@
             });
         });
 
+        // 選擇「組別」後要做的事情
         var check=function(){
             var team = $('#team').val();
             $(document).ready(function() {
@@ -156,82 +154,6 @@
             });
         }
 
-        // 畫布宣告
-        var ctx = document.getElementById('chart');
-
-        // 畫布設定
-        var chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: [],
-                datasets: [{
-                    label: '總得分',
-                    data: [],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    x: {
-                        display: true,
-                        title: {
-                            display: true,
-                            text: '姓名',
-                            font: {
-                                size: 18,
-                                style: 'italic',
-                                lineHeight: 1.2,
-                            },
-                            padding: {top: 20, left: 0, right: 0, bottom: 0}
-                        }
-                    },
-                    y: {
-                        display: true,
-                        title: {
-                            display: true,
-                            text: '總得分',
-                            font: {
-                                size: 18,
-                                style: 'italic',
-                                lineHeight: 1.2
-                            },
-                            padding: {top: 30, left: 0, right: 0, bottom: 0}
-                        }
-                    }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        text: '組別績效排行榜',
-                        font: {
-                            size: 25,
-                            weight: 'bold',
-                        },
-                        padding: {
-                            top: 10,
-                            bottom: 30
-                        }
-                    },
-                },
-            }
-        });
-
         $(document).on('click', '.search', function() {
             var meeting = $('#record').val();
             var team = $('#team').val();
@@ -255,22 +177,7 @@
 
                                 $('#member_title').hide();
                                 $('#member_table').hide();
-                                $('#chart').show();
 
-                                $('#date_title').html('成績紀錄日期：'+data[3]+' ~ '+data[2]);
-
-                                // 清空遺留的資料
-                                chart.data.labels = [];
-                                chart.data.datasets[0].data = [];
-
-                                // 更新資料
-                                for (var i = 0; i < data[1].length; i++) {
-                                    chart.data.labels.push(data[1][i].name);
-                                    chart.data.datasets.forEach((dataset) => {
-                                        dataset.data.push(data[0][i]);
-                                    });
-                                }
-                                chart.update();
 
                                 // 選擇「會議記錄」
                             }else {
@@ -285,7 +192,6 @@
                                     $('#date_title').html('成績紀錄日期：'+data[3]);
                                     $('#member_title').show();
                                     $('#member_table').show();
-                                    $('#chart').hide();
 
                                     html_member += '<tr>';
                                     for (var i = 0; i < data[0].length; i++) {
