@@ -39,7 +39,8 @@
                 <label class="form-title p-t-10 " id="date_title"></label><br>
 
                 <div class="row col-12" id="member_title" style="display: none; font-size: 15pt;">
-                    <p class="form-title p-t-10 p-r-10"><b>組員個別成績</b></p>
+{{--                    <p class="form-title p-t-10 p-r-10"><b>組員個別成績</b></p>--}}
+                    <h3 class="p-t-10 p-r-10">組員個別成績</h3>
                     <button tabindex="0" class="btn btn-info btn-xs h-25 m-t-10" data-toggle="popover" data-trigger="focus" title="分數計算" data-content="總得分 = 貢獻度 x 成效分數">
                         <i class="fa fa-question-circle"></i>
                     </button>
@@ -66,7 +67,7 @@
                     未有成績紀錄
                 </div>
 
-                <div id="all_grades"></div>
+                <div id="all_grades" style="display: none"></div>
 
             </div> <!-- container-fluid -->
         </div> <!-- content -->
@@ -117,7 +118,7 @@
                             $("#record").html("");
                         }else {
                             var TeamSinner="";
-                            TeamSinner = TeamSinner+'<option value="0">組別績效排行榜</option>';
+                            TeamSinner = TeamSinner+'<option value="0">組內績效排行榜</option>';
                             for (var i = 0; i < data.length; i++){
                                 TeamSinner = TeamSinner+'<option value='+data[i]['meeting_id']+'>'+data[i]['name']+'</option>';
                             }
@@ -146,7 +147,7 @@
                             $("#record").html("");
                         }else {
                             var TeamSinner="";
-                            TeamSinner = TeamSinner+'<option value="0">組別績效排行榜</option>';
+                            TeamSinner = TeamSinner+'<option value="0">組內績效排行榜</option>';
                             for (var i = 0; i < data.length; i++){
                                 TeamSinner = TeamSinner+'<option value='+data[i]['meeting_id']+'>'+data[i]['name']+'</option>';
                             }
@@ -179,7 +180,7 @@
                         dataType: 'json',
                         success: function(data) {
 
-                            // 選擇「組別績效排行榜」
+                            // 選擇「組內績效排行榜」
                             if(data[4] == '0'){
 
                                 $('#member_title').hide();
@@ -187,8 +188,19 @@
 
                                 if (data[0] == '未有分數紀錄'){
                                     $('#danger').show();
+                                    $('#date_title').hide();
+                                    $('#member_title').hide();
+                                    $('#member_table').hide();
+                                    $('#all_grades').hide();
+
                                 }else{
+                                    $('#date_title').hide();
+                                    $('#member_title').hide();
+                                    $('#member_table').hide();
+                                    $('#all_grades').show();
+
                                     for (var i = 0; i < data[1].length; i++){
+                                        html_grades += '<h3 class="p-t-10 p-r-10">組內績效排行榜</h3>'
                                         html_grades += '<p>'+ data[1][i].name +'</p>'
                                         html_grades += '<div class="col-lg-10"><div class="card"><div class="card-body"><div class="table-responsive">'
                                         html_grades += '<table class="table m-0" style="text-align: center">'
@@ -212,8 +224,10 @@
                                     $('#date_title').hide();
                                     $('#member_title').hide();
                                     $('#member_table').hide();
+                                    $('#all_grades').hide();
 
                                 }else {
+                                    $('#all_grades').hide();
                                     $('#date_title').html('成績紀錄日期：'+data[3]);
                                     $('#member_title').show();
                                     $('#member_table').show();
