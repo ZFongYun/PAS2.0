@@ -62,6 +62,12 @@
                     </table>
                 </div>
 
+                <div class="alert alert-danger" role="alert" id="danger" style="display: none; width: 60%">
+                    未有成績紀錄
+                </div>
+
+                <div id="all_grades"></div>
+
             </div> <!-- container-fluid -->
         </div> <!-- content -->
     </div>
@@ -158,6 +164,7 @@
             var meeting = $('#record').val();
             var team = $('#team').val();
             var html_member = '';
+            var html_grades = '';
 
             if (team == null){
                 alert('請選擇組別');
@@ -178,15 +185,33 @@
                                 $('#member_title').hide();
                                 $('#member_table').hide();
 
+                                if (data[0] == '未有分數紀錄'){
+                                    $('#danger').show();
+                                }else{
+                                    for (var i = 0; i < data[1].length; i++){
+                                        html_grades += '<p>'+ data[1][i].name +'</p>'
+                                        html_grades += '<div class="col-lg-10"><div class="card"><div class="card-body"><div class="table-responsive">'
+                                        html_grades += '<table class="table m-0" style="text-align: center">'
+                                        html_grades += '<thead> <tr> <th>排名</th> <th>姓名</th> <th>總得分</th> <th>=</th> <th>貢獻度</th> <th>x</th> <th>成效分數</th> </tr> </thead>'
+                                        html_grades += '<tbody>'
+                                        for (var y = 0; y < data[2][i].length; y++){
+                                            var sum = y+1;
+                                            html_grades += '<tr> <td>第' + sum + '名</td> <td>' + data[2][i][y].name + '</td> <td>' + data[2][i][y].total + '</td> <td></td> <td>' + data[2][i][y].CV + '</td> <td></td> <td>' + data[2][i][y].EV + '</td> </tr>'
+                                        }
+                                        html_grades += '</tbody>'
+                                        html_grades += '</table>'
+                                        html_grades += '</div></div></div></div>'
+                                    }
+                                    $('#all_grades').html(html_grades);
+                                }
 
-                                // 選擇「會議記錄」
+                            // 選擇「會議記錄」
                             }else {
                                 if(data[0][0] == ''){
                                     alert('無結果');
                                     $('#date_title').hide();
                                     $('#member_title').hide();
                                     $('#member_table').hide();
-
 
                                 }else {
                                     $('#date_title').html('成績紀錄日期：'+data[3]);
