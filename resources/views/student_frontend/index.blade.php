@@ -35,10 +35,16 @@
                                                 <tbody>
                                                 @for($i=0; $i<count($stu_score); $i++)
                                                     @if(auth('student')->user()->name == $stu_score[$i]->name)
-                                                        <tr style="color: crimson; background: yellow">
+                                                        <tr style="color: crimson; background: rgb(255,255,128)">
                                                             <td>第{{$i+1}}名</td>
                                                             <td>{{$stu_score[$i]->name}}</td>
-                                                            <td>{{$stu_score[$i]->total}}</td>
+                                                            @if($arr[0] == 0)
+                                                                <td>{{$stu_score[$i]->total}} <span class="text-success">&nbsp;<i class="fa fa-angle-double-up"></i> {{$arr[1]}}分</span></td>
+                                                            @elseif($arr[0] == 1)
+                                                                <td>{{$stu_score[$i]->total}} <span class="text-danger">&nbsp;<i class="fa fa-angle-double-down"></i>{{$arr[1]}}分</span></td>
+                                                            @else
+                                                                <td>{{$stu_score[$i]->total}} <span class="text-secondary">&nbsp;<i class="fa fa-minus"></i>{{$arr[1]}}分</span></td>
+                                                            @endif
                                                             <td></td>
                                                             <td>{{$stu_score[$i]->CV}}</td>
                                                             <td></td>
@@ -61,6 +67,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if($arr[0] == 0)
+                                    <h5 class="text-success">本次與上次的總得分 共進步{{$arr[1]}}分，請繼續保持！</h5>
+                                @elseif($arr[0] == 1)
+                                    <h5 class="text-danger">本次與上次的總得分 共退步{{$arr[1]}}分，下次再加油！</h5>
+                                @else
+                                    <h5 class="text-secondary">本次與上次的總得分無變動。</h5>
+                                @endif
                             </div>
                         @endif
 

@@ -70,11 +70,39 @@ class StuIndexController extends Controller
                     ->where('student_score.meeting_id', $meeting[0]->meeting_id)
                     ->orderBy('student_score.total', 'desc')
                     ->select('student_score.*', 'student.name')
-                    ->get()->toArray();  //組員成績
+                    ->get()->toArray();
+
+                $arr = array();
+                $stu_score_st = DB::Table('student_score')
+                    ->join('student', 'student_score.student_id', '=', 'student.id')
+                    ->where('student_score.meeting_id', $meeting[0]->meeting_id)
+                    ->where('student_score.student_id', $user_id)
+                    ->select('student_score.total', 'student.name')
+                    ->get()->toArray();
+
+                $stu_score_nd = DB::Table('student_score')
+                    ->join('student', 'student_score.student_id', '=', 'student.id')
+                    ->where('student_score.meeting_id', $meeting[1]->meeting_id)
+                    ->where('student_score.student_id', $user_id)
+                    ->select('student_score.total', 'student.name')
+                    ->get()->toArray();
+
+                if ($stu_score_st[0]->total > $stu_score_nd[0]->total){
+                    //進步
+                    $diff = $stu_score_st[0]->total - $stu_score_nd[0]->total;
+                    array_push($arr,0,$diff);
+                }else if ($stu_score_st[0]->total < $stu_score_nd[0]->total){
+                    //退步
+                    $diff = $stu_score_st[0]->total - $stu_score_nd[0]->total;
+                    array_push($arr,1,$diff);
+                }else{
+                    //維持
+                    array_push($arr,2,0);
+                }
 
                 $user_team_name = $user_team[0]->name;
                 $score_record_date = date('Y/m/d', strtotime($meeting[0]->updated_at));
-                return view('student_frontend.index',compact('bulletin','user_team_name','score_record_date','stu_score'));
+                return view('student_frontend.index',compact('bulletin','user_team_name','score_record_date','stu_score','arr'));
             }
         }
     }
