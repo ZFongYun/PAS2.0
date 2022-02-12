@@ -101,7 +101,7 @@
             }
         });
 
-        // 選擇「學年期」要做的事情
+        // 選擇「學年期」後要做的事情
         $("#year").change(function(){
             var year = $('#year').val();
             $(document).ready(function() {
@@ -125,7 +125,7 @@
             });
         });
 
-        // 選擇「組別」要做的事情
+        // 選擇「組別」後要做的事情
         $("#team").change(function(){
             var team = $('#team').val();
             $(document).ready(function() {
@@ -154,6 +154,7 @@
             });
         });
 
+        // 選擇「組別」後要做的事情
         var check=function(){
             var team = $('#team').val();
             $(document).ready(function() {
@@ -209,7 +210,7 @@
 
 
 
-                                // 選擇「會議記錄」
+                            // 選擇「會議記錄」
                             }else {
                                 if(data[0][0] == ''){
                                     alert('無結果');
