@@ -93,7 +93,7 @@ class StuIndexController extends Controller
                     array_push($arr,0,$diff);
                 }else if ($stu_score_st[0]->total < $stu_score_nd[0]->total){
                     //退步
-                    $diff = $stu_score_st[0]->total - $stu_score_nd[0]->total;
+                    $diff = $stu_score_nd[0]->total - $stu_score_st[0]->total;
                     array_push($arr,1,$diff);
                 }else{
                     //維持
