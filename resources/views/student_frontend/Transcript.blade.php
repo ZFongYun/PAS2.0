@@ -231,7 +231,11 @@
                                         html_grades += '<tbody>'
                                         for (var y = 0; y < data[2][i].length; y++){
                                             var sum = y+1;
-                                            html_grades += '<tr> <td>第' + sum + '名</td> <td>' + data[2][i][y].name + '</td> <td>' + data[2][i][y].total + '</td> <td></td> <td>' + data[2][i][y].CV + '</td> <td></td> <td>' + data[2][i][y].EV + '</td> </tr>'
+                                            if(data[2][i][y].student_id === {{auth('student')->user()->id}}){
+                                                html_grades += '<tr style="color: crimson; background: yellow"> <td>第' + sum + '名</td> <td>' + data[2][i][y].name + '</td> <td>' + data[2][i][y].total + '</td> <td></td> <td>' + data[2][i][y].CV + '</td> <td></td> <td>' + data[2][i][y].EV + '</td> </tr>'
+                                            }else {
+                                                html_grades += '<tr> <td>第' + sum + '名</td> <td>' + data[2][i][y].name + '</td> <td>' + data[2][i][y].total + '</td> <td></td> <td>' + data[2][i][y].CV + '</td> <td></td> <td>' + data[2][i][y].EV + '</td> </tr>'
+                                            }
                                         }
                                         html_grades += '</tbody>'
                                         html_grades += '</table>'
