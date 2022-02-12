@@ -227,11 +227,14 @@ class TranscriptController extends Controller
                 ->select('student_score.*','student.name','student.student_ID')
                 ->get()->toArray();  //組員成績
 
+            $position = TeamMember::where('team_id',$team_id)->where('student_id',$stu_id)->pluck('position');
+
             //同儕回饋
             $stu_peer_feedback = DB::Table('studnet_scoring_peer')
                 ->join('student','studnet_scoring_peer.student_id','=','student.id')
-                ->where('studnet_scoring_peer.peer_id',$stu_id)
                 ->where('studnet_scoring_peer.meeting_id',$meeting_id)
+                ->where('studnet_scoring_peer.team_id',$team_id)
+                ->where('studnet_scoring_peer.position',$position)
                 ->select('studnet_scoring_peer.*')
                 ->get()->toArray();
 

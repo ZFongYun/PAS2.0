@@ -45,15 +45,17 @@
                     </button>
                 </div>
 
-                <div class="table-responsive">
+                <div class="table-responsive col-md-8">
                     <table class="table m-0" id="score_table" style="display: none; text-align: center">
                         <thead>
                         <tr>
                             <th>學號</th>
                             <th>姓名</th>
-                            <th>貢獻度</th>
-                            <th>成效分數</th>
                             <th>總得分</th>
+                            <th>=</th>
+                            <th>貢獻度</th>
+                            <th>x</th>
+                            <th>成效分數</th>
                         </tr>
                         </thead>
                         <tbody id="score_body">
@@ -61,12 +63,12 @@
                     </table>
                 </div>
 
-                <label class="form-title p-t-10" id="member_feedback_title" style="display: none"><b>組內成員回饋</b></label>
-                <div class="table-responsive">
+                <label class="form-title p-t-10" id="member_feedback_title" style="display: none"><b><span style="color: #FF6666">組內</span>成員給予的回饋</b></label>
+                <div class="table-responsive col-md-6">
                     <table class="table m-0" id="member_feedback_table" style="display: none">
                         <thead>
                         <tr>
-                            <th>貢獻度</th>
+                            <th width="25%">貢獻度</th>
                             <th>回饋</th>
                         </tr>
                         </thead>
@@ -75,17 +77,10 @@
                     </table>
                 </div>
 
-                <label class="form-title p-t-10" id="stu_feedback_title" style="display: none"><b>同儕回饋</b></label>
-                <div class="table-responsive">
+                <label class="form-title p-t-10" id="stu_feedback_title" style="display: none"><b><span style="color: #FF6666">組外</span>成員給予的回饋</b></label>
+                <div class="table-responsive col-md-6">
                     <table class="table m-0" id="stu_feedback_table" style="display: none">
-                        <thead>
-                        <tr>
-                            <th>成效分數</th>
-                            <th>回饋</th>
-                        </tr>
-                        </thead>
-                        <tbody id="stu_feedback_body">
-                        </tbody>
+
                     </table>
                 </div>
 
@@ -210,9 +205,13 @@
                             // 選擇「組內績效排行榜」
                             if(data[4] == '0'){
 
+                                $('#date_title').hide();
                                 $('#score_title').hide();
                                 $('#score_table').hide();
-                                $('#date_title').hide();
+                                $('#member_feedback_title').hide();
+                                $('#member_feedback_table').hide();
+                                $('#stu_feedback_title').hide();
+                                $('#stu_feedback_table').hide();
 
                                 if (data[0] == '未有分數紀錄'){
                                     $('#danger').show();
@@ -248,12 +247,15 @@
                             }else {
                                 $('#all_grades').hide();
 
-                                if(data[0][0] == ''){
+                                if(data[0] == ''){
                                     $('#danger').show();
                                     $('#date_title').hide();
                                     $('#score_title').hide();
                                     $('#score_table').hide();
-
+                                    $('#member_feedback_title').hide();
+                                    $('#member_feedback_table').hide();
+                                    $('#stu_feedback_title').hide();
+                                    $('#stu_feedback_table').hide();
                                 }else {
                                     $('#danger').hide();
                                     $('#date_title').html('成績紀錄日期：'+data[3]);
@@ -263,11 +265,12 @@
                                     html_score += '<tr>';
                                     html_score += '<td>'+data[0][0].student_ID+'</td>';
                                     html_score += '<td>'+data[0][0].name+'</td>';
-                                    html_score += '<td>'+data[0][0].CV+'</td>';
-                                    html_score += '<td>' + data[0][0].EV + '</td>';
-                                    html_score += '<td>' + data[0][0].total + '</td></tr>';
+                                    html_score += '<td>' + data[0][0].total + '</td><td></td>';
+                                    html_score += '<td>'+data[0][0].CV+'</td><td></td>';
+                                    html_score += '<td>' + data[0][0].EV + '</td></tr>';
                                     $('#score_body').html(html_score);
 
+                                    // 組內成員給予的回饋
                                     $('#member_feedback_title').show();
                                     $('#member_feedback_table').show();
                                     if (data[2] == ''){
@@ -284,20 +287,29 @@
                                         $('#member_feedback_body').html(html_member_feedback);
                                     }
 
+                                    // 組外成員給予的回饋
                                     $('#stu_feedback_title').show();
                                     $('#stu_feedback_table').show();
-                                    if (data[3] == ''){
+                                    if (data[1] == ''){
+                                        html_stu_feedback += '<thead> <tr> <th width="25%">分數</th> <th>回饋</th> </tr> </thead> <tbody> </tbody>'
                                         html_stu_feedback += '<tr>';
                                         html_stu_feedback += '<td>-</td>';
                                         html_stu_feedback += '<td>-</td></tr>';
-                                        $('#stu_feedback_body').html(html_stu_feedback);
+                                        $('#stu_feedback_table').html(html_stu_feedback);
                                     }else {
+                                        if (data[1][1].position === '0'){
+                                            html_stu_feedback += '<thead> <tr> <th width="25%">企劃分數</th> <th>回饋</th> </tr> </thead> <tbody> </tbody>'
+                                        }else if (data[1][1].position === '1'){
+                                            html_stu_feedback += '<thead> <tr> <th width="25%">程式分數</th> <th>回饋</th> </tr> </thead> <tbody> </tbody>'
+                                        }else {
+                                            html_stu_feedback += '<thead> <tr> <th width="25%">美術分數</th> <th>回饋</th> </tr> </thead> <tbody> </tbody>'
+                                        }
                                         html_stu_feedback += '<tr>';
                                         for (var i = 0; i < data[1].length; i++){
                                             html_stu_feedback += '<td>'+data[1][i].EV+'</td>';
                                             html_stu_feedback += '<td>'+data[1][i].feedback+'</td></tr>';
                                         }
-                                        $('#stu_feedback_body').html(html_stu_feedback);
+                                        $('#stu_feedback_table').html(html_stu_feedback);
                                     }
                                 }
                             }
