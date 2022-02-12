@@ -89,6 +89,10 @@
                     </table>
                 </div>
 
+                <div class="alert alert-danger" role="alert" id="danger" style="display: none; width: 60%">
+                    未有成績紀錄
+                </div>
+
                 <div id="all_grades" style="display: none"></div>
 
             </div> <!-- container-fluid -->
@@ -146,7 +150,6 @@
                             }
                             $("#record").html(TeamSinner);
                         }
-
                     },
                     error: function (){
                         alert('error')
@@ -212,10 +215,11 @@
                                 $('#date_title').hide();
 
                                 if (data[0] == '未有分數紀錄'){
-                                    alert('未有分數紀錄');
+                                    $('#danger').show();
                                     $('#all_grades').hide();
 
                                 }else{
+                                    $('#danger').hide();
                                     $('#all_grades').show();
 
                                     html_grades += '<h3 class="p-t-10 p-r-10">組內績效排行榜</h3>'
@@ -241,12 +245,13 @@
                                 $('#all_grades').hide();
 
                                 if(data[0][0] == ''){
-                                    alert('無結果');
+                                    $('#danger').show();
                                     $('#date_title').hide();
                                     $('#score_title').hide();
                                     $('#score_table').hide();
 
                                 }else {
+                                    $('#danger').hide();
                                     $('#date_title').html('成績紀錄日期：'+data[3]);
                                     $('#score_title').show();
                                     $('#score_table').show();
