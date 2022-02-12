@@ -89,11 +89,12 @@
                     </table>
                 </div>
 
+                <div id="all_grades" style="display: none"></div>
+
             </div> <!-- container-fluid -->
         </div> <!-- content -->
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript">
         $.ajaxSetup({
             headers: {
@@ -139,7 +140,7 @@
                             $("#record").html("");
                         }else {
                             var TeamSinner="";
-                            TeamSinner = TeamSinner+'<option value="0">組別績效排行榜</option>';
+                            TeamSinner = TeamSinner+'<option value="0">組內績效排行榜</option>';
                             for (var i = 0; i < data.length; i++){
                                 TeamSinner = TeamSinner+'<option value='+data[i]['meeting_id']+'>'+data[i]['name']+'</option>';
                             }
@@ -168,7 +169,7 @@
                             $("#record").html("");
                         }else {
                             var TeamSinner="";
-                            TeamSinner = TeamSinner+'<option value="0">組別績效排行榜</option>';
+                            TeamSinner = TeamSinner+'<option value="0">組內績效排行榜</option>';
                             for (var i = 0; i < data.length; i++){
                                 TeamSinner = TeamSinner+'<option value='+data[i]['meeting_id']+'>'+data[i]['name']+'</option>';
                             }
@@ -189,6 +190,7 @@
             var html_score = '';
             var html_member_feedback = '';
             var html_stu_feedback = '';
+            var html_grades = '';
 
             if (team == null){
                 alert('請選擇組別')
@@ -202,16 +204,42 @@
                             _token: '{{csrf_token()}}'},
                         success: function(data) {
 
-                            // 選擇「組別績效排行榜」
+                            // 選擇「組內績效排行榜」
                             if(data[4] == '0'){
 
                                 $('#score_title').hide();
                                 $('#score_table').hide();
+                                $('#date_title').hide();
 
+                                if (data[0] == '未有分數紀錄'){
+                                    alert('未有分數紀錄');
+                                    $('#all_grades').hide();
 
+                                }else{
+                                    $('#all_grades').show();
+
+                                    html_grades += '<h3 class="p-t-10 p-r-10">組內績效排行榜</h3>'
+                                    for (var i = 0; i < data[1].length; i++){
+                                        html_grades += '<p>'+ data[1][i].name +'</p>'
+                                        html_grades += '<div class="col-lg-10"><div class="card"><div class="card-body"><div class="table-responsive">'
+                                        html_grades += '<table class="table m-0" style="text-align: center">'
+                                        html_grades += '<thead> <tr> <th>排名</th> <th>姓名</th> <th>總得分</th> <th>=</th> <th>貢獻度</th> <th>x</th> <th>成效分數</th> </tr> </thead>'
+                                        html_grades += '<tbody>'
+                                        for (var y = 0; y < data[2][i].length; y++){
+                                            var sum = y+1;
+                                            html_grades += '<tr> <td>第' + sum + '名</td> <td>' + data[2][i][y].name + '</td> <td>' + data[2][i][y].total + '</td> <td></td> <td>' + data[2][i][y].CV + '</td> <td></td> <td>' + data[2][i][y].EV + '</td> </tr>'
+                                        }
+                                        html_grades += '</tbody>'
+                                        html_grades += '</table>'
+                                        html_grades += '</div></div></div></div>'
+                                    }
+                                    $('#all_grades').html(html_grades);
+                                }
 
                             // 選擇「會議記錄」
                             }else {
+                                $('#all_grades').hide();
+
                                 if(data[0][0] == ''){
                                     alert('無結果');
                                     $('#date_title').hide();
@@ -222,7 +250,6 @@
                                     $('#date_title').html('成績紀錄日期：'+data[3]);
                                     $('#score_title').show();
                                     $('#score_table').show();
-                                    $('#chart').hide();
 
                                     html_score += '<tr>';
                                     html_score += '<td>'+data[0][0].student_ID+'</td>';

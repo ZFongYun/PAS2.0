@@ -168,30 +168,51 @@ class TranscriptController extends Controller
 
         if ($meeting_id == '0'){
             $all_data_arr = array();  //全部資料
-            $stu_score_arr = array();  //組員成績
 
-            $team_member = DB::Table('team_member')
-                ->join('student','team_member.student_id','student.id')
-                ->where('team_member.team_id',$team_id)
-                ->where('team_member.deleted_at',null)
-                ->select('team_member.*','student.name')
-                ->get();
+            // 查詢該組別已結算的會議
+            $meeting = DB::table('meeting_team')
+                ->join('meeting','meeting_team.meeting_id','=','meeting.id')
+                ->whereNull('meeting_team.deleted_at')
+                ->whereNull('meeting.deleted_at')
+                ->where('meeting_team.team_id',$team_id)
+                ->where('meeting_team.calc_status','1')
+                ->select('meeting.name','meeting_team.team_id','meeting_team.meeting_id')
+                ->get()->toArray();
 
-            for ($i = 0; $i < count($team_member); $i++) {
-                $stu_score = DB::Table('student_score')
-                    ->join('student', 'student_score.student_id', '=', 'student.id')
-                    ->where('student_score.student_id', $team_member[$i]->student_id)
-                    ->sum('student_score.total');  //組員成績
-                array_push($stu_score_arr, $stu_score);
+            if ($meeting == null){
+                $message = '未有分數紀錄';
+                $stu_score_arr = '';
+
+            }else{
+                $message = '有分數紀錄';
+
+                $team_member = DB::Table('team_member')
+                    ->join('student','team_member.student_id','student.id')
+                    ->whereNull('team_member.deleted_at')
+                    ->whereNull('student.deleted_at')
+                    ->where('team_member.team_id',$team_id)
+                    ->select('team_member.student_id','student.name')
+                    ->get()->toArray();
+
+                $team_member_id = array();
+                for ($i = 0; $i < count($team_member); $i++) {
+                    array_push($team_member_id, $team_member[$i]->student_id);
+                }
+
+                $stu_score_arr = array();
+                for($i = 0; $i < count($meeting); $i++){
+                    $stu_score = DB::Table('student_score')
+                        ->join('student', 'student_score.student_id', '=', 'student.id')
+                        ->whereIn('student_score.student_id', $team_member_id)
+                        ->where('student_score.meeting_id', $meeting[$i]->meeting_id)
+                        ->orderBy('student_score.total', 'desc')
+                        ->select('student_score.*', 'student.name')
+                        ->get()->toArray();  //組員成績
+                    array_push($stu_score_arr, $stu_score);
+                }
+
             }
-
-            $date_max = MeetingTeam::where('calc_status','=','1')->orderBy('updated_at', 'desc')->first('updated_at');
-            $date_min = MeetingTeam::where('calc_status','=','1')->orderBy('updated_at', 'asc')->first('updated_at');
-
-            $date_max = date('Y/m/d', strtotime($date_max['updated_at']));
-            $date_min = date('Y/m/d', strtotime($date_min['updated_at']));
-
-            array_push($all_data_arr,$stu_score_arr,$team_member,$date_max,$date_min,0);
+            array_push($all_data_arr,$message,$meeting,$stu_score_arr,0,0);
 
             return $all_data_arr;
 
