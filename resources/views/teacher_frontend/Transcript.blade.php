@@ -184,22 +184,18 @@
 
                                 $('#member_title').hide();
                                 $('#member_table').hide();
+                                $('#date_title').hide();
 
                                 if (data[0] == '未有分數紀錄'){
                                     $('#danger').show();
-                                    $('#date_title').hide();
-                                    $('#member_title').hide();
-                                    $('#member_table').hide();
                                     $('#all_grades').hide();
 
                                 }else{
-                                    $('#date_title').hide();
-                                    $('#member_title').hide();
-                                    $('#member_table').hide();
+                                    $('#danger').hide();
                                     $('#all_grades').show();
 
+                                    html_grades += '<h3 class="p-t-10 p-r-10">組內績效排行榜</h3>'
                                     for (var i = 0; i < data[1].length; i++){
-                                        html_grades += '<h3 class="p-t-10 p-r-10">組內績效排行榜</h3>'
                                         html_grades += '<p>'+ data[1][i].name +'</p>'
                                         html_grades += '<div class="col-lg-10"><div class="card"><div class="card-body"><div class="table-responsive">'
                                         html_grades += '<table class="table m-0" style="text-align: center">'
@@ -218,15 +214,16 @@
 
                             // 選擇「會議記錄」
                             }else {
+                                $('#all_grades').hide();
+
                                 if(data[0][0] == ''){
-                                    alert('無結果');
+                                    $('#danger').show();
                                     $('#date_title').hide();
                                     $('#member_title').hide();
                                     $('#member_table').hide();
-                                    $('#all_grades').hide();
 
                                 }else {
-                                    $('#all_grades').hide();
+                                    $('#danger').hide();
                                     $('#date_title').html('成績紀錄日期：'+data[3]);
                                     $('#member_title').show();
                                     $('#member_table').show();
