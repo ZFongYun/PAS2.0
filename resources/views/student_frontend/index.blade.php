@@ -16,7 +16,7 @@
                         @else
                             <p>目前已加入組別：{{$user_team_name}}</p>
                             <p>成績紀錄日期：{{$score_record_date}}</p>
-                            <div class="col-lg-10">
+                            <div class="col-md-8">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="table-responsive">

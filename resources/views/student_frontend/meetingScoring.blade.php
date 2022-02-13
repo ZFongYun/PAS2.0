@@ -13,7 +13,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="public" class="col-sm-1 control-label form-title">選擇評分組別</label>
+                            <label for="public" class="col-sm-2 control-label form-title">選擇評分組別</label>
                             <div class="col-md-5">
                                 <select name="team" id="team" class="form-control" onchange="check()">
                                     <option default>請選擇</option>
