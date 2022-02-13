@@ -35,7 +35,7 @@
                                                 <tbody>
                                                 @for($i=0; $i<count($stu_score); $i++)
                                                     @if(auth('student')->user()->name == $stu_score[$i]->name)
-                                                        <tr style="color: crimson; background: rgb(255,255,128)">
+                                                        <tr style="color: #007bff; background: rgb(255,255,128)">
                                                             <td>第{{$i+1}}名</td>
                                                             <td>{{$stu_score[$i]->name}}</td>
                                                             @if($arr[0] == 0)
@@ -68,11 +68,11 @@
                                     </div>
                                 </div>
                                 @if($arr[0] == 0)
-                                    <h5 class="text-success">本次與上次的總得分 共進步{{$arr[1]}}分，請繼續保持！</h5>
+                                    <h4 class="text-success">本次與上次的總得分 共進步{{$arr[1]}}分，請繼續保持！</h4>
                                 @elseif($arr[0] == 1)
-                                    <h5 class="text-danger">本次與上次的總得分 共退步{{$arr[1]}}分，下次再加油！</h5>
+                                    <h4 class="text-danger">本次與上次的總得分 共退步{{$arr[1]}}分，下次再加油！</h4>
                                 @else
-                                    <h5 class="text-secondary">本次與上次的總得分無變動。</h5>
+                                    <h4 class="text-secondary">本次與上次的總得分無變動。</h4>
                                 @endif
                             </div>
                         @endif
