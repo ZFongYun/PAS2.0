@@ -17,9 +17,18 @@
                             <div class="col-md-5">
                                 <select name="team" id="team" class="form-control" onchange="check()">
                                     <option default>請選擇</option>
-                                    @for($i=0;$i<count($meeting_team);$i++)
-                                        <option value="{{$meeting_team[$i]->id}}">{{$meeting_team[$i]->name}}</option>
-                                    @endfor
+                                    <optgroup label="組內">
+                                        @if(isset($meeting_team_internal[0]))
+                                            <option value="{{$meeting_team_internal[0]->id}}">{{$meeting_team_internal[0]->name}}</option>
+                                        @else
+                                            <option disabled>無</option>
+                                        @endif
+                                    </optgroup>
+                                    <optgroup label="組外">
+                                        @for($i=0;$i<count($meeting_team_external);$i++)
+                                            <option value="{{$meeting_team_external[$i]->id}}">{{$meeting_team_external[$i]->name}}</option>
+                                        @endfor
+                                    </optgroup>
                                 </select>
                             </div>
                         </div>

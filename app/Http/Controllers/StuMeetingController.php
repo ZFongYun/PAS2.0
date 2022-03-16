@@ -154,16 +154,38 @@ class StuMeetingController extends Controller
 
         // 判斷當前時間有沒有在會議時間內
         if (strtotime(date("Y-m-d H:i:s")) > strtotime($meeting['meeting_date'].' '.$meeting['meeting_start']) && strtotime(date("Y-m-d H:i:s")) < strtotime($meeting['meeting_date'].' '.$meeting['meeting_end'])){
-            $meeting_team = DB::table('meeting_team')
+
+            $student_id = auth('student')->user()->id;
+            $student_team = DB::Table('team_member')
+                ->join('team','team_member.team_id','team.id')
+                ->where('team_member.student_id',$student_id)
+                ->where('team.status',0)
+                ->where('team_member.deleted_at',null)
+                ->select('team_member.team_id')
+                ->get()->toArray();
+
+            $meeting_team_internal = DB::table('meeting_team')
                 ->join('meeting','meeting_team.meeting_id','=','meeting.id')
                 ->join('team','meeting_team.team_id','=','team.id')
                 ->where('team.deleted_at',null)
                 ->whereNull('meeting_team.deleted_at')
                 ->where('meeting_id',$id)
+                ->where('team_id',$student_team[0]->team_id)
                 ->select('team.id','team.name')
                 ->get()->toArray();
 
-            return view('student_frontend.meetingScoring',compact('meeting','meeting_team'));
+            $meeting_team_external = DB::table('meeting_team')
+                ->join('meeting','meeting_team.meeting_id','=','meeting.id')
+                ->join('team','meeting_team.team_id','=','team.id')
+                ->where('team.deleted_at',null)
+                ->whereNull('meeting_team.deleted_at')
+                ->where('meeting_id',$id)
+                ->whereNotIn('team_id',[$student_team[0]->team_id])
+                ->select('team.id','team.name')
+                ->get()->toArray();
+//            dd($meeting_team_external);
+
+            return view('student_frontend.meetingScoring',compact('meeting','meeting_team_internal','meeting_team_external'));
         }else{
             echo "<script>alert('會議尚未開始。')</script>";
             echo '<meta http-equiv=REFRESH CONTENT=0.5;url=/APS_student/meeting>';
