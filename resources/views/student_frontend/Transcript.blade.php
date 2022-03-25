@@ -265,7 +265,7 @@
                                     html_score += '<tr>';
                                     html_score += '<td>'+data[0][0].student_ID+'</td>';
                                     html_score += '<td>'+data[0][0].name+'</td>';
-                                    html_score += '<td>' + data[0][0].total + '</td><td></td>';
+                                    html_score += '<td>' + data[0][0].total + '<br><span style="font-size: 8pt">(滿分500分)</span></td><td></td>';
                                     html_score += '<td>'+data[0][0].CV+'</td><td></td>';
                                     html_score += '<td>' + data[0][0].EV + '</td></tr>';
                                     $('#score_body').html(html_score);
