@@ -87,17 +87,19 @@ class StuIndexController extends Controller
                     ->select('student_score.total', 'student.name')
                     ->get()->toArray();
 
-                if ($stu_score_st[0]->total > $stu_score_nd[0]->total){
-                    //進步
-                    $diff = $stu_score_st[0]->total - $stu_score_nd[0]->total;
-                    array_push($arr,0,$diff);
-                }else if ($stu_score_st[0]->total < $stu_score_nd[0]->total){
-                    //退步
-                    $diff = $stu_score_nd[0]->total - $stu_score_st[0]->total;
-                    array_push($arr,1,$diff);
-                }else{
-                    //維持
-                    array_push($arr,2,0);
+                if ($stu_score_st != null && $stu_score_nd != null){
+                    if ($stu_score_st[0]->total > $stu_score_nd[0]->total){
+                        //進步
+                        $diff = $stu_score_st[0]->total - $stu_score_nd[0]->total;
+                        array_push($arr,0,$diff);
+                    }else if ($stu_score_st[0]->total < $stu_score_nd[0]->total){
+                        //退步
+                        $diff = $stu_score_nd[0]->total - $stu_score_st[0]->total;
+                        array_push($arr,1,$diff);
+                    }else{
+                        //維持
+                        array_push($arr,2,0);
+                    }
                 }
 
                 $user_team_name = $user_team[0]->name;

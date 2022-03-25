@@ -38,12 +38,14 @@
                                                         <tr style="color: #007bff; background: rgb(255,255,128)">
                                                             <td>第{{$i+1}}名</td>
                                                             <td>{{$stu_score[$i]->name}}</td>
-                                                            @if($arr[0] == 0)
-                                                                <td>{{$stu_score[$i]->total}} <span class="text-success">&nbsp;<i class="fa fa-angle-double-up"></i> {{$arr[1]}}分</span></td>
-                                                            @elseif($arr[0] == 1)
-                                                                <td>{{$stu_score[$i]->total}} <span class="text-danger">&nbsp;<i class="fa fa-angle-double-down"></i>{{$arr[1]}}分</span></td>
-                                                            @else
-                                                                <td>{{$stu_score[$i]->total}} <span class="text-secondary">&nbsp;<i class="fa fa-minus"></i>{{$arr[1]}}分</span></td>
+                                                            @if($arr != null)
+                                                                @if($arr[0] == 0)
+                                                                    <td>{{$stu_score[$i]->total}} <span class="text-success">&nbsp;<i class="fa fa-angle-double-up"></i> {{$arr[1]}}分</span></td>
+                                                                @elseif($arr[0] == 1)
+                                                                    <td>{{$stu_score[$i]->total}} <span class="text-danger">&nbsp;<i class="fa fa-angle-double-down"></i>{{$arr[1]}}分</span></td>
+                                                                @else
+                                                                    <td>{{$stu_score[$i]->total}} <span class="text-secondary">&nbsp;<i class="fa fa-minus"></i>{{$arr[1]}}分</span></td>
+                                                                @endif
                                                             @endif
                                                             <td></td>
                                                             <td>{{$stu_score[$i]->CV}}</td>
@@ -67,12 +69,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if($arr[0] == 0)
-                                    <h4 class="text-success">本次與上次的總得分 共進步{{$arr[1]}}分，請繼續保持！</h4>
-                                @elseif($arr[0] == 1)
-                                    <h4 class="text-danger">本次與上次的總得分 共退步{{$arr[1]}}分，下次再加油！</h4>
-                                @else
-                                    <h4 class="text-secondary">本次與上次的總得分無變動。</h4>
+                                @if($arr != null)
+                                    @if($arr[0] == 0)
+                                        <h4 class="text-success">本次與上次的總得分 共進步{{$arr[1]}}分，請繼續保持！</h4>
+                                    @elseif($arr[0] == 1)
+                                        <h4 class="text-danger">本次與上次的總得分 共退步{{$arr[1]}}分，下次再加油！</h4>
+                                    @else
+                                        <h4 class="text-secondary">本次與上次的總得分無變動。</h4>
+                                    @endif
                                 @endif
                             </div>
                         @endif
