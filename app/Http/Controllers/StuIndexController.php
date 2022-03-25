@@ -104,7 +104,7 @@ class StuIndexController extends Controller
 
                 $user_team_name = $user_team[0]->name;
                 $score_record_date = date('Y/m/d', strtotime($meeting[0]->updated_at));
-                return view('student_frontend.index',compact('bulletin','user_team_name','score_record_date','stu_score','arr'));
+                return view('student_frontend.index',compact('bulletin','user_team_name','score_record_date','stu_score','arr','stu_score_nd'));
             }
         }
     }

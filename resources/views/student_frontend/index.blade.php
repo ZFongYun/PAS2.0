@@ -15,12 +15,11 @@
                             </div>
                         @else
                             <p>目前已加入組別：{{$user_team_name}}</p>
-                            <p>成績紀錄日期：{{$score_record_date}}</p>
                             <div class="col-md-8">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table m-0" style="text-align: center">
+                                            <table class="table m-0" style="text-align: center;">
                                                 <thead>
                                                 <tr>
                                                     <th>排名</th>
@@ -67,17 +66,24 @@
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <div class="row" style="margin-top: 13pt; margin-bottom: -10pt;">
+                                            <div class="col-6"><p>※備註：總得分滿分500分</p></div>
+                                            <div class="col-6"><p style="text-align: right">成績紀錄日期：{{$score_record_date}}</p></div>
+                                        </div>
+                                        <div style="margin-bottom: -10pt;">
+                                            @if($arr != null)
+                                                @if($arr[0] == 0)
+                                                    <h4 class="text-success">與上次會議所得到的總得分<span style="font-size: 10pt">({{$stu_score_nd[0]->total}})</span>共進步{{$arr[1]}}分，請繼續保持！</h4>
+                                                @elseif($arr[0] == 1)
+                                                    <h4 class="text-danger">與上次會議所得到的總得分<span style="font-size: 10pt">({{$stu_score_nd[0]->total}})</span>共退步{{$arr[1]}}分，下次再加油！</h4>
+                                                @else
+                                                    <h4 class="text-secondary">本次與上次的總得分無變動。</h4>
+                                                @endif
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
-                                @if($arr != null)
-                                    @if($arr[0] == 0)
-                                        <h4 class="text-success">本次與上次的總得分 共進步{{$arr[1]}}分，請繼續保持！</h4>
-                                    @elseif($arr[0] == 1)
-                                        <h4 class="text-danger">本次與上次的總得分 共退步{{$arr[1]}}分，下次再加油！</h4>
-                                    @else
-                                        <h4 class="text-secondary">本次與上次的總得分無變動。</h4>
-                                    @endif
-                                @endif
+
                             </div>
                         @endif
 
