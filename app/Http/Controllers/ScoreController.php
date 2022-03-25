@@ -114,7 +114,7 @@ class ScoreController extends Controller
                 if ($peer_count == 0){
                     $EV = 0 ;
                 }else{
-                    $peer_score = StudentScoringPeer::where('meeting_id',$meeting_id)->where('position',$team_member[$j]->position)->sum('EV');
+                    $peer_score = StudentScoringPeer::where('meeting_id',$meeting_id)->where('team_id',$team_member[$j]->team_id)->where('position',$team_member[$j]->position)->sum('EV');
                     $EV = ceil($peer_score / $peer_count);
                 }
 
