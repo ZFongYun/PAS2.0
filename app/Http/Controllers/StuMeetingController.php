@@ -29,7 +29,8 @@ class StuMeetingController extends Controller
                 $meeting_team = MeetingTeam::where('meeting_id',$meeting[$j]['id'])
                     ->where('team_id',$team[$i]['team_id'])->get()->toArray();
                 if ($meeting_team == null){
-                    array_push($meeting[$j], 'needless');
+                    continue;
+//                    array_push($meeting[$j], 'needless');
                 }else{
                     $report = MeetingReport::where('meeting_id',$meeting[$j]['id'])
                         ->where('team_id', $team[$i]['team_id'])->get()->toArray();
@@ -38,6 +39,7 @@ class StuMeetingController extends Controller
                     }else{
                         array_push($meeting[$j], 'uploaded');
                     }
+                    break;
                 }
             }
         }
