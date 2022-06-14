@@ -50,7 +50,41 @@ class StuIndexController extends Controller
                 $message = '未有分數紀錄';
                 return view('student_frontend.index',compact('bulletin','message'));
 
+            }else if(count($meeting) == 1){
+                // 只有一個紀錄
+
+                //小組成員
+                $team_member = DB::Table('team_member')
+                    ->join('student','team_member.student_id','student.id')
+                    ->whereNull('team_member.deleted_at')
+                    ->whereNull('student.deleted_at')
+                    ->where('team_member.team_id',$user_team[0]->team_id)
+                    ->select('team_member.student_id','student.name')
+                    ->get()->toArray();
+
+                $team_member_id = array();
+                for ($i = 0; $i < count($team_member); $i++) {
+                    array_push($team_member_id, $team_member[$i]->student_id);
+                }
+                $stu_score = DB::Table('student_score')
+                    ->join('student', 'student_score.student_id', '=', 'student.id')
+                    ->whereIn('student_score.student_id', $team_member_id)
+                    ->where('student_score.meeting_id', $meeting[0]->meeting_id)
+                    ->orderBy('student_score.total', 'desc')
+                    ->select('student_score.*', 'student.name')
+                    ->get()->toArray();
+
+                $arr = null;
+                $stu_score_nd = null;
+
+                $user_team_name = $user_team[0]->name;
+                $score_record_date = date('Y/m/d', strtotime($meeting[0]->updated_at));
+
+                return view('student_frontend.index',compact('bulletin','user_team_name','score_record_date','stu_score','arr','stu_score_nd'));
+
             }else{
+                // 有兩筆紀錄可以比較
+
                 //小組成員
                 $team_member = DB::Table('team_member')
                     ->join('student','team_member.student_id','student.id')

@@ -32,37 +32,63 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                @for($i=0; $i<count($stu_score); $i++)
-                                                    @if(auth('student')->user()->name == $stu_score[$i]->name)
-                                                        <tr style="color: #007bff; background: rgb(255,255,128)">
-                                                            <td>第{{$i+1}}名</td>
-                                                            <td>{{$stu_score[$i]->name}}</td>
-                                                            @if($arr != null)
-                                                                @if($arr[0] == 0)
-                                                                    <td>{{$stu_score[$i]->total}} <span class="text-success">&nbsp;<i class="fa fa-angle-double-up"></i> {{$arr[1]}}分</span></td>
-                                                                @elseif($arr[0] == 1)
-                                                                    <td>{{$stu_score[$i]->total}} <span class="text-danger">&nbsp;<i class="fa fa-angle-double-down"></i>{{$arr[1]}}分</span></td>
-                                                                @else
-                                                                    <td>{{$stu_score[$i]->total}} <span class="text-secondary">&nbsp;<i class="fa fa-minus"></i>{{$arr[1]}}分</span></td>
+                                                @if($arr == null)
+                                                    @for($i=0; $i<count($stu_score); $i++)
+                                                        @if(auth('student')->user()->name == $stu_score[$i]->name)
+                                                            <tr style="color: #007bff; background: rgb(255,255,128)">
+                                                                <td>第{{$i+1}}名</td>
+                                                                <td>{{$stu_score[$i]->name}}</td>
+                                                                <td>{{$stu_score[$i]->total}}</td>
+                                                                <td></td>
+                                                                <td>{{$stu_score[$i]->CV}}</td>
+                                                                <td></td>
+                                                                <td>{{$stu_score[$i]->EV}}</td>
+                                                            </tr>
+                                                        @else
+                                                            <tr>
+                                                                <td>第{{$i+1}}名</td>
+                                                                <td>{{$stu_score[$i]->name}}</td>
+                                                                <td>{{$stu_score[$i]->total}}</td>
+                                                                <td></td>
+                                                                <td>{{$stu_score[$i]->CV}}</td>
+                                                                <td></td>
+                                                                <td>{{$stu_score[$i]->EV}}</td>
+                                                            </tr>
+                                                        @endif
+                                                    @endfor
+                                                @else
+                                                    @for($i=0; $i<count($stu_score); $i++)
+                                                        @if(auth('student')->user()->name == $stu_score[$i]->name)
+                                                            <tr style="color: #007bff; background: rgb(255,255,128)">
+                                                                <td>第{{$i+1}}名</td>
+                                                                <td>{{$stu_score[$i]->name}}</td>
+                                                                @if($arr != null)
+                                                                    @if($arr[0] == 0)
+                                                                        <td>{{$stu_score[$i]->total}} <span class="text-success">&nbsp;<i class="fa fa-angle-double-up"></i> {{$arr[1]}}分</span></td>
+                                                                    @elseif($arr[0] == 1)
+                                                                        <td>{{$stu_score[$i]->total}} <span class="text-danger">&nbsp;<i class="fa fa-angle-double-down"></i>{{$arr[1]}}分</span></td>
+                                                                    @else
+                                                                        <td>{{$stu_score[$i]->total}} <span class="text-secondary">&nbsp;<i class="fa fa-minus"></i>{{$arr[1]}}分</span></td>
+                                                                    @endif
                                                                 @endif
-                                                            @endif
-                                                            <td></td>
-                                                            <td>{{$stu_score[$i]->CV}}</td>
-                                                            <td></td>
-                                                            <td>{{$stu_score[$i]->EV}}</td>
-                                                        </tr>
-                                                    @else
-                                                        <tr>
-                                                            <td>第{{$i+1}}名</td>
-                                                            <td>{{$stu_score[$i]->name}}</td>
-                                                            <td>{{$stu_score[$i]->total}}</td>
-                                                            <td></td>
-                                                            <td>{{$stu_score[$i]->CV}}</td>
-                                                            <td></td>
-                                                            <td>{{$stu_score[$i]->EV}}</td>
-                                                        </tr>
-                                                    @endif
-                                                @endfor
+                                                                <td></td>
+                                                                <td>{{$stu_score[$i]->CV}}</td>
+                                                                <td></td>
+                                                                <td>{{$stu_score[$i]->EV}}</td>
+                                                            </tr>
+                                                        @else
+                                                            <tr>
+                                                                <td>第{{$i+1}}名</td>
+                                                                <td>{{$stu_score[$i]->name}}</td>
+                                                                <td>{{$stu_score[$i]->total}}</td>
+                                                                <td></td>
+                                                                <td>{{$stu_score[$i]->CV}}</td>
+                                                                <td></td>
+                                                                <td>{{$stu_score[$i]->EV}}</td>
+                                                            </tr>
+                                                        @endif
+                                                    @endfor
+                                                @endif
                                                 </tbody>
                                             </table>
                                         </div>
