@@ -1,20 +1,26 @@
 ## 同儕互評系統(2.0版)
 此系統提供使用者在會議中能夠透過手機給予同儕即時性的回饋。
 
-教師端DEMO：http://pas220712.herokuapp.com/APS_teacher/login 
-學生端DEMO：http://pas220712.herokuapp.com/APS_student/login 
+教師端DEMO：http://pas220712.herokuapp.com/APS_teacher/login
+
+學生端DEMO：http://pas220712.herokuapp.com/APS_student/login
 
 ### 測試帳號
-* 教師端 
-帳號：teacher 
+* 教師端
+
+帳號：teacher
+
 密碼：a12345 
 
-* 學生端：
-帳號：4a790071 
-密碼：a12345 
+* 學生端
 
-帳號：4a790072 
-密碼：a12345 
+帳號：4a790071
+
+密碼：a12345
+
+帳號：4a790072
+
+密碼：a12345
 
 ### 系統架構
 ![PAS](https://user-images.githubusercontent.com/53658361/176619329-7573a65a-1107-4ede-8b28-25bc38f36db3.png)
