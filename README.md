@@ -35,7 +35,7 @@
 * 檔案上傳/下載
 
 ### 安裝
-1. 在terminal輸入`https://github.com/ZFongYun/PAS2.0.git`下載專案資料夾
+1. 在terminal輸入`git clone https://github.com/ZFongYun/PAS2.0.git`下載專案資料夾
 2. 開啟網頁虛擬器(XAMPP...etc)，為專案配置虛擬目錄，以及新增資料庫
 3. 開啟專案，複製`.env .example`成新增`.env`，接著設定資料庫相關環境變數
 4. 在terminal輸入`php artisan key:generate`，以建立`.env`的`APP_KEY`
