@@ -1,6 +1,8 @@
 ## 同儕互評系統(2.0版)
 此系統提供使用者在會議中能夠透過手機給予同儕即時性的回饋。
 
+![pas](https://user-images.githubusercontent.com/53658361/179455734-cb008c3a-e40d-4552-be25-08a38446691f.jpg)
+
 教師端DEMO：http://pas220712.herokuapp.com/APS_teacher/login
 
 學生端DEMO：http://pas220712.herokuapp.com/APS_student/login
